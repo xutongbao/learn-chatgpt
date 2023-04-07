@@ -1,0 +1,9 @@
+.m-ai-edit-userinfo-wrap .ant-select-selector{display: flex;align-items: center; height: 60px!important;}
+.m-ai-edit-userinfo-wrap .ant-select-selection-item{display: flex;}
+.m-ai-edit-userinfo-select-avatar-wrap{display: flex;gap: 10px;flex-wrap: wrap;justify-content: center;}
+.m-ai-edit-userinfo-select-avatar-img{width: 50px;height: 50px;border-radius: 6px;cursor: pointer;}
+.m-ai-edit-userinfo-select-avatar-img:hover{transform: scale(1.2);}
+
+
+
+

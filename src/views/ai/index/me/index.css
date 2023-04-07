@@ -1,0 +1,20 @@
+.m-h5-me-wrap{flex: 1;overflow-y: auto;background: #ededed;}
+.m-h5-me-header-wrap{position: relative; margin: 0 0 10px 0; padding: 70px 20px 26px 28px;background: #fff;cursor: pointer;}
+.m-ai-me-user-edit-icon{position: absolute;top: 103px;right: 10px;font-size: 20px;transform: rotate(180deg);color: #999;}
+.m-h5-me-header{display: flex; }
+.m-h5-me-header-img{width: 64px!important; height: 64px!important;border-radius: 6px;}
+.m-h5-me-header .ant-image-mask-info {display: none;}
+.m-h5-me-header-info{flex: 1;margin: 5px 0 0 20px;overflow: hidden;}
+.m-h5-me-header-info-row1{height: 20px;line-height: 20px;display: flex;}
+.m-h5-me-header-username{font-weight: bold;font-size: 20px;}
+.m-ai-me-header-vip{color: #ff9a03;vertical-align:middle;display: inline-block;margin: 3px 0 0 5px;font-size: 22px;}
+.m-h5-me-header-money{color: #a5680e;vertical-align:middle;display: inline-block;margin: 0 0 0 5px;font-size: 22px;}
+.m-h5-me-header-info-row2{margin: 10px 0 0 0; height: 24px;font-size: 18px;color: #999;display: flex;}
+.m-h5-me-header-follow{display: inline-block;}
+.m-h5-me-header-count{font-size: 14px;display: inline-block;margin: 0 2px 0 0;font-weight: bold;}
+.m-h5-me-header-due-date{margin: 2px 0 0 0; line-height: 30px;font-size: 16px;color: #999;}
+.m-h5-me-group-wrap{padding: 10px 0; display: flex; background: white;flex-flow: row wrap;align-content: flex-start;gap: 10px 0;}
+.m-h5-me-group-item{flex: 0 0 25%;text-align: center;display: flex;flex-direction: column;cursor: pointer;}
+.m-h5-me-group-item-icon{font-size: 26px!important;color: #333;line-height: 36px;}
+.m-h5-me-group-item-title{font-size: 14px;height: 20px;}
+.m-h5-me-btn-wrap{margin: 10px 0 0 0;padding: 14px 0;font-size: 16px; background: #fff;display: flex;align-items: center;justify-content: center;cursor: pointer;}

@@ -1,0 +1,7 @@
+.m-single-share-intro{font-size: 14px;line-height: 20px;padding: 5px 10px 20px 10px;color: #333;line-height: 1.75;}
+.m-single-share-info{padding: 0 10px 10px;}
+.m-single-share-url{padding: 0 0px 20px 0; font-weight: bold;cursor: pointer;text-decoration: underline;}
+.m-single-share-img-wrap{display: flex;flex-direction: column;align-items: center; justify-content: center;}
+.m-single-share-img{margin: 10px 0 10px; width: 200px!important; height: auto;}
+.m-single-share-link{padding: 0 5px; font-weight: bold;cursor: pointer;text-decoration: underline;}
+

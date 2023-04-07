@@ -1,0 +1,25 @@
+.m-ai-wrap-box{display: flex;justify-content: center;background: #ddd;background: #ddd;position: absolute;top: 0;left: 0;right: 0;bottom: 0;overflow: hidden;}
+.m-ai-wrap-real-chat{display: flex;flex-direction: column; max-width: 800px;width: 100%;background: #ededed;position: relative;}
+.m-ai-main{flex:1;display: flex;flex-direction: column;overflow-y: auto;}
+.m-ai-footer{display: flex;padding: 5px; border-top: 1px solid #ddd;gap: 5px;align-items: center;justify-content: center;background: #f6f6f6;}
+.m-ai-list{flex: 1;padding: 0px 0;}
+.m-ai-dropdown{position: absolute;top: 10px;right: 14px;}
+.m-ai-user-list-wrap-wrap{margin: 0 10px;display: flex; }
+.m-ai-user-list-wrap{padding: 10px 0px 10px;display: flex;flex:1; line-height: 28px;overflow: hidden;}
+.m-ai-user-list-avatar{width: 42px;height: 42px;border-radius: 6px;}
+.m-ai-message-wrap{display: flex;flex-direction: column;flex: 1;padding: 0 0 0 5px;margin: -12px 0 0 0; overflow: hidden;}
+.m-ai-nickname{color: #999;font-size: 12px;padding: 0 0 0 6px;}
+.m-ai-message-inner{ display: inline-block;padding: 0 0 0 6px; max-width: 100%;}
+.m-ai-message-inner-inner{position: relative; display: inline-block;max-width: 100%;padding: 0 8px 0 0;box-sizing: border-box;}
+.m-ai-message{display: inline-block; padding: 8px 10px;font-size: 16px; border-radius: 4px; background: #fff;color: #333; line-height: 1.75;max-width: 100%;word-wrap: break-word;white-space: pre-line;box-sizing: border-box;}
+.m-ai-message.type3{background: #fff;}
+.m-ai-message-cross {position: absolute;top: 15px;left: -4px;overflow: hidden;width: 8px;height: 8px;transform: rotate(-45deg);}
+.m-ai-message-cross.chat-type3{background: #fff;}
+.m-ai-message-cross.me{background: #95ec69;}
+.m-ai-message.me{background: #95ec69;}
+.m-ai-menu-btn{display: inline-block;text-align: center;line-height: 35px; color: #333;font-size: 26px;width: 35px;height: 35px;z-index: 99;cursor: pointer;}
+.m-ai-group-chat-userinfo-wrap{width: 240px;}
+.m-group-chat-toolbar-item{display: flex;flex-direction: column; align-items: center;}
+.m-ai-menu-icon{font-size: 18px!important;}
+
+

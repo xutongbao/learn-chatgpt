@@ -1,0 +1,13 @@
+.m-single-exchange-form-wrap{padding: 20px 0 0;}
+.m-single-exchange{padding: 10px 10px 10px;}
+.m-single-exchange-title{text-align: center;font-size: 20px;line-height: 40px;padding: 0 0 20px 0;}
+.m-single-exchange-intro{font-size: 14px;line-height: 20px;padding: 0 0 20px 0;color: #333;line-height: 1.75;}
+.m-single-exchange-btn{width: 100%;}
+.m-weixin-code{padding: 0 5px; font-weight: bold;cursor: pointer;text-decoration: underline;}
+.m-wechat-wrap{display: flex;justify-content: center;}
+.m-single-exchange-img-wrap{display: flex;justify-content: center;}
+.m-single-exchange-img{margin: 10px 0 0; width: 200px!important; height: auto;}
+.m-single-exchange-form-wrap .ant-col-20{max-width: 100%;}
+
+
+

@@ -1,0 +1,39 @@
+.m-h5-wrap-box{display: flex;justify-content: center;background: #ddd;background: #ddd;position: absolute;top: 0;left: 0;right: 0;bottom: 0;overflow: hidden;}
+.m-h5-wrap{display: flex;flex-direction: column; max-width: 800px;width: 100%;background: white;}
+.m-h5-main{flex:1;display: flex;flex-direction: column;overflow-y: auto;}
+.m-h5-footer{display: flex;border-top: 1px solid #ddd;background: #f6f6f6;}
+.m-h5-footer-item{flex:1;text-align: center;color: #1a1a1a;}
+.m-h5-footer-item.active{color: #00c250;}
+.m-h5-footer-icon{font-size: 24px!important;display: block;height: 30px;line-height: 30px; padding: 4px 0 0;}
+.m-h5-footer-text{font-size: 12px;padding: 2px 0;transform: scale(1);}
+.m-h5-home-header{height: 50px;background: #f6f6f6;text-align: center;line-height: 50px;font-weight: bold;font-size: 16px; color: #181818;border-bottom: 1px solid #ddd;}
+.m-h5-home-content{flex: 1;overflow-y: auto;display: flex;flex-direction: column;}
+.m-h5-home-main{overflow-y: auto;flex:1;padding: 4px 0 0 0;}
+.m-h5-home-main-list{height: 100%;overflow-y: auto;}
+.m-h5-lesson-play-wrap{display: flex;justify-content: center;background: #ddd;overflow-y: auto;}
+.m-h5-lesson-play-inner{background: white;width: 100%;}
+.m-h5-lesson-play-player-wrap{position: relative; width: 100%;padding: 56% 0 0 0;}
+.m-h5-lesson-play-player{position: absolute!important;top: 0;left: 0;right: 0;bottom: 0;width: 100%!important;height: 100%!important;}
+.m-h5-lesson-play-info{padding: 10px 10px;}
+.m-h5-lesson-play-info-course-wrap{display: flex;height: 30px;}
+.m-h5-lesson-play-info-avatar{width: 28px;height: 28px;border-radius: 4px;}
+.m-h5-lesson-play-info-course-name{flex:1; font-size: 14px;line-height: 28px;padding: 0 0 0 10px;color:#333; overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+.m-h5-lesson-play-info-course-btn-wrap{padding: 0 10px 0;line-height: 40px;}
+.m-h5-lesson-play-info-course-btn{padding: 4px 12px;border-radius: 1px;}
+.m-h5-lesson-play-info-course-btn.unfollow{background: #f04142;color: #fff;cursor: pointer;}
+.m-h5-lesson-play-info-course-btn.followed{border:1px solid #ddd; color: #ddd;}
+.m-h5-lesson-play-info-lesson-name{font-size: 16px;font-weight: bold;}
+.m-h5-lesson-play-divider{margin: 20px 5px 10px;height: 1px;background: rgba(0, 0, 0, 0.06);}
+.m-h5-lesson-play-skeleton{padding: 10px;}
+.m-h5-lesson-play-player-lesson-time{position: absolute;right: 5px;bottom: 5px;display: inline-block;min-width: 38px;padding: 0 3px;font-size: 12px; background: rgba(0, 0, 0, 0.6);color: #fff;z-index: 999;text-align: center;line-height: 16px;height: 16px;border-radius: 8px;}
+
+/* 覆盖antd样式 */
+.m-h5-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: #f04142;}
+.m-h5-tabs .ant-tabs-ink-bar{background: #f04142;}
+.m-h5-tabs .ant-tabs-nav{margin: 0!important;}
+.xgplayer-skin-default.xgplayer-is-cssfullscreen{position: absolute!important;}
+
+@media screen and (min-width: 768px) {  
+  .m-h5-footer-icon{font-size: 32px!important;display: block;height: 40px;line-height: 40px; padding: 4px 0 0;}
+  .m-h5-footer-text{font-size: 18px;padding: 2px 0;transform: scale(1);}
+} 

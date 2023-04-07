@@ -1,0 +1,9 @@
+.m-ai-dropdown{position: absolute;top: 10px;right: 20px;}
+.m-ai-menu-btn{display: inline-block;text-align: center;line-height: 35px; color: #333;font-size: 26px;width: 35px;height: 35px;z-index: 99;}
+.m-ai-login-code{display: flex;justify-content: center;width: 100%;}
+.m-ai-register .ant-input-group-addon{width: 100px;}
+.m-ai-register .ant-input-group-addon:nth-child(3){width: 30px;}
+.m-ai-register-btn-wrap{margin: -28px 0 0 0;}
+.m-ai-register-btn-text{margin: 5px 5px 0 0;padding: 4px 0;}
+
+

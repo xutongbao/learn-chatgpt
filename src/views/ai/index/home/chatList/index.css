@@ -1,0 +1,23 @@
+.m-single-list{flex: 1;padding: 10px 0; overflow-y: auto;}
+.m-single-ai-user-list-wrap-wrap{margin: 0 0 0 16px; cursor: pointer;}
+.m-single-ai-user-list-wrap{padding: 12px 0px 12px;display: flex;line-height: 28px;align-items: center;}
+.m-single-ai-user-list-avatar{width: 46px;height: 46px;border-radius: 6px;}
+.m-single-ai-user-list-user-wrap{flex:1; padding: 0 16px 0 16px;line-height: 22px;overflow: hidden;}
+.m-single-ai-user-list-user-name-wrap{display: flex;}
+.m-single-ai-user-list-user-name{flex:1; font-size: 16px;font-weight: bold;}
+.m-single-ai-user-list-user-fans-count{font-size: 12px;color: #999;height: 22px;}
+.m-single-ai-user-list-btn-wrap{padding: 0 0 0 5px;font-size: 12px;color: #999;}
+.m-single-ai-user-list-btn{padding: 4px 12px;border-radius: 1px;}
+.m-single-ai-user-list-btn.unfollow{border: 1px solid #ddd; color: #333;cursor: pointer;}
+.m-single-ai-user-list-btn.followed{color: #999;}
+.m-single-ai-user-list-divider{margin: 0 0 0 62px; height: 1px;background: rgba(0, 0, 0, 0.06);}
+
+
+
+
+
+
+
+
+
+
