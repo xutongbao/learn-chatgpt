@@ -63,6 +63,16 @@ const getRouteArr = () => {
       component: lazy(() => import('../../single/me/gptFour/Index')),
     },  
     {
+      title: '合作',
+      path: '/ai/single/me/cooperation',
+      component: lazy(() => import('../../single/me/cooperation/Index')),
+    },  
+    {
+      title: 'github',
+      path: '/ai/single/me/github',
+      component: lazy(() => import('../../single/me/github/Index')),
+    },  
+    {
       title: '设置',
       path: '/ai/single/me/set',
       component: lazy(() => import('../../single/me/set/Index')),

@@ -15,7 +15,7 @@ const getBaseURL = () => {
   const hostname = os.hostname()
   const host = {
     'LAPTOP-4KDIA4A3': 'http://localhost',
-    iZ6ilh61jzkvrhZ: 'http://39.97.238.175',
+    iZ6ilh61jzkvrhZ: 'http://127.0.0.1',
   }[hostname]
   const baseURL = `${host}:${port}`
   return {
