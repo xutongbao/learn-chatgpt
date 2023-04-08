@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Input, Dropdown, Form } from 'antd'
+import { Button, Input, Dropdown, Form, Popover } from 'antd'
 import { connect } from 'react-redux'
 import { Icon } from '../../../components/light'
 import useList from './useList'
@@ -81,6 +81,19 @@ function Index(props) {
             >
               <Input
                 addonBefore="邮箱"
+                addonAfter={
+                  <Popover
+                    placement="left"
+                    title={'提示'}
+                    content={'某些用户的邮件会发送到垃圾箱'}
+                    trigger="click"
+                  >
+                    <Icon
+                      name="help"
+                      className="m-ai-register-addon-after"
+                    ></Icon>
+                  </Popover>
+                }
                 onPressEnter={(e) => e.preventDefault()}
               />
             </Form.Item>
