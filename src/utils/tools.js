@@ -622,6 +622,18 @@ const getAdminInfo = () => {
       email: 'xxxx@qq.com',
       isHasBigWechatGroup: false,
     },
+    {
+      id: 4,
+      host: 'dunxia.com',
+      url,
+      wechatCode: 'xxxxxx',
+      wechatQRCode:
+        'http://static.xutongbao.top/img/m-wechat-demo.jpg?time=20230407',
+      wechatGroupQRCode:
+        'http://static.xutongbao.top/img/m-join-group-buffer-demo.jpg?time=20230407',
+      email: 'xxxx@qq.com',
+      isHasBigWechatGroup: false,
+    },
   ]
 
   const result = hooks.find((item) => item.host === host)
