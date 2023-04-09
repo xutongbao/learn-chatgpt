@@ -52,7 +52,6 @@ export default function useList(props) {
 
   const handleReload = () => {
     window.location.reload()
-
   }
 
   useEffect(() => {
