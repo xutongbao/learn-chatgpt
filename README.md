@@ -33,7 +33,7 @@ This project exists thanks to all those who contributed.
 
 Thank you to all our supporters!🙏
 
-[![img](http://static.xutongbao.top/img/xutongbao.jpg)](https://github.com/xutongbao/learn-chatgpt/graphs/contributors)
+[![img](http://static.xutongbao.top/img/xutongbao.jpg?time=20230409)](https://github.com/xutongbao/learn-chatgpt/graphs/contributors)
 
 ## License
 
