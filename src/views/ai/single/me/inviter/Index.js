@@ -38,6 +38,14 @@ function Index(props) {
     7: {
       title: '月卡V4',
       className: 'mv4',
+    },  
+    8: {
+      title: '升级V4',
+      className: 'v4',
+    }, 
+    9: {
+      title: '月卡V4',
+      className: 'mv4',
     },       
   }
   return (
