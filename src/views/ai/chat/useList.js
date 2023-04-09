@@ -509,11 +509,14 @@ export default function useList(props) {
       if (
         avatarCdn === 'http://static.xutongbao.top/img/m-default-avatar.jpg'
       ) {
-        antdMessage.success({
-          content: '请上传头像后再提问',
-          duration: 5,
-        })
-        return
+        if (Array.isArray(dataSource) && dataSource.length > 0) {
+          antdMessage.success({
+            content: '请上传头像后再提问',
+            duration: 5,
+          })
+          props.history.push('/ai/single/me/editUserInfo')
+          return
+        }
       }
       const now = Date.now()
       uidForFrontEndPeopleMesssage = now
