@@ -6,11 +6,11 @@ A demo repo based on [OpenAI GPT-3.5 Turbo & GPT-4 API.](https://platform.openai
 
 **🍿 Live preview**: http://chat.xutongbao.top
 
-![image](http://static.xutongbao.top/img/m-github01.jpg)
-![image](http://static.xutongbao.top/img/m-github02.jpg)
-![image](http://static.xutongbao.top/img/m-github03.jpg)
-![image](http://static.xutongbao.top/img/m-github04.jpg)
-![image](http://static.xutongbao.top/img/m-github05.jpg)
+![image](http://static.xutongbao.top/img/m-github01.jpg?time=20230409)
+![image](http://static.xutongbao.top/img/m-github02.jpg?time=20230409)
+![image](http://static.xutongbao.top/img/m-github03.jpg?time=20230409)
+![image](http://static.xutongbao.top/img/m-github04.jpg?time=20230409)
+![image](http://static.xutongbao.top/img/m-github05.jpg?time=20230409)
 
 
 ## Running Locally
