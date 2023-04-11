@@ -17,20 +17,27 @@ export default function useList(props) {
     dataSource: [
       {
         uid: 0,
-        avatar: 'http://static.xutongbao.top/img/robot2.png',
+        avatar: 'http://static.xutongbao.top/img/m-gpt-3_5-logo.png',
         name: 'ChatGPT',
         intro: '',
         createTime: '',
       },
       {
         uid: 1,
+        avatar: 'http://static.xutongbao.top/img/m-gpt-4-logo.png',
+        name: 'GPT-4',
+        intro: '',
+        createTime: '',
+      },
+      {
+        uid: 2,
         avatar: 'http://static.xutongbao.top/img/logo.png',
         name: '群聊',
         intro: '',
         createTime: '',
       },
       {
-        uid: 2,
+        uid: 3,
         avatar:
           'http://static.xutongbao.top/img/m-real-people-group-chat2.png?time=20230302',
         name: '真人群聊',
@@ -38,9 +45,8 @@ export default function useList(props) {
         createTime: '',
       },
       {
-        uid: 3,
-        avatar:
-          'http://static.xutongbao.top/img/m-course.png?time=2023040401',
+        uid: 4,
+        avatar: 'http://static.xutongbao.top/img/m-course.png?time=2023040401',
         name: '课程',
         intro: '学而不思则罔',
         createTime: '',
@@ -58,14 +64,13 @@ export default function useList(props) {
     }
     let routerSearchObjNew = { talkId: localStorage.getItem('talkId'), isAll }
 
-
     const searchParams = {
       ...routerSearchObjNew,
     }
 
     Api.h5.chatListSearch(searchParams).then((res) => {
       if (res.code === 200) {
-        let { chatInfo, groupChatInfo, realPeopleInfo } = res.data
+        let { chatInfo, chatInfoForGPT4, groupChatInfo, realPeopleInfo } = res.data
         const { dataSource } = state
         if (chatInfo.createTime) {
           dataSource[0].createTime = moment(chatInfo.createTime - 0).format(
@@ -73,17 +78,23 @@ export default function useList(props) {
           )
           dataSource[0].intro = chatInfo.message
         }
+        if (chatInfoForGPT4.createTime) {
+          dataSource[1].createTime = moment(chatInfoForGPT4.createTime - 0).format(
+            'MM-DD HH:mm:ss'
+          )
+          dataSource[1].intro = chatInfoForGPT4.message
+        }
         if (groupChatInfo.createTime) {
-          dataSource[1].createTime = moment(
+          dataSource[2].createTime = moment(
             groupChatInfo.createTime - 0
           ).format('MM-DD HH:mm:ss')
-          dataSource[1].intro = groupChatInfo.message
+          dataSource[2].intro = groupChatInfo.message
         }
         if (realPeopleInfo.createTime) {
-          dataSource[2].createTime = moment(
+          dataSource[3].createTime = moment(
             realPeopleInfo.createTime - 0
           ).format('MM-DD HH:mm:ss')
-          dataSource[2].intro = realPeopleInfo.message
+          dataSource[3].intro = realPeopleInfo.message
         }
         setState({
           dataSource,
@@ -119,16 +130,17 @@ export default function useList(props) {
     e.stopPropagation()
   }
 
-
   //操作
   const handleAction = ({ uid }) => {
     if (uid === 0) {
       props.history.push(`/ai/chat`)
     } else if (uid === 1) {
-      props.history.push(`/ai/groupChat`)
+      props.history.push(`/ai/chat-gpt-4`)
     } else if (uid === 2) {
-      props.history.push(`/ai/realPeopleGroupChat`)
+      props.history.push(`/ai/groupChat`)
     } else if (uid === 3) {
+      props.history.push(`/ai/realPeopleGroupChat`)
+    } else if (uid === 4) {
       props.history.push(`/ai/course`)
     }
   }
@@ -143,7 +155,8 @@ export default function useList(props) {
     total,
     current,
     pageSize: state.pageSize,
-    currentImage, visible,
+    currentImage,
+    visible,
     handleSearch,
     handleDetail,
     formatLessonTime,

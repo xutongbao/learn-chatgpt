@@ -66,7 +66,6 @@ const urls = {
   //#region 对话
   talkAppSearch: '/api/light/talk/appSearch',
   talkAdminSearch: '/api/light/talk/adminSearch',
-  talkAdd: '/api/light/talk/add',
   talkDelete: '/api/light/talk/delete',
   talkEdit: '/api/light/talk/edit',
   //#endregion  

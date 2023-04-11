@@ -72,7 +72,6 @@ const Api = {
   //#region 对话
   talkAppSearch: (data) => common({ url: urls.h5.talkAppSearch, data, method: 'post' }),
   talkAdminSearch: (data) => common({ url: urls.h5.talkAdminSearch, data, method: 'post' }),
-  talkAdd: (data) => common({ url: urls.h5.talkAdd, data, method: 'post' }),
   talkDelete: (data) => common({ url: urls.h5.talkDelete, data, method: 'post' }),
   talkEdit: (data) => common({ url: urls.h5.talkEdit, data, method: 'post' }),
   //#endregion   

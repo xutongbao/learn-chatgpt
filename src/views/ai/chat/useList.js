@@ -27,6 +27,28 @@ let player
 let isCurrentPage = '1'
 
 export default function useList(props) {
+  const {
+    location: { pathname },
+  } = props
+  let pageType = '1' //1单聊，2群聊
+  let initTitle = 'ChatGPT'
+  if (pathname === '/ai/groupChat') {
+    pageType = '2'
+    initTitle = '群聊'
+  } else if (pathname === '/ai/chat-gpt-4') {
+    pageType = '3'
+    initTitle = 'GPT-4'
+  }
+  let robotAvatar = 'http://static.xutongbao.top/img/m-gpt-3_5-logo.png'
+
+  if (pageType === '1') {
+    robotAvatar = 'http://static.xutongbao.top/img/m-gpt-3_5-logo.png'
+  } else if (pageType === '3') {
+    robotAvatar = 'http://static.xutongbao.top/img/m-gpt-4-logo.png'
+  }
+
+  // eslint-disable-next-line
+  const [title, setTitle] = useState(initTitle)
   // eslint-disable-next-line
   const [username, setUsername] = useState(localStorage.getItem('username'))
   const [total, setTotal] = useState()
@@ -41,13 +63,6 @@ export default function useList(props) {
   const [isGetNewest, setIsGetNewest] = useState(false)
   const [trigger, setTrigger] = useState('click')
   const [userInfo, setUserInfo] = useState({})
-  const {
-    location: { pathname },
-  } = props
-  let pageType = '1' //1单聊，2群聊
-  if (pathname === '/ai/groupChat') {
-    pageType = '2'
-  }
 
   const scrollEl = useRef(null)
   let uidForFrontEndPeopleMesssage
@@ -61,13 +76,25 @@ export default function useList(props) {
     let talkId = localStorage.getItem('talkId')
     let searchParams = {}
     let searchData = {}
-    if (pageType === '1' && talkId !== 'guest') {
-      let routerSearchObjNew = { talkId }
-
+    if (pageType === '1') {
+      let routerSearchObjNew = { talkId, gptVersion: '3.5' }
       searchParams = {
         ...routerSearchObjNew,
       }
       searchData = { pageNum: page, pageSize, ...searchParams, isGetNewest }
+      if (talkId === 'guest') {
+        return
+      }
+    } else if (pageType === '3') {
+      let talkId = localStorage.getItem('talkId')
+      let routerSearchObjNew = { talkId, gptVersion: '4' }
+      searchParams = {
+        ...routerSearchObjNew,
+      }
+      searchData = { pageNum: page, pageSize, ...searchParams, isGetNewest }
+      if (talkId === 'guest') {
+        return
+      }
     } else if (pageType === '2') {
       searchParams = {
         talkId: '',
@@ -120,32 +147,6 @@ export default function useList(props) {
                 .replace(/>/g, '&gt;')
             }
           }
-          // let isShowToAudioBtn = true
-          // let zhCNReg = new RegExp('[\\u4E00-\\u9FFF]+', 'g')
-          // let jaJPReg = new RegExp('[\\u3040-\\u309F\\u30A0-\\u30FF]+', 'g')
-          // let koKRReg = new RegExp('[\\u3130-\\u318F\\uAC00-\\uD7AF]+', 'g')
-          // if (jaJPReg.test(message)) {
-          //   isShowToAudioBtn = true
-          // } else if (koKRReg.test(message)) {
-          //   isShowToAudioBtn = true
-          // } else if (zhCNReg.test(message) && message.length > 500) {
-          //   isShowToAudioBtn = false
-          // }
-          // if (isIncludeCode) {
-          //   isShowToAudioBtn = false
-          // } else if (item.audioUrlCdn) {
-          //   //isShowToAudioBtn = false
-          // } else if (message.includes('```')) {
-          //   isShowToAudioBtn = false
-          // }
-          // if (pageType === '2') {
-          //   if (item.messageOwner !== localStorage.getItem('nickname')) {
-          //     isShowToAudioBtn = false
-          //   }
-          // }
-          // if (localStorage.getItem('nickname').includes('徐同保-超级管理员')) {
-          //   isShowToAudioBtn = true
-          // }
 
           let isShowToAudioBtn = getIsShowToAudioBtn({
             message,
@@ -159,8 +160,13 @@ export default function useList(props) {
             item.userAvatarCdn =
               'http://static.xutongbao.top/img/m-default-avatar.jpg'
           }
+          let chatGPTVersion = item.chatGPTVersion
+          if (pageType === '3') {
+            chatGPTVersion = '4'
+          }
           return {
             ...item,
+            chatGPTVersion,
             message,
             messageForHtml,
             isAudioLoading: false,
@@ -193,6 +199,223 @@ export default function useList(props) {
         setCurrent(currentTemp)
       }
     })
+  }
+
+  const addRobotMessage = ({
+    robotMessage = '',
+    chatGPTVersion = '3.5',
+    uidForPeopleMesssage,
+    uidForRobotMessage,
+  }) => {
+    let { dataSource, pageSize } = state
+    let message = robotMessage
+    let codeHighLightHistory =
+      localStorage.getItem('codeHighLight') === 'false' ? false : true
+    let messageForHtml = message
+    let isIncludeCode =
+      [...message].filter((item) => item === '`').length >= 6 ||
+      message.includes(`:--`)
+    if (codeHighLightHistory && isIncludeCode) {
+      const messageTemp = formatCode({ message })
+      messageForHtml = md.render(messageTemp)
+    }
+
+    let isShowToAudioBtn = getIsShowToAudioBtn({ message, isIncludeCode })
+
+    const now = Date.now()
+    dataSource.push({
+      uid: uidForRobotMessage,
+      userAvatarCdn: robotAvatar,
+      nickname: 'robot',
+      messageOwner: 'robot',
+      message: robotMessage,
+      messageForHtml,
+      messageType: '2',
+      chatGPTVersion,
+      isAudioLoading: false,
+      isShowToAudioBtn,
+      isOpenPopover: false,
+      createTime: now,
+      userInfo: {},
+    })
+
+    let resultIndex = dataSource.findIndex(
+      (item) => item.uid === uidForFrontEndPeopleMesssage
+    )
+    if (resultIndex >= 0) {
+      const { message, isIncludeCode } = dataSource[resultIndex]
+      dataSource[resultIndex].uid = uidForPeopleMesssage
+      let isShowToAudioBtn = getIsShowToAudioBtn({ message, isIncludeCode })
+      dataSource[resultIndex].isShowToAudioBtn = isShowToAudioBtn
+    }
+
+    let newDataSource = [...dataSource]
+    newDataSource = newDataSource.filter(
+      (item) => (item.uid + '').indexOf('robot-loading') < 0
+    )
+
+    setState({
+      dataSource: newDataSource,
+      pageSize,
+    })
+  }
+
+  const handleSendLoop = ({ isNeedContext = true } = {}) => {
+    let talkId = localStorage.getItem('talkId')
+    let groupCode = localStorage.getItem('groupCode')
+    let gptVersion = '3.5'
+    if (pageType === '1') {
+      talkId = localStorage.getItem('talkId')
+      gptVersion = '3.5'
+    } else if (pageType === '3') {
+      talkId = localStorage.getItem('talkId')
+      gptVersion = '4'
+    }
+
+    setIsSending(true)
+    Api.h5
+      .chatAdd({
+        message,
+        talkId,
+        isNeedContext,
+        groupCode,
+        gptVersion,
+      })
+      .then(async (res) => {
+        if (res.code === 200) {
+          if (res.data.isRobotBusy === true) {
+            count = count + 1
+            if (count < 5) {
+              await new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve()
+                }, 1000)
+              })
+              handleSendLoop({ isNeedContext: false })
+            } else {
+              antdMessage.warning(res.message)
+              setIsSending(false)
+              count = 0
+            }
+          } else {
+            //请求列表
+            //handleSearch({ isGetNewest: true })
+            const {
+              robotMessage,
+              chatGPTVersion,
+              uidForPeopleMesssage,
+              uidForRobotMessage,
+            } = res.data
+            addRobotMessage({
+              robotMessage,
+              chatGPTVersion,
+              uidForPeopleMesssage,
+              uidForRobotMessage,
+            })
+            count = 0
+            setIsSending(false)
+            setMessage('')
+          }
+        } else if (res.code === 400) {
+          setIsSending(false)
+        } else if (res.code === 500) {
+          setIsSending(false)
+        } else if (res.code === 40001) {
+          setIsSending(false)
+          isCurrentPage = '2'
+          props.history.push(`/ai/exchange`)
+        } else if (res.code === 40003) {
+          setIsSending(false)
+          isCurrentPage = '2'
+          antdMessage.success('提问数受限，请加入微信群获取验证码')
+          props.history.push(`/ai/single/me/joinGroup`)
+        }
+      })
+  }
+
+  //发送
+  const handleSend = ({ isNeedContext = true } = {}) => {
+    if (message === '' || message.trim() === '') {
+      antdMessage.warning('请输入内容')
+      return
+    }
+    let talkId = localStorage.getItem('talkId')
+
+    if (talkId === 'guest') {
+      antdMessage.warning('游客仅可以在群聊中看别人提问，请注册账号')
+    } else {
+      let { dataSource, pageSize } = state
+      let { avatarCdn, nickname, payStatus, createTime } = userInfo
+
+      let messageForHtml = ''
+      if (message.includes('http')) {
+        const messageTemp = formatCode({ message })
+        messageForHtml = md.render(messageTemp)
+      } else {
+        const messageTemp = message.replace(/ /g, '&nbsp;')
+        messageForHtml = messageTemp.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      }
+      if (avatarCdn === 'http://static.xutongbao.top/img/logo.png') {
+        avatarCdn = 'http://static.xutongbao.top/img/m-default-avatar.jpg'
+      }
+      if (
+        avatarCdn === 'http://static.xutongbao.top/img/m-default-avatar.jpg'
+      ) {
+        if (Array.isArray(dataSource) && dataSource.length > 0) {
+          antdMessage.success({
+            content: '请上传头像后再提问',
+            duration: 5,
+          })
+          props.history.push('/ai/single/me/editUserInfo')
+          return
+        }
+      }
+      const now = Date.now()
+      uidForFrontEndPeopleMesssage = now
+      dataSource.push({
+        uid: now,
+        userAvatarCdn: avatarCdn,
+        nickname,
+        messageOwner: nickname,
+        message,
+        messageForHtml,
+        messageType: '1',
+        chatGPTVersion: '4',
+        isAudioLoading: false,
+        isShowToAudioBtn: false,
+        isOpenPopover: false,
+        createTime: now,
+        userInfo: {
+          payStatus,
+          createTime,
+        },
+      })
+
+      dataSource.push({
+        uid: `${now}-robot-loading`,
+        userAvatarCdn: robotAvatar,
+        nickname: 'robot',
+        messageOwner: 'robot',
+        message: '...',
+        messageForHtml: `<div style="display:flex"><img src="http://static.xutongbao.top/img/loading.gif" style="width:20px;height:20px"/></div>`,
+        messageType: '2',
+        chatGPTVersion: '0',
+        isAudioLoading: false,
+        isShowToAudioBtn: false,
+        isOpenPopover: false,
+        createTime: now,
+        userInfo: {},
+      })
+      let newDataSource = [...dataSource]
+
+      setIsGetNewest(true)
+      setState({
+        dataSource: newDataSource,
+        pageSize,
+      })
+      handleSendLoop({ isNeedContext })
+      setMessage('')
+    }
   }
 
   const getIsShowToAudioBtn = ({ message, isIncludeCode }) => {
@@ -358,213 +581,6 @@ export default function useList(props) {
     return result
   }
 
-  const addRobotMessage = ({
-    robotMessage = '',
-    chatGPTVersion = '3.5',
-    uidForPeopleMesssage,
-    uidForRobotMessage,
-  }) => {
-    let { dataSource, pageSize } = state
-    let message = robotMessage
-    let codeHighLightHistory =
-      localStorage.getItem('codeHighLight') === 'false' ? false : true
-    let messageForHtml = message
-    let isIncludeCode =
-      [...message].filter((item) => item === '`').length >= 6 ||
-      message.includes(`:--`)
-    if (codeHighLightHistory && isIncludeCode) {
-      const messageTemp = formatCode({ message })
-      messageForHtml = md.render(messageTemp)
-    }
-
-    let isShowToAudioBtn = getIsShowToAudioBtn({ message, isIncludeCode })
-
-    const now = Date.now()
-    dataSource.push({
-      uid: uidForRobotMessage,
-      userAvatarCdn: 'http://static.xutongbao.top/img/robot2.png',
-      nickname: 'robot',
-      messageOwner: 'robot',
-      message: robotMessage,
-      messageForHtml,
-      messageType: '2',
-      chatGPTVersion,
-      isAudioLoading: false,
-      isShowToAudioBtn,
-      isOpenPopover: false,
-      createTime: now,
-      userInfo: {},
-    })
-
-    let resultIndex = dataSource.findIndex(
-      (item) => item.uid === uidForFrontEndPeopleMesssage
-    )
-    if (resultIndex >= 0) {
-      const { message, isIncludeCode } = dataSource[resultIndex]
-      dataSource[resultIndex].uid = uidForPeopleMesssage
-      let isShowToAudioBtn = getIsShowToAudioBtn({ message, isIncludeCode })
-      dataSource[resultIndex].isShowToAudioBtn = isShowToAudioBtn
-    }
-
-    let newDataSource = [...dataSource]
-    newDataSource = newDataSource.filter(
-      (item) => (item.uid + '').indexOf('robot-loading') < 0
-    )
-
-    setState({
-      dataSource: newDataSource,
-      pageSize,
-    })
-  }
-
-  const handleSendLoop = ({ isNeedContext = true } = {}) => {
-    let talkId = localStorage.getItem('talkId')
-    let groupCode = localStorage.getItem('groupCode')
-
-    setIsSending(true)
-    Api.h5
-      .chatAdd({
-        message,
-        talkId,
-        isNeedContext,
-        groupCode,
-      })
-      .then(async (res) => {
-        if (res.code === 200) {
-          if (res.data.isRobotBusy === true) {
-            count = count + 1
-            if (count < 5) {
-              await new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve()
-                }, 1000)
-              })
-              handleSendLoop({ isNeedContext: false })
-            } else {
-              antdMessage.warning(res.message)
-              setIsSending(false)
-              count = 0
-            }
-          } else {
-            //请求列表
-            //handleSearch({ isGetNewest: true })
-            const {
-              robotMessage,
-              chatGPTVersion,
-              uidForPeopleMesssage,
-              uidForRobotMessage,
-            } = res.data
-            addRobotMessage({
-              robotMessage,
-              chatGPTVersion,
-              uidForPeopleMesssage,
-              uidForRobotMessage,
-            })
-            count = 0
-            setIsSending(false)
-            setMessage('')
-          }
-        } else if (res.code === 400) {
-          setIsSending(false)
-        } else if (res.code === 500) {
-          setIsSending(false)
-        } else if (res.code === 40001) {
-          setIsSending(false)
-          isCurrentPage = '2'
-          props.history.push(`/ai/exchange`)
-        } else if (res.code === 40003) {
-          setIsSending(false)
-          isCurrentPage = '2'
-          antdMessage.success('提问数受限，请加入微信群获取验证码')
-          props.history.push(`/ai/single/me/joinGroup`)
-        }
-      })
-  }
-
-  //发送
-  const handleSend = ({ isNeedContext = true } = {}) => {
-    if (message === '' || message.trim() === '') {
-      antdMessage.warning('请输入内容')
-      return
-    }
-    let talkId = localStorage.getItem('talkId')
-
-    if (talkId === 'guest') {
-      antdMessage.warning('游客仅可以在群聊中看别人提问，请注册账号')
-    } else {
-      let { dataSource, pageSize } = state
-      let { avatarCdn, nickname, payStatus, createTime } = userInfo
-
-      let messageForHtml = ''
-      if (message.includes('http')) {
-        const messageTemp = formatCode({ message })
-        messageForHtml = md.render(messageTemp)
-      } else {
-        const messageTemp = message.replace(/ /g, '&nbsp;')
-        messageForHtml = messageTemp.replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      }
-      if (avatarCdn === 'http://static.xutongbao.top/img/logo.png') {
-        avatarCdn = 'http://static.xutongbao.top/img/m-default-avatar.jpg'
-      }
-      if (
-        avatarCdn === 'http://static.xutongbao.top/img/m-default-avatar.jpg'
-      ) {
-        if (Array.isArray(dataSource) && dataSource.length > 0) {
-          antdMessage.success({
-            content: '请上传头像后再提问',
-            duration: 5,
-          })
-          props.history.push('/ai/single/me/editUserInfo')
-          return
-        }
-      }
-      const now = Date.now()
-      uidForFrontEndPeopleMesssage = now
-      dataSource.push({
-        uid: now,
-        userAvatarCdn: avatarCdn,
-        nickname,
-        messageOwner: nickname,
-        message,
-        messageForHtml,
-        messageType: '1',
-        chatGPTVersion: '4',
-        isAudioLoading: false,
-        isShowToAudioBtn: false,
-        isOpenPopover: false,
-        createTime: now,
-        userInfo: {
-          payStatus,
-          createTime,
-        },
-      })
-      dataSource.push({
-        uid: `${now}-robot-loading`,
-        userAvatarCdn: 'http://static.xutongbao.top/img/robot2.png',
-        nickname: 'robot',
-        messageOwner: 'robot',
-        message: '...',
-        messageForHtml: `<div style="display:flex"><img src="http://static.xutongbao.top/img/loading.gif" style="width:20px;height:20px"/></div>`,
-        messageType: '2',
-        chatGPTVersion: '0',
-        isAudioLoading: false,
-        isShowToAudioBtn: false,
-        isOpenPopover: false,
-        createTime: now,
-        userInfo: {},
-      })
-      let newDataSource = [...dataSource]
-
-      setIsGetNewest(true)
-      setState({
-        dataSource: newDataSource,
-        pageSize,
-      })
-      handleSendLoop({ isNeedContext })
-      setMessage('')
-    }
-  }
-
   const handleCtrlEnter = (e) => {
     if (e.ctrlKey && e.keyCode === 13) {
       handleSend()
@@ -697,6 +713,12 @@ export default function useList(props) {
             current.scrollToBottom()
           }
         }, 100)
+        setTimeout(() => {
+          if (isCurrentPage === '1') {
+            const current = scrollEl.current
+            current.scrollToBottom()
+          }
+        }, 500)
       }
     } else {
       if (scrollEl.current) {
@@ -797,6 +819,7 @@ export default function useList(props) {
     trigger,
     device,
     pageType,
+    title,
     handleSearch,
     handleSend,
     handleCtrlEnter,

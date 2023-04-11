@@ -34,7 +34,12 @@ const h5Router = [
     title: '单聊',
     path: '/ai/chat',
     component: lazy(() => import('../../views/ai/chat/Index')),
-  },   
+  },  
+  {
+    title: 'gpt-4',
+    path: '/ai/chat-gpt-4',
+    component: lazy(() => import('../../views/ai/chat/Index')),
+  },    
   {
     title: '我的',
     path: '/ai/single/me',

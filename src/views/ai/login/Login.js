@@ -106,6 +106,7 @@ function Login(props) {
               localStorage.setItem('nickname', res.data.nickname)
               localStorage.setItem('token', res.data.token)
               localStorage.setItem('talkId', res.data.talkId)
+
               localStorage.setItem('uid', res.data.uid)
               props.history.push('/ai/index/home/chatList')
               hideLoading()

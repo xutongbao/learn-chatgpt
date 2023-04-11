@@ -29,6 +29,7 @@ function Index(props) {
     trigger,
     device,
     pageType,
+    title,
     handleSend,
     handleCtrlEnter,
     handleInputChange,
@@ -221,7 +222,7 @@ function Index(props) {
       <div className={`m-ai-wrap-chat ${wideScreenHistory ? 'active' : ''}`}>
         <SinglePageHeader
           goBackPath="/ai/index/home/chatList"
-          title={pageType === '1' ? 'ChatGPT' : '群聊'}
+          title={title}
         ></SinglePageHeader>
         <div className="m-ai-main" id="scrollableDiv" onScroll={handleScroll}>
           <div className="m-ai-list">
