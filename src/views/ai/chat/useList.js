@@ -98,6 +98,7 @@ export default function useList(props) {
     } else if (pageType === '2') {
       searchParams = {
         talkId: '',
+        gptVersion: '3.5'
       }
 
       let username = localStorage.getItem('username')
@@ -364,7 +365,7 @@ export default function useList(props) {
         if (Array.isArray(dataSource) && dataSource.length > 0) {
           antdMessage.success({
             content: '请上传头像后再提问',
-            duration: 5,
+            duration: 30,
           })
           props.history.push('/ai/single/me/editUserInfo')
           return

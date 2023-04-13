@@ -641,7 +641,7 @@ const getAdminInfo = () => {
     return result
   } else {
     return {
-      ...hooks[0],
+      ...hooks[1],
     }
   }
 }
