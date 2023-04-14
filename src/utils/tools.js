@@ -595,7 +595,7 @@ const getAdminInfo = () => {
     wechatCode: 'xu1183391880',
     wechatQRCode: 'http://static.xutongbao.top/wechat.jpg?time=20230215',
     wechatGroupQRCode:
-      'http://static.xutongbao.top/img/m-join-group-buffer.jpg?time=20230407',
+      'http://static.xutongbao.top/img/m-join-group-buffer.jpg',
     email: '1183391880@qq.com',
     isHasBigWechatGroup: true,
   }
@@ -618,7 +618,7 @@ const getAdminInfo = () => {
       wechatQRCode:
         'http://static.xutongbao.top/img/m-wechat-demo.jpg?time=20230407',
       wechatGroupQRCode:
-        'http://static.xutongbao.top/img/m-join-group-buffer-demo.jpg?time=20230407',
+        'http://static.xutongbao.top/img/m-join-group-buffer-demo.jpg',
       email: 'xxxx@qq.com',
       isHasBigWechatGroup: false,
     },
@@ -630,7 +630,7 @@ const getAdminInfo = () => {
       wechatQRCode:
         'http://static.xutongbao.top/img/m-wechat-demo.jpg?time=20230407',
       wechatGroupQRCode:
-        'http://static.xutongbao.top/img/m-join-group-buffer-demo.jpg?time=20230407',
+        'http://static.xutongbao.top/img/m-join-group-buffer-demo.jpg',
       email: 'xxxx@qq.com',
       isHasBigWechatGroup: false,
     },
