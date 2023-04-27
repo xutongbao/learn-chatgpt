@@ -98,7 +98,7 @@ export default function useList(props) {
     } else if (pageType === '2') {
       searchParams = {
         talkId: '',
-        gptVersion: '3.5'
+        gptVersion: ''
       }
 
       let username = localStorage.getItem('username')
@@ -362,7 +362,7 @@ export default function useList(props) {
       if (
         avatarCdn === 'http://static.xutongbao.top/img/m-default-avatar.jpg'
       ) {
-        if (Array.isArray(dataSource) && dataSource.length > 0) {
+        if (Array.isArray(dataSource) && dataSource.length > 6) {
           antdMessage.success({
             content: '请上传头像后再提问',
             duration: 30,

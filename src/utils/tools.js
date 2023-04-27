@@ -588,14 +588,14 @@ const getAdminInfo = () => {
   let url = `${window.location.protocol}//${window.location.host}`
   let host = window.location.host
   //host = 'demo.xutongbao.top'
-  console.log('host', host, url)
+  // console.log('host', host, url)
+  let now = Date.now()
 
   let myInfo = {
     url,
     wechatCode: 'xu1183391880',
     wechatQRCode: 'http://static.xutongbao.top/wechat.jpg?time=20230215',
-    wechatGroupQRCode:
-      'http://static.xutongbao.top/img/m-join-group-buffer.jpg',
+    wechatGroupQRCode: `http://static.xutongbao.top/img/m-join-group-buffer.jpg?time=${now}`,
     email: '1183391880@qq.com',
     isHasBigWechatGroup: true,
   }
@@ -617,8 +617,7 @@ const getAdminInfo = () => {
       wechatCode: 'xxxxxx',
       wechatQRCode:
         'http://static.xutongbao.top/img/m-wechat-demo.jpg?time=20230407',
-      wechatGroupQRCode:
-        'http://static.xutongbao.top/img/m-join-group-buffer-demo.jpg',
+      wechatGroupQRCode: `http://static.xutongbao.top/img/m-join-group-buffer.jpg?time=${now}`,
       email: 'xxxx@qq.com',
       isHasBigWechatGroup: false,
     },
