@@ -25,6 +25,9 @@ const { device } = ua
 let player
 
 let isCurrentPage = '1'
+let touchStartTime, touchEndTime
+let touchTimer
+let selecttionObj
 
 export default function useList(props) {
   const {
@@ -98,7 +101,7 @@ export default function useList(props) {
     } else if (pageType === '2') {
       searchParams = {
         talkId: '',
-        gptVersion: ''
+        gptVersion: '',
       }
 
       let username = localStorage.getItem('username')
@@ -198,6 +201,7 @@ export default function useList(props) {
         setTotal(res.data.total)
         const currentTemp = res.data.pageNum - 1
         setCurrent(currentTemp)
+        selecttionObj?.empty()
       }
     })
   }
@@ -362,7 +366,7 @@ export default function useList(props) {
       if (
         avatarCdn === 'http://static.xutongbao.top/img/m-default-avatar.jpg'
       ) {
-        if (Array.isArray(dataSource) && dataSource.length > 6) {
+        if (Array.isArray(dataSource) && dataSource.length > 40) {
           antdMessage.success({
             content: '请上传头像后再提问',
             duration: 30,
@@ -676,6 +680,61 @@ export default function useList(props) {
     )
   }
 
+  const handleSelectText = (uid) => {
+    // const newRange = document.createRange()
+    // let dom = document.getElementById(`m-ai-message-value-${uid}`)
+    // newRange.selectNode(dom)
+    // var selecttionObj = window.getSelection()
+    // selecttionObj.empty()
+    // selecttionObj.addRange(newRange)
+  }
+  const handleTouchStart = (uid) => {
+    touchStartTime = Date.now()
+    clearTimeout(touchTimer)
+    touchTimer = setTimeout(() => {
+      console.log('长按1')
+      const newRange = document.createRange()
+      let dom = document.getElementById(`m-ai-message-value-${uid}`)
+      newRange.selectNode(dom)
+      const selecttionObj = window.getSelection()
+      setTimeout(() => {
+        selecttionObj.empty()
+        selecttionObj.addRange(newRange)
+      }, 10)
+    }, 100)
+  }
+  const handleTouchEnd = (uid) => {
+    clearTimeout(touchTimer)
+
+    touchEndTime = Date.now()
+    // console.log(touchEndTime, touchStartTime, touchEndTime - touchStartTime)
+    if (touchEndTime - touchStartTime < 50) {
+      // console.log('长按时间太短')
+    } else {
+      console.log('长按2')
+      const newRange = document.createRange()
+      let dom = document.getElementById(`m-ai-message-value-${uid}`)
+      newRange.selectNode(dom)
+      selecttionObj = window.getSelection()
+      setTimeout(() => {
+        selecttionObj.empty()
+        selecttionObj.addRange(newRange)
+      }, 10)
+    }
+  }
+
+  const handleDoubleClick = (uid) => {
+    console.log('双击')
+    const newRange = document.createRange()
+    let dom = document.getElementById(`m-ai-message-value-${uid}`)
+    newRange.selectNode(dom)
+    selecttionObj = window.getSelection()
+    setTimeout(() => {
+      selecttionObj.empty()
+      selecttionObj.addRange(newRange)
+    }, 10)
+  }
+
   //操作
   const handleAction = ({ type, record }) => {
     if (type === 'refresh') {
@@ -828,6 +887,10 @@ export default function useList(props) {
     handleJumpPage,
     handleInputChange,
     handleScroll,
+    handleSelectText,
+    handleTouchStart,
+    handleTouchEnd,
+    handleDoubleClick,
     handleAction,
     getMessageToolbar,
     handleToAudio,

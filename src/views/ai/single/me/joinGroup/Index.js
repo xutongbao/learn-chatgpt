@@ -12,8 +12,14 @@ function Index(props) {
   // eslint-disable-next-line
   const [isNight, setIsNight] = useState(false)
 
-  const { wechatCode, wechatQRCode, wechatGroupQRCode, isHasBigWechatGroup } =
-    getAdminInfo()
+  const {
+    wechatCode,
+    wechatQRCode,
+    wechatGroupQRCode,
+    isHasBigWechatGroup,
+    xingqiu1,
+    xingqiu2,
+  } = getAdminInfo()
 
   const handleCopy = (text) => {
     clipboard.writeText(text).then(() => {
@@ -103,6 +109,20 @@ function Index(props) {
                 className="m-single-join-group-img"
                 src="http://static.xutongbao.top/img/m-join-group.jpg?time=20230405"
               />
+            </div>
+          </div>
+        ) : null}
+        {xingqiu1 ? (
+          <div>
+            <div className="m-single-join-group-img-wrap">
+              <Image
+                src={xingqiu1}
+                className="m-single-join-group-img"
+                alt={'图片'}
+              ></Image>
+            </div>
+            <div className="m-single-join-group-img-wrap">
+              <Image className="m-single-join-group-img" src={xingqiu2} />
             </div>
           </div>
         ) : null}

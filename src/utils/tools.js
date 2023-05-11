@@ -597,7 +597,18 @@ const getAdminInfo = () => {
     wechatQRCode: 'http://static.xutongbao.top/wechat.jpg?time=20230215',
     wechatGroupQRCode: `http://static.xutongbao.top/img/m-join-group-buffer.jpg?time=${now}`,
     email: '1183391880@qq.com',
+    xingqiu1: 'http://static.xutongbao.top/img/m-chat-xingqiu1.jpg?time=20230504',
     isHasBigWechatGroup: true,
+
+    // host: 'gpt.xutongbao.top',
+    // url,
+    // wechatCode: 'zllt2075',
+    // wechatQRCode:
+    //   'http://static.xutongbao.top/img/m-gpt-wechat.jpg',
+    // wechatGroupQRCode:
+    //   `http://static.xutongbao.top/img/m-gpt-wechat-group.jpg?time=${now}`,
+    // email: 'xxxx@qq.com',
+    // isHasBigWechatGroup: false,
   }
   let hooks = [
     {
@@ -630,6 +641,92 @@ const getAdminInfo = () => {
         'http://static.xutongbao.top/img/m-wechat-demo.jpg?time=20230407',
       wechatGroupQRCode:
         'http://static.xutongbao.top/img/m-join-group-buffer-demo.jpg',
+      email: 'xxxx@qq.com',
+      isHasBigWechatGroup: false,
+    },
+    {
+      id: 5,
+      host: 'dalinvip.xutongbao.top',
+      url,
+      wechatCode: 'dalinvip2023',
+      wechatQRCode:
+        'http://static.xutongbao.top/img/m-dalin-wechat.jpg',
+      wechatGroupQRCode:
+        'http://static.xutongbao.top/img/m-dalin-wechat.jpg',
+      xingqiu1: 'http://static.xutongbao.top/img/m-dalin-xingqiu1.jpg',
+      xingqiu2: 'http://static.xutongbao.top/img/m-dalin-xingqiu2.jpg',
+      email: 'xxxx@qq.com',
+      isHasBigWechatGroup: false,
+    },
+    {
+      id: 6,
+      host: 'lntano.xutongbao.top',
+      url,
+      wechatCode: 'g15997086777',
+      wechatQRCode:
+        'http://static.xutongbao.top/img/m-tan-wechat.jpg',
+      wechatGroupQRCode:
+        `http://static.xutongbao.top/img/m-tan-wechat-group.jpg?time=${now}`,
+      email: 'xxxx@qq.com',
+      isHasBigWechatGroup: false,
+    },
+    {
+      id: 7,
+      host: 'dk.xutongbao.top',
+      url,
+      wechatCode: 'wxid_51aibh0csyy322',
+      wechatQRCode:
+        'http://static.xutongbao.top/img/m-dk-wechat.jpg',
+      wechatGroupQRCode:
+        `http://static.xutongbao.top/img/m-dk-wechat-group.jpg?time=${now}`,
+      email: 'xxxx@qq.com',
+      isHasBigWechatGroup: false,
+    },
+    {
+      id: 8,
+      host: 'cate.xutongbao.top',
+      url,
+      wechatCode: 'xch10472',
+      wechatQRCode:
+        'http://static.xutongbao.top/img/m-cate-wechat.jpg',
+      wechatGroupQRCode:
+        `http://static.xutongbao.top/img/m-cate-wechat-group.jpg?time=${now}`,
+      email: 'xxxx@qq.com',
+      isHasBigWechatGroup: false,
+    },
+    {
+      id: 9,
+      host: 'luye.xutongbao.top',
+      url,
+      wechatCode: 'xch10472',
+      wechatQRCode:
+        'http://static.xutongbao.top/img/m-luye-wechat.jpg',
+      wechatGroupQRCode:
+        `http://static.xutongbao.top/img/m-luye-wechat-group.jpg?time=${now}`,
+      email: 'xxxx@qq.com',
+      isHasBigWechatGroup: false,
+    },
+    {
+      id: 10,
+      host: 'erc.xutongbao.top',
+      url,
+      wechatCode: 'DIANBAN12',
+      wechatQRCode:
+        'http://static.xutongbao.top/img/m-erc-wechat.jpg',
+      wechatGroupQRCode:
+        `http://static.xutongbao.top/img/m-erc-wechat-group.jpg?time=${now}`,
+      email: 'xxxx@qq.com',
+      isHasBigWechatGroup: false,
+    },
+    {
+      id: 11,
+      host: 'gpt.xutongbao.top',
+      url,
+      wechatCode: 'zllt2075',
+      wechatQRCode:
+        'http://static.xutongbao.top/img/m-gpt-wechat.jpg',
+      wechatGroupQRCode:
+        `http://static.xutongbao.top/img/m-gpt-wechat-group.jpg?time=${now}`,
       email: 'xxxx@qq.com',
       isHasBigWechatGroup: false,
     },

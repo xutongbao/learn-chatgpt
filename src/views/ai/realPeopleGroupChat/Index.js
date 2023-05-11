@@ -231,9 +231,11 @@ function Index(props) {
               maxRows: 8,
             }}
           />
-          <Button type="primary" disabled={isSending} onClick={handleSend}>
-            发送
-          </Button>
+          <div className="m-ai-footer-btn-wrap">
+            <Button type="primary" disabled={isSending} onClick={handleSend}>
+              发送
+            </Button>
+          </div>
         </div>
       </div>
     </div>

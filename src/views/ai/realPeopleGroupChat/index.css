@@ -2,6 +2,7 @@
 .m-ai-wrap-real-chat{display: flex;flex-direction: column; max-width: 800px;width: 100%;background: #ededed;position: relative;}
 .m-ai-main{flex:1;display: flex;flex-direction: column;overflow-y: auto;}
 .m-ai-footer{display: flex;padding: 5px; border-top: 1px solid #ddd;gap: 5px;align-items: center;justify-content: center;background: #f6f6f6;}
+.m-ai-footer-btn-wrap{display: flex; justify-content: flex-end;}
 .m-ai-list{flex: 1;padding: 0px 0;}
 .m-ai-dropdown{position: absolute;top: 10px;right: 14px;}
 .m-ai-user-list-wrap-wrap{margin: 0 10px;display: flex; }

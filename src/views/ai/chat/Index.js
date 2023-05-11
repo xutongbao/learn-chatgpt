@@ -38,6 +38,10 @@ function Index(props) {
     handleJumpPage,
     handleToolbarOpenChange,
     handleAudioPlayerBtnClick,
+    // handleSelectText,
+    //handleTouchStart,
+    //handleTouchEnd,
+    // handleDoubleClick,
     handleAction,
   } = useList(props)
 
@@ -310,7 +314,7 @@ function Index(props) {
                               >
                                 <div className="m-ai-message-inner-inner">
                                   <div
-                                    className={`m-ai-message chat-type${
+                                    className={`m-ai-message m-select-text chat-type${
                                       item.messageType
                                     } ${
                                       item.nickname ===
@@ -321,6 +325,15 @@ function Index(props) {
                                     dangerouslySetInnerHTML={{
                                       __html: item.messageForHtml,
                                     }}
+                                    // onClick={() => handleSelectText(item.uid)}
+                                    // onTouchStart={() =>
+                                    //   handleTouchStart(item.uid)
+                                    // }
+                                    // onTouchEnd={() => handleTouchEnd(item.uid)}
+                                    // onDoubleClick={() =>
+                                    //   handleDoubleClick(item.uid)
+                                    // }
+                                    id={`m-ai-message-value-${item.uid}`}
                                   ></div>
                                   <div
                                     className={`m-ai-message-cross chat-type${
