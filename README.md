@@ -23,7 +23,7 @@ A demo repo based on [OpenAI GPT-3.5 Turbo & GPT-4 API.](https://platform.openai
    ```
 3. Run the application, the local project runs on `http://localhost:3000/`
    ```bash
-    yarn start
+    yarn dev
    ```
 
 

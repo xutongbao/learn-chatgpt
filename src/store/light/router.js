@@ -61,6 +61,16 @@ const h5Router = [
     component: lazy(() => import('../../views/ai/course/Index')),
   },  
   {
+    title: '识字',
+    path: '/ai/words',
+    component: lazy(() => import('../../views/ai/words/Index')),
+  },  
+  {
+    title: '识字-详情',
+    path: '/ai/wordsDetail',
+    component: lazy(() => import('../../views/ai/wordsDetail/Index')),
+  },  
+  {
     title: '入群',
     path: '/ai/joinGroup',
     component: lazy(() => import('../../views/ai/joinGroup/Index')),

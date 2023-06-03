@@ -375,6 +375,22 @@ export default function useList(props) {
           return
         }
       }
+      if (total > 12) {
+        let groupCode = localStorage.getItem('groupCode')
+        if (payStatus === '2') {
+          //todo
+        } else {
+          if (groupCode !== '672913') {
+            antdMessage.success({
+              content:
+                '【我的】-【微信群】请扫码入群，并填写群公告验证码，增加提问次数',
+              duration: 30,
+            })
+            // props.history.push('/ai/single/me/joinGroup')
+            // return
+          }
+        }
+      }
       const now = Date.now()
       uidForFrontEndPeopleMesssage = now
       dataSource.push({
@@ -425,24 +441,24 @@ export default function useList(props) {
 
   const getIsShowToAudioBtn = ({ message, isIncludeCode }) => {
     let isShowToAudioBtn = true
-    let zhCNReg = new RegExp('[\\u4E00-\\u9FFF]+', 'g')
-    let jaJPReg = new RegExp('[\\u3040-\\u309F\\u30A0-\\u30FF]+', 'g')
-    let koKRReg = new RegExp('[\\u3130-\\u318F\\uAC00-\\uD7AF]+', 'g')
-    if (jaJPReg.test(message)) {
-      isShowToAudioBtn = true
-    } else if (koKRReg.test(message)) {
-      isShowToAudioBtn = true
-    } else if (zhCNReg.test(message) && message.length > 500) {
-      isShowToAudioBtn = false
-    }
-    if (isIncludeCode) {
-      isShowToAudioBtn = false
-    } else if (message.includes('```')) {
-      isShowToAudioBtn = false
-    }
-    if (localStorage.getItem('nickname').includes('徐同保-超级管理员')) {
-      isShowToAudioBtn = true
-    }
+    // let zhCNReg = new RegExp('[\\u4E00-\\u9FFF]+', 'g')
+    // let jaJPReg = new RegExp('[\\u3040-\\u309F\\u30A0-\\u30FF]+', 'g')
+    // let koKRReg = new RegExp('[\\u3130-\\u318F\\uAC00-\\uD7AF]+', 'g')
+    // if (jaJPReg.test(message)) {
+    //   isShowToAudioBtn = true
+    // } else if (koKRReg.test(message)) {
+    //   isShowToAudioBtn = true
+    // } else if (zhCNReg.test(message) && message.length > 500) {
+    //   isShowToAudioBtn = false
+    // }
+    // if (isIncludeCode) {
+    //   isShowToAudioBtn = false
+    // } else if (message.includes('```')) {
+    //   isShowToAudioBtn = false
+    // }
+    // if (localStorage.getItem('nickname').includes('徐同保')) {
+    //   isShowToAudioBtn = true
+    // }
     return isShowToAudioBtn
   }
 

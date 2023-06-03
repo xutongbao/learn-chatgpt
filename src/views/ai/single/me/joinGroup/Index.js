@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Image, Input, message } from 'antd'
+import { Image, Input, message, Button } from 'antd'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 import { getAdminInfo } from '../../../../../utils/tools'
@@ -38,6 +38,17 @@ function Index(props) {
     props.history.push(path)
   }
 
+  const handleCheckGroupCode = () => {
+    let groupCode = localStorage.getItem('groupCode')
+    if (groupCode.trim() === '') {
+      message.warning('群公告验证码不能为空')
+    } else if (groupCode === '672913') {
+      message.success('成功')
+    } else {
+      message.warning('群公告验证码错误')
+    }
+  }
+
   useEffect(() => {
     let isNight = false
     let hour = moment(Date.now()).format('HH') - 0
@@ -60,6 +71,15 @@ function Index(props) {
           placeholder="请输入"
           className="m-login-input"
         />
+      </div>
+      <div className="m-login-row">
+        <Button
+          type="primary"
+          className="m-space m-single-exchange-btn"
+          onClick={handleCheckGroupCode}
+        >
+          提交
+        </Button>
       </div>
       <div className="m-single-join-group-intro">
         <div>

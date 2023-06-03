@@ -81,6 +81,11 @@ const urls = {
   chatAddAudio: '/api/light/chat/addAudio',
 
   //#endregion 
+
+  //#region words
+  wordsAppSearch: '/api/light/words/appSearch',
+  wordsGetById: '/api/light/words/getById',
+  //#endregion  
 }
 
 export default urls

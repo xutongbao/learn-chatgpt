@@ -51,6 +51,13 @@ export default function useList(props) {
         intro: '学而不思则罔',
         createTime: '',
       },
+      {
+        uid: 5,
+        avatar: 'http://static.xutongbao.top/img/m-words.png',
+        name: '识字',
+        intro: '幼儿园起步',
+        createTime: '',
+      },
     ],
     pageSize: 10,
   })
@@ -142,6 +149,8 @@ export default function useList(props) {
       props.history.push(`/ai/realPeopleGroupChat`)
     } else if (uid === 4) {
       props.history.push(`/ai/course`)
+    } else if (uid === 5) {
+      props.history.push(`/ai/words`)
     }
   }
 

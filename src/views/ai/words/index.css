@@ -1,0 +1,14 @@
+.m-words-wrap-box{display: flex;justify-content: center;background: #ddd;background: #ddd;position: absolute;top: 0;left: 0;right: 0;bottom: 0;overflow: hidden;}
+.m-words-wrap-chat{position: relative; display: flex;flex-direction: column; max-width: 400px;width: 100%;background: #ededed;}
+.m-words-wrap-chat.active{max-width: 1600px;}
+.m-words-main{flex:1;display: flex;flex-direction: column;overflow-y: auto;}
+.m-words-footer{display: flex;padding: 5px;height: 40px; border-top: 1px solid #ddd;gap: 5px;align-items: center;justify-content: center;background: #f6f6f6;}
+.m-words-list{flex: 1;padding: 0px 0;overflow-y: auto;}
+.m-words-dropdown{position: absolute;top: 10px;right: 14px;}
+.m-words-menu-btn{display: inline-block;text-align: center;line-height: 35px; color: #333;font-size: 26px;width: 35px;height: 35px;z-index: 99;cursor: pointer;}
+.m-words-word-wrap{ display: flex;gap: 10px;padding: 10px 0; flex-wrap: wrap;justify-content: center;}
+.m-words-word-item{width: 50px;height: 50px;border-radius: 6px;font-weight: bold;font-size: 20px;color: #333; background: #f6f6f6; cursor: pointer;display: flex;align-items: center;justify-content: center;}
+.m-words-word-item:hover{color: #00c250;background: #fff;}
+
+
+
