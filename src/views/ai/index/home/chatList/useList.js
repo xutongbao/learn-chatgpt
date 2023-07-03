@@ -58,6 +58,13 @@ export default function useList(props) {
         intro: '幼儿园起步',
         createTime: '',
       },
+      {
+        uid: 6,
+        avatar: 'http://static.xutongbao.top/img/m-google.png',
+        name: 'Google',
+        intro: '通过api接口实现',
+        createTime: '',
+      },
     ],
     pageSize: 10,
   })
@@ -151,6 +158,8 @@ export default function useList(props) {
       props.history.push(`/ai/course`)
     } else if (uid === 5) {
       props.history.push(`/ai/words`)
+    } else if (uid === 6) {
+      props.history.push(`/single/home/google`)
     }
   }
 

@@ -119,7 +119,7 @@
   },
   "homepage": "./",
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "cross-env MODE_ENV=prod node scripts/start.js",
     "dev": "cross-env MODE_ENV=dev node scripts/start.js",
     "build_test": "cross-env MODE_ENV=test GENERATE_SOURCEMAP=false GENERATE_BUNDLE_ANALYZER_REPORT=true node scripts/build.js",
     "build": "cross-env MODE_ENV=prod PUBLIC_URL=http://static.xutongbao.top/ GENERATE_SOURCEMAP=false node scripts/build.js",

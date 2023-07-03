@@ -145,7 +145,7 @@ export default function useList(props) {
               const messageTemp = formatCode({ message: item.message })
               messageForHtml = md.render(messageTemp)
             } else {
-              message = item.message.replace(/ /g, '&nbsp;')
+              //message = item.message.replace(/ /g, '&nbsp;')
               messageForHtml = message
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
@@ -357,7 +357,8 @@ export default function useList(props) {
         const messageTemp = formatCode({ message })
         messageForHtml = md.render(messageTemp)
       } else {
-        const messageTemp = message.replace(/ /g, '&nbsp;')
+        //const messageTemp = message.replace(/ /g, '&nbsp;')
+        const messageTemp = message
         messageForHtml = messageTemp.replace(/</g, '&lt;').replace(/>/g, '&gt;')
       }
       if (avatarCdn === 'http://static.xutongbao.top/img/logo.png') {

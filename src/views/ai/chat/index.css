@@ -9,6 +9,7 @@
 .m-ai-user-list-wrap-wrap{margin: 0 10px;display: flex; }
 .m-ai-user-list-wrap{padding: 10px 0px 10px;display: flex;flex:1; line-height: 28px;overflow: hidden;}
 .m-ai-user-list-avatar{width: 42px;height: 42px;border-radius: 6px;}
+.m-ai-user-list-avatar-popover{width: 200px;}
 .m-ai-chat-intro-img{width: 64px!important; height: 64px!important;border-radius: 6px;}
 .m-ai-chat-userinfo-wrap .ant-image-mask-info {display: none;}
 .m-ai-message-wrap{display: flex;flex-direction: column;flex: 1;padding: 0 0 0 5px;margin: -12px 0 0 0; overflow: hidden;}
@@ -60,6 +61,8 @@
 @media screen and (min-width: 768px) {  
 .m-ai-footer{display: flex;flex-direction: column;}  
 .m-ai-footer-btn-wrap{width: 100%;}
+.m-ai-user-list-avatar-popover{width: unset;}
+
 } 
 
 .m-ai-message-footer .ant-popover-inner{padding: 0;}

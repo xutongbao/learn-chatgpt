@@ -8,8 +8,7 @@ import useList from './useList'
 import './index.css'
 
 function Index(props) {
-  const { dataSource, isHasMore, handleSearch, handleJumpPage } =
-    useList(props)
+  const { dataSource, isHasMore, handleSearch } = useList(props)
   const getItems = () => {
     const items = [
       {
@@ -57,11 +56,12 @@ function Index(props) {
     ]
     return items
   }
+  // eslint-disable-next-line
   let wideScreenHistory =
     localStorage.getItem('wideScreen') === 'false' ? false : true
   return (
     <div className="m-words-wrap-box">
-      <div className={`m-words-wrap-chat ${wideScreenHistory ? '' : ''}`}>
+      <div className={`m-words-wrap-chat`}>
         <SinglePageHeader
           goBackPath="/ai/index/home/chatList"
           title="识字"
@@ -106,17 +106,25 @@ function Index(props) {
           >
             <div className="m-words-word-wrap">
               {dataSource.map((item, index) => (
-                <div
-                  className="m-words-word-item"
-                  key={item.uid}
-                  onClick={() =>
-                    handleJumpPage(
-                      `/ai/wordsDetail?uid=${item.uid}&pageNum=${item.pageNum}`
-                    )
-                  }
-                >
-                  {item.word}
-                </div>
+                <>
+                  {/* eslint-disable-next-line */}
+                  <a
+                    href={`/#/ai/wordsDetail?uid=${item.uid}&pageNum=${item.pageNum}`}
+                    target="_blank"
+                  >
+                    <div
+                      className={`m-words-word-item level${item.level}`}
+                      key={item.uid}
+                      // onClick={() =>
+                      //   handleJumpPage(
+                      //     `/ai/wordsDetail?uid=${item.uid}&pageNum=${item.pageNum}`
+                      //   )
+                      // }
+                    >
+                      {item.word}
+                    </div>
+                  </a>
+                </>
               ))}
             </div>
             {dataSource.length === 0 ? (

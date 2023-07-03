@@ -266,11 +266,11 @@ function Index(props) {
                             placement="rightTop"
                             title={null}
                             content={
-                              <div>
+                              <div className="m-ai-user-list-avatar-popover">
                                 Based on OpenAI API (
                                 {item.chatGPTVersion === '4'
                                   ? 'gpt-4'
-                                  : 'gpt-3.5-turbo'}
+                                  : 'gpt-3.5-turbo-16k-0613'}
                                 ).
                               </div>
                             }
@@ -388,7 +388,7 @@ function Index(props) {
                                 item.messageType === '2' ? (
                                   <>
                                     <div className="m-ai-message-footer-info">
-                                      gpt-3.5-turbo
+                                    gpt-3.5-turbo-16k-0613
                                     </div>
                                     <div
                                       className="m-ai-message-footer-upgrade"

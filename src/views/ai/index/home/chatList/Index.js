@@ -31,7 +31,7 @@ function Index(props) {
         releaseToRefreshContent={
           <h3 style={{ textAlign: 'center' }}>&#8593; 释放刷新</h3>
         }
-        hasMore={true}
+        hasMore={false}
         loader={
           <Skeleton
             avatar
@@ -42,7 +42,7 @@ function Index(props) {
             className="m-h5-lesson-play-skeleton"
           />
         }
-        endMessage={<Divider plain>已经到底啦~</Divider>}
+        // endMessage={<Divider plain>已经到底啦~</Divider>}
         scrollableTarget="scrollableDiv"
       >
         {dataSource.map((item, index) => (

@@ -79,6 +79,8 @@ const urls = {
   chatDelete: '/api/light/chat/delete',
   chatEdit: '/api/light/chat/edit',
   chatAddAudio: '/api/light/chat/addAudio',
+  chatGoogleSearch: '/api/light/chat/googleSearch',
+
 
   //#endregion 
 

@@ -85,6 +85,11 @@ const h5Router = [
     path: '/ai/exchange',
     component: lazy(() => import('../../views/ai/exchange/Index')),
   },  
+  {
+    title: 'Google',
+    path: '/single/home/google',
+    component: lazy(() => import('../../views/ai/single/home/google/Index')),
+  }, 
 ]
 
 const router = []

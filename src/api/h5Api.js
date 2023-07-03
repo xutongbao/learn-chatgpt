@@ -85,6 +85,8 @@ const Api = {
   chatDelete: (data) => common({ url: urls.h5.chatDelete, data, method: 'post' }),
   chatEdit: (data) => common({ url: urls.h5.chatEdit, data, method: 'post' }),
   chatAddAudio: (data) => common({ url: urls.h5.chatAddAudio, data, method: 'post', isLoading: false }),
+  chatGoogleSearch: (data) => common({ url: urls.h5.chatGoogleSearch, data, method: 'post' }),
+
   //#endregion   
   
   //#region words
