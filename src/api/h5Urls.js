@@ -14,6 +14,10 @@ const urls = {
   userEditPassword: '/api/light/user/editPassword',
   //#endregion
 
+  //#region 邮件
+  emailCustomSend: '/api/light/email/customSend',
+  //#endregion    
+
   //#region 兑换
   exchangeCodeAppUse: '/api/light/exchangeCode/appUse',
   //#endregion   
@@ -53,6 +57,7 @@ const urls = {
   
   //#region 上传
   uploadGetTokenForH5: '/api/light/upload/getTokenForH5',
+  uploadToCDN: 'https://upload-z1.qiniup.com',
   //#endregion    
 
   //#region 评论
@@ -84,10 +89,23 @@ const urls = {
 
   //#endregion 
 
+  //#region 文件列表
+  fileAppSearch: '/api/light/file/appSearch',
+  fileAdminSearch: '/api/light/file/adminSearch',
+  fileAdd: '/api/light/file/add',
+  fileDelete: '/api/light/file/delete',
+  fileEdit: '/api/light/file/edit',
+  fileTranscriptions: '/api/light/file/transcriptions',
+  fileWisperForH5: '/api/light/file/whisperForH5',
+  fileMoYin: '/api/light/file/moYin',
+  //#endregion   
+
   //#region words
   wordsAppSearch: '/api/light/words/appSearch',
   wordsGetById: '/api/light/words/getById',
   //#endregion  
+
+  
 }
 
 export default urls

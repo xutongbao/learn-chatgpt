@@ -1,14 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { SinglePageHeader, Icon } from '../../../components/light'
+import { SinglePageHeader, Icon } from '../../../../../components/light'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { Dropdown, Divider, Skeleton } from 'antd'
+import { Dropdown, Divider, Skeleton, Button, Space, Image } from 'antd'
 import useList from './useList'
+import moment from 'moment'
+import useFile from './useFile'
 import './index.css'
 
 function Index(props) {
-  const { dataSource, isHasMore, handleSearch } = useList(props)
+  const { dataSource, isHasMore, isLoading, handleSearch, handleCopy } =
+    useList(props)
+  const { fileOpenModel, fileGetDom } = useFile({ handleSearch })
   const getItems = () => {
     const items = [
       {
@@ -24,7 +28,7 @@ function Index(props) {
             </a>
           </>
         ),
-        icon: <Icon name="course" className="m-words-menu-icon"></Icon>,
+        icon: <Icon name="course" className="m-filelist-menu-icon"></Icon>,
       },
       {
         key: '2',
@@ -39,7 +43,7 @@ function Index(props) {
             </a>
           </>
         ),
-        icon: <Icon name="course" className="m-words-menu-icon"></Icon>,
+        icon: <Icon name="course" className="m-filelist-menu-icon"></Icon>,
       },
       {
         key: 'chrome',
@@ -51,28 +55,26 @@ function Index(props) {
             </a>
           </>
         ),
-        icon: <Icon name="chrome" className="m-words-menu-icon"></Icon>,
+        icon: <Icon name="chrome" className="m-filelist-menu-icon"></Icon>,
       },
     ]
     return items
   }
   // eslint-disable-next-line
-  let wideScreenHistory =
-    localStorage.getItem('wideScreen') === 'false' ? false : true
   return (
-    <div className="m-words-wrap-box">
-      <div className={`m-words-wrap-chat`}>
+    <div className="m-filelist-wrap-box">
+      <div className={`m-filelist-wrap-chat`}>
         <SinglePageHeader
           goBackPath="/ai/index/home/chatList"
-          title="识字"
+          title="文件列表"
         ></SinglePageHeader>
-        <div className="m-words-list" id="scrollableDiv">
+        <div className="m-filelist-list" id="scrollableDiv">
           <Dropdown
             menu={{ items: getItems() }}
-            className="m-words-dropdown"
+            className="m-filelist-dropdown"
             trigger={['click', 'hover']}
           >
-            <Icon name="more" className="m-words-menu-btn"></Icon>
+            <Icon name="more" className="m-filelist-menu-btn"></Icon>
           </Dropdown>
           <InfiniteScroll
             dataLength={dataSource.length}
@@ -104,30 +106,58 @@ function Index(props) {
             }
             scrollableTarget="scrollableDiv"
           >
-            <div className="m-words-word-wrap">
-              {dataSource.map((item, index) => (
-                <div key={item.uid}>
-                  {/* eslint-disable-next-line */}
-                  <a
-                    href={`/#/ai/wordsDetail?uid=${item.uid}&pageNum=${item.pageNum}`}
-                    target="_blank"
-                    key={item.uid}
-                  >
-                    <div
-                      className={`m-words-word-item level${item.level}`}
-                      // onClick={() =>
-                      //   handleJumpPage(
-                      //     `/ai/wordsDetail?uid=${item.uid}&pageNum=${item.pageNum}`
-                      //   )
-                      // }
+            <div className="m-filelist-item-wrap">
+              {dataSource.map((item) => (
+                <div
+                  className={`m-filelist-item`}
+                  key={item.uid}
+                  // onClick={() =>
+                  //   handleJumpPage(
+                  //     `/ai/wordsDetail?uid=${item.uid}&pageNum=${item.pageNum}`
+                  //   )
+                  // }
+                >
+                  <Icon
+                    name={item.fileType}
+                    className="m-filelist-item-icon"
+                  ></Icon>
+                  <div className="m-filelist-item-info">
+                    <div className="m-filelist-item-name">{item.name}</div>
+                    {/* eslint-disable-next-line */}
+                    <a
+                      href={`${item.urlCdn}`}
+                      title={`${item.urlCdn}`}
+                      target="_blank"
+                      className="m-filelist-item-url m-ellipsis"
                     >
-                      {item.word}
+                      {item.urlCdn}
+                    </a>
+                    <div className="m-filelist-item-nickname">
+                      <Image
+                        src={item.userAvatarCdn}
+                        className="m-filelist-item-avatar"
+                        alt={'图片'}
+                      ></Image>
+                      {item.nickname}
                     </div>
-                  </a>
+                    <div className="m-filelist-item-datetime">
+                      {moment(item.createTime - 0).format('MM-DD HH:mm:ss')}
+                    </div>
+                    <div className="m-filelist-item-btn-wrap">
+                      <Space>
+                        <Button
+                          onClick={() => handleCopy(item.urlCdn)}
+                          size="small"
+                        >
+                          复制链接
+                        </Button>
+                      </Space>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
-            {dataSource.length === 0 ? (
+            {dataSource.length === 0 && isLoading ? (
               <Skeleton
                 avatar
                 paragraph={{
@@ -139,7 +169,14 @@ function Index(props) {
             ) : null}
           </InfiniteScroll>
         </div>
-        {/* <div className="m-words-footer"></div> */}
+        <div className="m-filelist-footer">
+          <Space>
+            <Button type="primary" onClick={() => fileOpenModel()}>
+              添加文件
+            </Button>
+          </Space>
+        </div>
+        {fileGetDom()}
       </div>
     </div>
   )

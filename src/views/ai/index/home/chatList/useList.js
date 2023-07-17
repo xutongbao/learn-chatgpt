@@ -65,6 +65,13 @@ export default function useList(props) {
         intro: '通过api接口实现',
         createTime: '',
       },
+      {
+        uid: 7,
+        avatar: 'http://static.xutongbao.top/img/m-file.png',
+        name: '我的文件',
+        intro: '私密存储',
+        createTime: '',
+      },
     ],
     pageSize: 10,
   })
@@ -84,7 +91,8 @@ export default function useList(props) {
 
     Api.h5.chatListSearch(searchParams).then((res) => {
       if (res.code === 200) {
-        let { chatInfo, chatInfoForGPT4, groupChatInfo, realPeopleInfo } = res.data
+        let { chatInfo, chatInfoForGPT4, groupChatInfo, realPeopleInfo } =
+          res.data
         const { dataSource } = state
         if (chatInfo.createTime) {
           dataSource[0].createTime = moment(chatInfo.createTime - 0).format(
@@ -93,9 +101,9 @@ export default function useList(props) {
           dataSource[0].intro = chatInfo.message
         }
         if (chatInfoForGPT4.createTime) {
-          dataSource[1].createTime = moment(chatInfoForGPT4.createTime - 0).format(
-            'MM-DD HH:mm:ss'
-          )
+          dataSource[1].createTime = moment(
+            chatInfoForGPT4.createTime - 0
+          ).format('MM-DD HH:mm:ss')
           dataSource[1].intro = chatInfoForGPT4.message
         }
         if (groupChatInfo.createTime) {
@@ -140,8 +148,8 @@ export default function useList(props) {
 
   const handleImageClick = (e, item) => {
     setCurrentImage(item.avatar)
-    setVisible(true)
-    e.stopPropagation()
+    //setVisible(true)
+    //e.stopPropagation()
   }
 
   //操作
@@ -160,6 +168,8 @@ export default function useList(props) {
       props.history.push(`/ai/words`)
     } else if (uid === 6) {
       props.history.push(`/single/home/google`)
+    } else if (uid === 7) {
+      props.history.push(`/single/home/fileList`)
     }
   }
 

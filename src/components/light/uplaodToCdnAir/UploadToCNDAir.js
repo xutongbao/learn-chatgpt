@@ -1,17 +1,18 @@
 import React from 'react'
-import { Button, Upload, message } from 'antd'
+import { Upload, message } from 'antd'
 import { v4 as uuidv4 } from 'uuid'
 import {
   imageUrlFormat,
   uploadGetTokenFromLocalStorageForH5,
-} from '../../utils/tools'
-import urls from '../../api/urls'
+} from '../../../utils/tools'
+import Icon from '../Icon'
+import urls from '../../../api/urls'
+import './index.css'
 
-export default function UploadVideoToCND({
+export default function UploadToCNDAir({
   value = '',
   msg,
   type = 'add',
-  onChange,
   accept = '.mp4',
   imgUrlCnd,
   videoDir = 'video/temp',
@@ -41,7 +42,9 @@ export default function UploadVideoToCND({
       )
       const fileName = uid + file.name.slice(reslutIndex, file.name.length)
       return {
-        key: `${videoDir}/${filePrefix ? filePrefix + '-' : ''}${Date.now()}-${fileName}`,
+        key: `${videoDir}/${
+          filePrefix ? filePrefix + '-' : ''
+        }${Date.now()}-${fileName}`,
         fname: fileName,
         token: uploadGetTokenFromLocalStorageForH5(),
       }
@@ -49,21 +52,17 @@ export default function UploadVideoToCND({
     headers: {},
     maxCount: 1,
     listType: 'picture',
-    defaultFileList: [...fileList],
+    defaultFileList: [],
+    showUploadList: false,
     accept,
     onChange(info) {
       if (info.file.status !== 'uploading') {
         console.log(info.file, info.fileList)
-        onChange(undefined)
       }
       if (info.file.status === 'done') {
         message.success(`${info.file.name} 上传成功`)
-        handleChangeFile && handleChangeFile({ info })
         if (info.file.response.code === 200) {
-          // console.log(info.file.xhr.responseURL)
-          // const imgUrl = `${getHost(info.file.xhr.responseURL)}/${info.file.response.data.filename}`
-          // console.log(imgUrl)
-          onChange(info.file.response.data.key)
+          handleChangeFile && handleChangeFile({ info })
         }
       } else if (info.file.status === 'uploading') {
       } else if (info.file.status === 'error') {
@@ -76,7 +75,7 @@ export default function UploadVideoToCND({
     <span>
       {type !== 'check' ? (
         <Upload {...uploadProps}>
-          <Button>上传</Button>
+          <Icon name="add" className="m-upload-to-cdn-air-icon"></Icon>
           <span className="m-upload-text">{msg}</span>
         </Upload>
       ) : value ? (

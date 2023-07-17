@@ -3,7 +3,7 @@
 .m-ai-wrap-chat.active{max-width: 1600px;}
 .m-ai-main{flex:1;display: flex;flex-direction: column;overflow-y: auto;}
 .m-ai-footer{display: flex;padding: 5px; border-top: 1px solid #ddd;gap: 5px;align-items: center;justify-content: center;background: #f6f6f6;}
-.m-ai-footer-btn-wrap{display: flex; justify-content: flex-end;}
+.m-ai-footer-btn-wrap{display: flex; justify-content: flex-end;gap: 5px;}
 .m-ai-list{flex: 1;padding: 0px 0;}
 .m-ai-dropdown{position: absolute;top: 10px;right: 14px;}
 .m-ai-user-list-wrap-wrap{margin: 0 10px;display: flex; }
@@ -57,10 +57,27 @@
 .m-ai-chat-toolbar-icon{font-size: 20px;}
 .m-ai-chat-audio-popover{display: flex;}
 
+.m-ai-chat-drawer .ant-drawer-wrapper-body{background: #ededed;}
+.m-ai-chat-plugin-wrap{display: flex;gap: 20px;flex-wrap: wrap;}
+.m-ai-chat-plugin-item:hover .m-ai-chat-plugin-item-icon-wrap{background: #cbddf7;}
+.m-ai-chat-plugin-item:hover .m-ai-chat-plugin-text{color: #00c250;}
+.m-ai-chat-plugin-item-icon-wrap{display: flex;align-items: center;justify-content: center; width: 64px;height: 64px;border-radius: 14px;background: #fff; cursor: pointer;}
+.m-ai-chat-plugin-icon{font-size: 30px;}
+.m-ai-chat-plugin-text{margin: 5px 0 0 0; font-size: 13px;text-align: center;color: #333;}
+.m-ai-chat-plugin-img-list{display: flex;flex-direction: column;gap: 10px;}
+.m-ai-chat-plugin-img-wrap{display: flex;justify-content: center;margin: 0 0 10px 0;}
+.m-ai-chat-plugin-img{margin: 10px 0 0; width: 200px!important; height: auto;}
+
+.m-ai-chat-input-type-icon{font-size: 30px;margin: 0 5px 0 0;}
+.m-ai-chat-input-wrap{display: flex;width: 100%;align-items: center;}
+.m-ai-chat-input{flex: 1}
+.m-ai-chat-audio-recorder-wrap{margin: 10px;}
+.m-ai-chat-audio-recorder-wrap-outer{display: none;width: 100%;align-items: center;}
+.m-ai-chat-audio-recorder-wrap-outer.active{display: flex;}
 
 @media screen and (min-width: 768px) {  
 .m-ai-footer{display: flex;flex-direction: column;}  
-.m-ai-footer-btn-wrap{width: 100%;}
+.m-ai-footer-btn-wrap{width: 100%;display: flex;gap: 5px;}
 .m-ai-user-list-avatar-popover{width: unset;}
 
 } 

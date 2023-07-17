@@ -1,7 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
 import { message as antdMessage } from 'antd'
 import Api from '../../../api'
-import { objArrayUnique, showLoading, hideLoading } from '../../../utils/tools'
+import {
+  objArrayUnique,
+  showLoading,
+  hideLoading,
+  uploadGetTokenFromLocalStorageForH5,
+  uploadGetTokenForH5,
+} from '../../../utils/tools'
 import * as clipboard from 'clipboard-polyfill/text'
 import Clipboard from 'clipboard'
 import { Icon } from '../../../components/light'
@@ -13,6 +19,9 @@ import uaParser from 'ua-parser-js'
 // eslint-disable-next-line
 import Player from 'xgplayer'
 import Music from 'xgplayer-music'
+import axios from 'axios'
+import urls from '../../../api/urls'
+import { v4 as uuidv4 } from 'uuid'
 
 let count = 0
 let isLoadingForSearch = false
@@ -66,6 +75,7 @@ export default function useList(props) {
   const [isGetNewest, setIsGetNewest] = useState(false)
   const [trigger, setTrigger] = useState('click')
   const [userInfo, setUserInfo] = useState({})
+  const [inputType, setInputType] = useState('1') //1文字，2录音
 
   const scrollEl = useRef(null)
   let uidForFrontEndPeopleMesssage
@@ -265,7 +275,11 @@ export default function useList(props) {
     })
   }
 
-  const handleSendLoop = ({ isNeedContext = true } = {}) => {
+  const handleSendLoop = ({
+    isNeedContext = true,
+    messageByRecorder = '',
+    audioUrlForRecorder = '',
+  } = {}) => {
     let talkId = localStorage.getItem('talkId')
     let groupCode = localStorage.getItem('groupCode')
     let gptVersion = '3.5'
@@ -280,7 +294,8 @@ export default function useList(props) {
     setIsSending(true)
     Api.h5
       .chatAdd({
-        message,
+        message: messageByRecorder ? messageByRecorder : message,
+        audioUrlForRecorder,
         talkId,
         isNeedContext,
         groupCode,
@@ -317,6 +332,9 @@ export default function useList(props) {
               uidForPeopleMesssage,
               uidForRobotMessage,
             })
+            if (inputType === '2') {
+              handleToAudio({ uid: uidForRobotMessage }, robotMessage)
+            }
             count = 0
             setIsSending(false)
             setMessage('')
@@ -339,11 +357,24 @@ export default function useList(props) {
   }
 
   //发送
-  const handleSend = ({ isNeedContext = true } = {}) => {
-    if (message === '' || message.trim() === '') {
-      antdMessage.warning('请输入内容')
-      return
+  const handleSend = ({
+    isNeedContext = true,
+    messageByRecorder = '',
+    audioUrlCdnForRecorder = '',
+    audioUrlForRecorder = '',
+  } = {}) => {
+    if (inputType === '2') {
+      if (messageByRecorder === '' || messageByRecorder.trim() === '') {
+        antdMessage.warning('请录音')
+        return
+      }
+    } else {
+      if (message === '' || message.trim() === '') {
+        antdMessage.warning('请输入内容')
+        return
+      }
     }
+
     let talkId = localStorage.getItem('talkId')
 
     if (talkId === 'guest') {
@@ -399,13 +430,14 @@ export default function useList(props) {
         userAvatarCdn: avatarCdn,
         nickname,
         messageOwner: nickname,
-        message,
-        messageForHtml,
+        message: messageByRecorder ? messageByRecorder : message,
+        messageForHtml: messageByRecorder ? messageByRecorder : messageForHtml,
         messageType: '1',
         chatGPTVersion: '4',
         isAudioLoading: false,
         isShowToAudioBtn: false,
         isOpenPopover: false,
+        audioUrlCdn: audioUrlCdnForRecorder,
         createTime: now,
         userInfo: {
           payStatus,
@@ -435,10 +467,47 @@ export default function useList(props) {
         dataSource: newDataSource,
         pageSize,
       })
-      handleSendLoop({ isNeedContext })
+      handleSendLoop({ isNeedContext, messageByRecorder, audioUrlForRecorder })
       setMessage('')
     }
   }
+
+  //#region 录音
+  const handleUploadAudio = async (blob) => {
+    const url = URL.createObjectURL(blob)
+    const audio = document.createElement('audio')
+    audio.src = url
+    console.log(url)
+    const uid = uuidv4()
+    let formData = new FormData()
+    formData.append('file', blob, `${uid}.webm`)
+    formData.append('token', uploadGetTokenFromLocalStorageForH5())
+    formData.append('key', `ai/audio/real01/${Date.now()}-${uid}.webm`)
+    formData.append('fname', `${uid}.webm`)
+
+    let uploadRes = await axios({
+      url: urls.light.uploadToCDN,
+      method: 'post',
+      data: formData,
+    })
+    let fileWisperForH5Res
+    if (uploadRes?.data?.code === 200) {
+      fileWisperForH5Res = await Api.h5.fileWisperForH5({
+        url: uploadRes.data.data.key,
+      })
+    }
+    if (fileWisperForH5Res?.code === 200) {
+      handleSend({
+        messageByRecorder: fileWisperForH5Res.data.info.data.respData.text,
+        audioUrlCdnForRecorder: fileWisperForH5Res.data.urlCdn,
+        audioUrlForRecorder: uploadRes.data.data.key,
+      })
+    }
+  }
+  const handleNotAllowedOrFound = () => {
+    console.log('todo')
+  }
+  //#endregion
 
   const getIsShowToAudioBtn = ({ message, isIncludeCode }) => {
     let isShowToAudioBtn = true
@@ -492,7 +561,7 @@ export default function useList(props) {
   }
 
   //转音频
-  const handleToAudio = (item) => {
+  const handleToAudio = (item, robotMessage = '') => {
     const { uid } = item
     let { dataSource, pageSize } = state
     if (item.isAudioLoading) {
@@ -501,14 +570,19 @@ export default function useList(props) {
       const resultIndex = dataSource.findIndex((item) => item.uid === uid)
       if (resultIndex >= 0) {
         dataSource[resultIndex].isAudioLoading = true
+        let newDataSource = [...dataSource]
+        newDataSource = newDataSource.filter(
+          (item) => (item.uid + '').indexOf('robot-loading') < 0
+        )
+
         setState({
-          dataSource,
+          dataSource: newDataSource,
           pageSize,
         })
         let talkId = localStorage.getItem('talkId')
         //handleToolbarVisible()
         antdMessage.success('转音频中，请耐心等待')
-        Api.h5.chatAddAudio({ uid, talkId }).then((res) => {
+        Api.h5.chatAddAudio({ uid, robotMessage, talkId }).then((res) => {
           if (res.code === 200) {
             const { audioUrlCdn, isCutMessage } = res.data
             dataSource[resultIndex] = {
@@ -524,8 +598,13 @@ export default function useList(props) {
             } else {
               antdMessage.success('成功')
             }
+            let newDataSource = [...dataSource]
+            newDataSource = newDataSource.filter(
+              (item) => (item.uid + '').indexOf('robot-loading') < 0
+            )
+
             setState({
-              dataSource,
+              dataSource: newDataSource,
               pageSize,
             })
           }
@@ -611,6 +690,10 @@ export default function useList(props) {
 
   const handleInputChange = (e) => {
     setMessage(e.target.value)
+  }
+
+  const changeMessageByUpload = ({ data }) => {
+    setMessage(`${message}${data.urlCdn}`)
   }
 
   //退出
@@ -772,6 +855,21 @@ export default function useList(props) {
   }
 
   useEffect(() => {
+    let audioSendDom = document.getElementsByClassName('js-audio-send')
+    if (audioSendDom) {
+      if (audioSendDom[0].title === 'Save recording') {
+        //audioSendDom[0].src = 'https://static.xutongbao.top/img/m-send-audio.png?time=20230116'
+      }
+    }
+    // eslint-disable-next-line
+  }, [])
+
+  useEffect(() => {
+    uploadGetTokenForH5()
+    // eslint-disable-next-line
+  }, [])
+
+  useEffect(() => {
     Api.h5.userGetInfo({ isLoading: false }).then((res) => {
       if (res.code === 200) {
         setUserInfo(res.data)
@@ -897,6 +995,7 @@ export default function useList(props) {
     device,
     pageType,
     title,
+    inputType,
     handleSearch,
     handleSend,
     handleCtrlEnter,
@@ -913,5 +1012,9 @@ export default function useList(props) {
     handleToAudio,
     handleAudioPlayerBtnClick,
     handleToolbarOpenChange,
+    changeMessageByUpload,
+    setInputType,
+    handleUploadAudio,
+    handleNotAllowedOrFound,
   }
 }

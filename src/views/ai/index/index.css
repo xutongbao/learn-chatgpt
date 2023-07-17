@@ -14,7 +14,7 @@
 .m-h5-lesson-play-inner{background: white;width: 100%;}
 .m-h5-lesson-play-player-wrap{position: relative; width: 100%;padding: 56% 0 0 0;}
 .m-h5-lesson-play-player{position: absolute!important;top: 0;left: 0;right: 0;bottom: 0;width: 100%!important;height: 100%!important;}
-.m-h5-lesson-play-info{padding: 10px 10px;}
+.m-h5-lesson-play-info{padding: 10px 10px;cursor: pointer;}
 .m-h5-lesson-play-info-course-wrap{display: flex;height: 30px;}
 .m-h5-lesson-play-info-avatar{width: 28px;height: 28px;border-radius: 4px;}
 .m-h5-lesson-play-info-course-name{flex:1; font-size: 14px;line-height: 28px;padding: 0 0 0 10px;color:#333; overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}

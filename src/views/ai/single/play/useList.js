@@ -35,11 +35,15 @@ export default function useList(props) {
         } = res.data.lesson
         if (isHasPlayAuth === true || lessonType === '1') {
           if (player) {
-            player.destroy()
+            try {
+              player.destroy()
+            } catch (error) {
+              console.log(error)
+            }
           }
           setIsPlaying(false)
           player = new Player({
-            id: 'mse',
+            id: 'm-mse',
             url: urlCnd,
             poster: coverImageCnd,
             playsinline: true,
@@ -74,11 +78,15 @@ export default function useList(props) {
         } = res.data.lesson
         if (isHasPlayAuth === true || lessonType === '1') {
           if (player) {
-            player.destroy()
+            try {
+              player.destroy()
+            } catch (error) {
+              console.log(error)
+            }
           }
           setIsPlaying(false)
           player = new Player({
-            id: 'mse',
+            id: 'm-mse',
             url: urlCnd,
             poster: coverImageCnd,
             playsinline: true,
@@ -100,7 +108,8 @@ export default function useList(props) {
 
   //返回
   const handleBack = () => {
-    props.history.goBack()
+    //props.history.goBack()
+    props.history.push('/ai/course')
   }
 
   //控制是否显示课节列表

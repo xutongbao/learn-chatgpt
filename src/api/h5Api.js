@@ -19,6 +19,10 @@ const Api = {
 
   //#endregion
 
+  //#region 邮件
+  emailCustomSend: (data) => common({ url: urls.h5.emailCustomSend, data, method: 'post' }),
+  //#endregion    
+
   //#region 兑换
   exchangeCodeAppUse: (data) => common({ url: urls.h5.exchangeCodeAppUse, data, method: 'post' }),
   //#endregion    
@@ -88,12 +92,24 @@ const Api = {
   chatGoogleSearch: (data) => common({ url: urls.h5.chatGoogleSearch, data, method: 'post' }),
 
   //#endregion   
+
+  //#region 文件列表
+  fileAppSearch: (data) => common({ url: urls.h5.fileAppSearch, data, method: 'post' }),
+  fileAdminSearch: (data) => common({ url: urls.h5.fileAdminSearch, data, method: 'post' }),
+  fileAdd: (data) => common({ url: urls.h5.fileAdd, data, method: 'post' }),
+  fileDelete: (data) => common({ url: urls.h5.fileDelete, data, method: 'post' }),
+  fileEdit: (data) => common({ url: urls.h5.fileEdit, data, method: 'post' }),
+  fileWisperForH5: (data) => common({ url: urls.h5.fileWisperForH5, data, method: 'post' }),
+
+  //#endregion      
   
   //#region words
   wordsAppSearch: (data) => common({ url: urls.h5.wordsAppSearch, data, method: 'post' }),
   wordsGetById: (data) => common({ url: urls.h5.wordsGetById, data, method: 'post' }),
 
   //#endregion   
+
+    
 }
 
 export default Api

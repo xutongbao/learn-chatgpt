@@ -133,15 +133,15 @@ export default function useBehavior(props) {
     clipboard.writeText(window.location.href).then(() => {
       message.success('链接复制成功')
     })
-    // if (navigator.share) {
-    //   navigator.share(
-    //     {
-    //       title: 'webShare',
-    //       text: 'webShare',
-    //       url: window.location.href
-    //     }
-    //   );
-    // }
+    if (navigator.share) {
+      navigator.share(
+        {
+          title: '学习',
+          text: currentLesson.name,
+          url: window.location.href
+        }
+      );
+    }
   }
 
   //收藏

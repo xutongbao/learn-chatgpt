@@ -90,6 +90,11 @@ const h5Router = [
     path: '/single/home/google',
     component: lazy(() => import('../../views/ai/single/home/google/Index')),
   }, 
+  {
+    title: '文件列表',
+    path: '/single/home/fileList',
+    component: lazy(() => import('../../views/ai/single/home/fileList/Index')),
+  }, 
 ]
 
 const router = []

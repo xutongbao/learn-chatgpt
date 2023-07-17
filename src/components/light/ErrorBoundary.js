@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { addLog } from '../../utils/tools'
 
+let timer
 
 //错误边界
 //https://zh-hans.reactjs.org/docs/error-boundaries.html#gatsby-focus-wrapper
@@ -35,7 +36,10 @@ export default class ErrorBoundary extends Component {
           window.location.reload()
         }, 3000)
       } else {
-        addLog({ errorTitle, detail: errorInfo.componentStack })
+        timer = setTimeout(() => {
+          addLog({ errorTitle, detail: errorInfo.componentStack })
+          clearTimeout(timer)
+        }, 3000)
         this.setState({
           isLoadingError: false
         })

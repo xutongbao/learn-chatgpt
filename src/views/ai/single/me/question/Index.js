@@ -25,6 +25,29 @@ function Index(props) {
               </a>
             </div>
           </Panel>
+          <Panel header="chatgpt联网" key="online">
+            <div>
+              <div>解决方案：请说“联网查询xxx”</div>
+              <div className="m-single-question-img-wrap">
+                <Image
+                  className="m-single-question-img"
+                  src="http://static.xutongbao.top/img/m-chatgpt-online1.jpg?time=20230706"
+                />
+              </div>
+              <div className="m-single-question-img-wrap">
+                <Image
+                  className="m-single-question-img"
+                  src="http://static.xutongbao.top/img/m-chatgpt-online2.jpg?time=20230706"
+                />
+              </div>
+              <div className="m-single-question-img-wrap">
+                <Image
+                  className="m-single-question-img"
+                  src="http://static.xutongbao.top/img/m-chatgpt-online3.jpg?time=20230706"
+                />
+              </div>
+            </div>
+          </Panel>
           <Panel header="AI回答的问题不完整" key="1">
             <div>
               <div>解决方案：请说“继续”</div>
@@ -40,16 +63,13 @@ function Index(props) {
             <div>
               <div>解决方案：下载chrome浏览器</div>
               <div>
-              {/* eslint-disable-next-line */}
-              <a
-                href={`https://llq.ywswge.cn`}
-                target="_blank"
-              >
-                {`https://llq.ywswge.cn`}
-              </a>
+                {/* eslint-disable-next-line */}
+                <a href={`https://llq.ywswge.cn`} target="_blank">
+                  {`https://llq.ywswge.cn`}
+                </a>
+              </div>
             </div>
-            </div>
-          </Panel>          
+          </Panel>
           <Panel header="提示【无权限】" key="2">
             <div>
               <div>解决方案：重新登录一下</div>
@@ -82,19 +102,19 @@ function Index(props) {
                   className="m-single-question-img"
                   src="http://static.xutongbao.top/img/m-invited.png?time=20230330"
                 />
-              </div>   
+              </div>
               <div className="m-single-question-img-wrap">
                 <Image
                   className="m-single-question-img"
                   src="http://static.xutongbao.top/img/m-gpt-4.png?time=20230330"
                 />
-              </div>   
+              </div>
               <div className="m-single-question-img-wrap">
                 <Image
                   className="m-single-question-img"
                   src="http://static.xutongbao.top/img/m-question-02.jpg?time=20230311"
                 />
-              </div>              
+              </div>
               <div className="m-single-question-img-wrap">
                 <Image
                   className="m-single-question-img"

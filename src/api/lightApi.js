@@ -7,6 +7,9 @@ const Api = {
   userLogout: (data) => common({ url: urls.light.userLogout, data, method: 'post' }),
   //#endregion 
   
+  //#region 上传
+  uploadImgGetToken: (data) => common({ url: urls.light.uploadImgGetToken, data, method: 'post' }),
+  //#endregion
 }
 
 export default Api

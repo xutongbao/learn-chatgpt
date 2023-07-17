@@ -4,8 +4,11 @@ const baseURL = {
   dev: 'http://localhost:85', //192.168.0.137 localhost
   //dev: 'http://yuying-api.xutongbao.top',
   test: 'http://yuying-api.xutongbao.top',
-  prod: 'http://yuying-api.xutongbao.top'
+  //prod: 'http://yuying-api.xutongbao.top',
+  prod: '' //使用nginx代理解决https请求转发到http
 }[process.env.REACT_APP_MODE]
+
+console.log(process.env, process.env.REACT_APP_MODE)
 
 const imageBaseUrl = {
   dev: 'http://localhost:85/',

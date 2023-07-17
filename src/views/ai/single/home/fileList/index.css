@@ -1,0 +1,20 @@
+.m-filelist-wrap-box{display: flex;justify-content: center;background: #ddd;background: #ddd;position: absolute;top: 0;left: 0;right: 0;bottom: 0;overflow: hidden;}
+.m-filelist-wrap-chat{position: relative; display: flex;flex-direction: column; max-width: 1600px;width: 100%;background: #ededed;}
+.m-filelist-main{flex:1;display: flex;flex-direction: column;overflow-y: auto;}
+.m-filelist-list{flex: 1;padding: 0px 0;overflow-y: auto;background: #fff;}
+.m-filelist-dropdown{position: absolute;top: 10px;right: 14px;}
+.m-filelist-menu-btn{display: inline-block;text-align: center;line-height: 35px; color: #333;font-size: 26px;width: 35px;height: 35px;z-index: 99;cursor: pointer;}
+.m-filelist-item-wrap{ display: flex;flex-direction: column;padding: 0 0;}
+.m-filelist-item{display: flex;padding: 10px 10px 10px 0;margin: 0 0 0 10px; border-bottom: 1px solid #ddd;}
+.m-filelist-item:hover{background: #fff;}
+.m-filelist-item-icon{font-size: 30px;}
+.m-filelist-item-info{flex: 1;padding: 0 0 0 0;margin: 0 0 0 10px;overflow: hidden; }
+.m-filelist-item-name{font-weight: bold;margin: 0 0 5px 0;}
+.m-filelist-item-url{font-size: 12px;display: block;margin: 0 0 5px 0;}
+.m-filelist-item-nickname{display: flex;gap: 5px;align-items: center; font-size: 12px;margin: 0 0 5px 0;color: #666;}
+.m-filelist-item-avatar{width: 30px!important;height: 30px!important;border-radius: 4px;}
+.m-filelist-item-datetime{font-size: 12px;margin: 0 0 5px 0;color: #999;}
+.m-filelist-footer{display: flex;padding: 5px;height: 40px; border-top: 1px solid #ddd;gap: 5px;align-items: center;justify-content: center;background: #f6f6f6;}
+
+
+

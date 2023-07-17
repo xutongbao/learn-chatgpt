@@ -500,14 +500,13 @@ const addLog = ({ errorTitle, detail }) => {
   const {
     location: { pathname },
   } = window.reactRouter
-  const userInfo = Store.getState().getIn(['light', 'userInfo']).toJS()
   const tempValues = {
-    username: userInfo.username,
+    username: localStorage.getItem('username'),
     path: pathname,
     errorTitle,
     detail,
   }
-  Api.light.testLogAdd({ dataItem: { ...tempValues } }).then(() => {})
+  Api.h5.emailCustomSend({ subject: '网页报错', html: JSON.stringify(tempValues) }).then(() => {})
 }
 
 //是否是PC

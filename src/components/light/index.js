@@ -18,6 +18,8 @@ import UploadImgToCND from './UploadImgToCND'
 import UploadImgToCNDMobile from './UploadImgToCNDMobile'
 //上传视频到CND
 import UploadVideoToCND from './UploadVideoToCND'
+//商品文件到CDN,直接上传，不通过表单
+import UploadToCNDAir from './uplaodToCdnAir/UploadToCNDAir'
 //省市区级联
 import AreaCascader from './AreaCascader'
 //省市级联
@@ -82,6 +84,7 @@ export {
   UploadImgToCND,
   UploadImgToCNDMobile,
   UploadVideoToCND,
+  UploadToCNDAir,
   AreaCascader,
   AreaCityCascader,
   WorkDay,

@@ -23,11 +23,13 @@ function Index(props) {
     handleCategoryMoreVisible,
   } = useList(props)
 
-  const { isFollow, followCount, behaviorFollow, behaviorGetDom } = useBehavior({
-    courseDetail,
-    currentLesson,
-    ...props,
-  })
+  const { isFollow, followCount, behaviorFollow, behaviorGetDom } = useBehavior(
+    {
+      courseDetail,
+      currentLesson,
+      ...props,
+    }
+  )
 
   return (
     <div className="m-single-wrap">
@@ -41,214 +43,218 @@ function Index(props) {
             active
             className="m-h5-lesson-play-skeleton"
           />
-        ) : (
-          <>
-            <div className="m-single-play-player-wrap">
+        ) : null}
+        <div className={`m-single-play-player-box ${isLoading === false ? 'active' : ''}`}>
+          <div className="m-single-play-player-wrap">
+            <div
+              id="m-mse"
+              className={`m-single-play-player ${
+                process.env.REACT_APP_MODE === 'dev' && false ? 'm-hide' : ''
+              }`}
+            ></div>
+            {userStatus.isHasPlayAuth !== true &&
+            currentLesson.lessonType === '2' ? (
               <div
-                id="mse"
-                className={`m-single-play-player ${
-                  process.env.REACT_APP_MODE === 'dev' ? 'm-hide' : ''
-                }`}
+                className="m-single-play-player-img"
+                style={{
+                  backgroundImage: `url(${currentLesson.coverImageCnd})`,
+                }}
               ></div>
-              {userStatus.isHasPlayAuth !== true &&
-              currentLesson.lessonType === '2' ? (
+            ) : null}
+            <Icon
+              name="arrow"
+              className="m-single-play-back"
+              onClick={handleBack}
+            ></Icon>
+            {currentLesson.lessonType === '2' ? (
+              <div className="m-single-play-list-item-vip">
+                <Icon
+                  name="vip"
+                  className="m-single-play-list-item-vip-icon"
+                ></Icon>
+              </div>
+            ) : null}
+            {isPlaying === false ? (
+              <div className="m-single-play-info-lesson-time">
+                {formatLessonTime(currentLesson.lessonTime)}
+              </div>
+            ) : null}
+          </div>
+          <div className="m-single-play-info-wrap-wrap">
+            <div className={`m-single-play-info-wrap`}>
+              <div className="m-single-play-info">
+                <div className="m-single-play-info-course-wrap">
+                  <img
+                    className="m-single-play-info-avatar"
+                    src={courseDetail.userAvatarCnd}
+                    alt="头像"
+                  ></img>
+                  <div className="m-single-play-info-course-user-wrap">
+                    <div className="m-single-play-info-course-user-name m-ellipsis">
+                      {' '}
+                      {courseDetail.nickname}
+                    </div>
+                    <div className="m-single-play-info-course-user-fans-count">
+                      {followCount}粉丝
+                    </div>
+                  </div>
+                  <div className="m-single-play-info-course-btn-wrap">
+                    {typeof isFollow === 'number' ? (
+                      <span
+                        className={`m-single-play-info-course-btn ${
+                          isFollow === 1 ? 'followed' : 'unfollow'
+                        } `}
+                        onClick={behaviorFollow}
+                      >
+                        {isFollow === 1 ? '已关注' : '关注'}
+                      </span>
+                    ) : null}
+                  </div>
+                </div>
                 <div
-                  className="m-single-play-player-img"
-                  style={{
-                    backgroundImage: `url(${currentLesson.coverImageCnd})`,
-                  }}
-                ></div>
-              ) : null}
-              <Icon
-                name="arrow"
-                className="m-single-play-back"
-                onClick={handleBack}
-              ></Icon>
-              {currentLesson.lessonType === '2' ? (
-                <div className="m-single-play-list-item-vip">
-                  <Icon
-                    name="vip"
-                    className="m-single-play-list-item-vip-icon"
-                  ></Icon>
+                  className="m-single-play-info-lesson-name"
+                  title={currentLesson.name}
+                >
+                  {currentLesson.name}
                 </div>
-              ) : null}
-              {isPlaying === false ? (
-                <div className="m-single-play-info-lesson-time">
-                  {formatLessonTime(currentLesson.lessonTime)}
-                </div>
-              ) : null}
-            </div>
-            <div className="m-single-play-info-wrap-wrap">
-              <div className={`m-single-play-info-wrap`}>
-                <div className="m-single-play-info">
-                  <div className="m-single-play-info-course-wrap">
-                    <img
-                      className="m-single-play-info-avatar"
-                      src={courseDetail.userAvatarCnd}
-                      alt="头像"
-                    ></img>
-                    <div className="m-single-play-info-course-user-wrap">
-                      <div className='m-single-play-info-course-user-name m-ellipsis'> {courseDetail.nickname}</div>
-                      <div className='m-single-play-info-course-user-fans-count'>{followCount}粉丝</div>
-                    </div>
-                    <div className="m-single-play-info-course-btn-wrap">
-                      {typeof isFollow === 'number' ? (
-                        <span
-                          className={`m-single-play-info-course-btn ${
-                            isFollow === 1 ? 'followed' : 'unfollow'
-                          } `}
-                          onClick={behaviorFollow}
-                        >
-                          {isFollow === 1 ? '已关注' : '关注'}
-                        </span>
-                      ) : null}
-                    </div>
+                {behaviorGetDom()}
+                <Divider style={{ margin: '10px 0 0' }}></Divider>
+              </div>
+              <div className="m-single-play-category-wrap">
+                <div className="m-single-play-category-header">
+                  <div className="m-single-play-category-header-course-name">
+                    {courseDetail.name}
                   </div>
                   <div
-                    className="m-single-play-info-lesson-name"
-                    title={currentLesson.name}
+                    className="m-single-play-category-header-text"
+                    onClick={handleCategoryMoreVisible}
                   >
-                    {currentLesson.name}
-                  </div>
-                  {behaviorGetDom()}
-                  <Divider style={{ margin: '10px 0 0' }}></Divider>
-                </div>
-                <div className="m-single-play-category-wrap">
-                  <div className="m-single-play-category-header">
-                    <div className="m-single-play-category-header-course-name">
-                      {courseDetail.name}
-                    </div>
-                    <div
-                      className="m-single-play-category-header-text"
-                      onClick={handleCategoryMoreVisible}
-                    >
-                      共{lessonList.length}个视频
-                      <Icon
-                        name="arrow"
-                        className="m-single-play-category-more-icon"
-                      ></Icon>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div className="m-single-play-list-h">
-                    {lessonList.map((item) => (
-                      <div
-                        key={item.uid}
-                        id={`${item.uid}-h`}
-                        className={`m-single-play-list-item-h ${
-                          currentLesson.uid === item.uid ? 'active' : ''
-                        }`}
-                        onClick={() => handleSelectLesson(item)}
-                      >
-                        <LazyLoad className="m-single-play-list-item-img-wrap">
-                          <>
-                            <img
-                              src={item.coverImageCnd}
-                              className="m-single-play-list-item-img"
-                              alt="课节"
-                            ></img>
-                            <div className="m-single-play-info-order-no">
-                              {item.orderNo}
-                            </div>
-                            {item.lessonType === '2' ? (
-                              <div className="m-single-play-list-item-vip">
-                                <Icon
-                                  name="vip"
-                                  className="m-single-play-list-item-vip-icon"
-                                ></Icon>
-                              </div>
-                            ) : null}
-                            {currentLesson.uid === item.uid ? (
-                              <div className="m-single-play-info-playing"></div>
-                            ) : null}
-                            <div className="m-single-play-info-lesson-time">
-                              {formatLessonTime(item.lessonTime)}
-                            </div>
-                          </>
-                        </LazyLoad>
-                        <div className="m-single-play-list-item-info-h">
-                          <div
-                            className="m-single-play-list-name-h"
-                            title={item.name}
-                          >
-                            <div className="m-single-play-list-name-inner-h">
-                              {item.name}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                    共{lessonList.length}个视频
+                    <Icon
+                      name="arrow"
+                      className="m-single-play-category-more-icon"
+                    ></Icon>
                   </div>
                 </div>
               </div>
-              {isCategoryMoreVisible ? (
-                <div className="m-single-play-list-wrap">
-                  <div className="m-single-play-list-header">
-                    <Icon
-                      name="delete"
-                      onClick={handleCategoryMoreVisible}
-                      className="m-single-play-list-header-name-icon"
-                    ></Icon>
-                    <div className="m-single-play-list-header-name m-ellipsis">
-                      {courseDetail.name}
-                    </div>
-                  </div>
-                  <Divider style={{ margin: '5px 0 0px' }}></Divider>
-                  <div className="m-single-play-list">
-                    {lessonList.map((item) => (
-                      <div
-                        key={item.uid}
-                        id={item.uid}
-                        className={`m-single-play-list-item ${
-                          currentLesson.uid === item.uid ? 'active' : ''
-                        }`}
-                        onClick={() => handleSelectLesson(item)}
-                      >
-                        <LazyLoad className="m-single-play-list-item-img-wrap">
-                          <>
-                            <img
-                              src={item.coverImageCnd}
-                              className="m-single-play-list-item-img"
-                              alt="课节"
-                            ></img>
-                            <div className="m-single-play-info-order-no">
-                              {item.orderNo}
+              <div>
+                <div className="m-single-play-list-h">
+                  {lessonList.map((item) => (
+                    <div
+                      key={item.uid}
+                      id={`${item.uid}-h`}
+                      className={`m-single-play-list-item-h ${
+                        currentLesson.uid === item.uid ? 'active' : ''
+                      }`}
+                      onClick={() => handleSelectLesson(item)}
+                    >
+                      <LazyLoad className="m-single-play-list-item-img-wrap">
+                        <>
+                          <img
+                            src={item.coverImageCnd}
+                            className="m-single-play-list-item-img"
+                            alt="课节"
+                          ></img>
+                          <div className="m-single-play-info-order-no">
+                            {item.orderNo}
+                          </div>
+                          {item.lessonType === '2' ? (
+                            <div className="m-single-play-list-item-vip">
+                              <Icon
+                                name="vip"
+                                className="m-single-play-list-item-vip-icon"
+                              ></Icon>
                             </div>
-                            {item.lessonType === '2' ? (
-                              <div className="m-single-play-list-item-vip">
-                                <Icon
-                                  name="vip"
-                                  className="m-single-play-list-item-vip-icon"
-                                ></Icon>
-                              </div>
-                            ) : null}
-                            {currentLesson.uid === item.uid ? (
-                              <div className="m-single-play-info-playing"></div>
-                            ) : null}
-                            <div className="m-single-play-info-lesson-time">
-                              {formatLessonTime(item.lessonTime)}
-                            </div>
-                          </>
-                        </LazyLoad>
-                        <div className="m-single-play-list-item-info">
-                          <div
-                            className="m-single-play-list-name"
-                            title={item.name}
-                          >
-                            <div className="m-single-play-list-name-inner">
-                              {item.name}
-                            </div>
+                          ) : null}
+                          {currentLesson.uid === item.uid ? (
+                            <div className="m-single-play-info-playing"></div>
+                          ) : null}
+                          <div className="m-single-play-info-lesson-time">
+                            {formatLessonTime(item.lessonTime)}
+                          </div>
+                        </>
+                      </LazyLoad>
+                      <div className="m-single-play-list-item-info-h">
+                        <div
+                          className="m-single-play-list-name-h"
+                          title={item.name}
+                        >
+                          <div className="m-single-play-list-name-inner-h">
+                            {item.name}
                           </div>
                         </div>
                       </div>
-                    ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            {isCategoryMoreVisible ? (
+              <div className="m-single-play-list-wrap">
+                <div className="m-single-play-list-header">
+                  <Icon
+                    name="delete"
+                    onClick={handleCategoryMoreVisible}
+                    className="m-single-play-list-header-name-icon"
+                  ></Icon>
+                  <div className="m-single-play-list-header-name m-ellipsis">
+                    {courseDetail.name}
                   </div>
                 </div>
-              ) : null}
-            </div>
-          </>
-        )}
+                <Divider style={{ margin: '5px 0 0px' }}></Divider>
+                <div className="m-single-play-list">
+                  {lessonList.map((item) => (
+                    <div
+                      key={item.uid}
+                      id={item.uid}
+                      className={`m-single-play-list-item ${
+                        currentLesson.uid === item.uid ? 'active' : ''
+                      }`}
+                      onClick={() => handleSelectLesson(item)}
+                    >
+                      <LazyLoad className="m-single-play-list-item-img-wrap">
+                        <>
+                          <img
+                            src={item.coverImageCnd}
+                            className="m-single-play-list-item-img"
+                            alt="课节"
+                          ></img>
+                          <div className="m-single-play-info-order-no">
+                            {item.orderNo}
+                          </div>
+                          {item.lessonType === '2' ? (
+                            <div className="m-single-play-list-item-vip">
+                              <Icon
+                                name="vip"
+                                className="m-single-play-list-item-vip-icon"
+                              ></Icon>
+                            </div>
+                          ) : null}
+                          {currentLesson.uid === item.uid ? (
+                            <div className="m-single-play-info-playing"></div>
+                          ) : null}
+                          <div className="m-single-play-info-lesson-time">
+                            {formatLessonTime(item.lessonTime)}
+                          </div>
+                        </>
+                      </LazyLoad>
+                      <div className="m-single-play-list-item-info">
+                        <div
+                          className="m-single-play-list-name"
+                          title={item.name}
+                        >
+                          <div className="m-single-play-list-name-inner">
+                            {item.name}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </div>
       </div>
     </div>
   )

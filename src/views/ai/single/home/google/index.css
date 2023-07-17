@@ -11,7 +11,7 @@
 .m-single-google-item-breadcrumb-wrap .ant-breadcrumb-link{color: #093;word-break: break-all;}
 .m-single-google-item-breadcrumb-wrap .ant-breadcrumb-separator{color: #093;}
 .m-single-google-item-info{display: flex;gap: 5px;}
-.m-single-google-item-content{color: #333;}
+.m-single-google-item-content{color: #333;flex: 1;word-break: break-word;}
 .m-single-google-list .ant-list-pagination-align-end{text-align: center;}
 
 

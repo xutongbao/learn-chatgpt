@@ -63,6 +63,7 @@ function Index(props) {
                         current,
                         pageSize: 10,
                         total: total,
+                        showSizeChanger: false
                       }
                     : false
                 }

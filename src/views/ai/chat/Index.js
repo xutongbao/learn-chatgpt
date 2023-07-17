@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-// eslint-disable-next-line
 import {
   Input,
   Button,
@@ -11,10 +10,14 @@ import {
   Skeleton,
   Image,
 } from 'antd'
+// eslint-disable-next-line
+import { SendOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import useList from './useList'
+import useFuntionCalling from './useFuntionCalling'
 import moment from 'moment'
 import { SinglePageHeader, Icon } from '../../../components/light'
 import { Scrollbar } from 'react-scrollbars-custom'
+import { AudioRecorder } from 'react-audio-voice-recorder'
 
 import './index.css'
 import './index2.css'
@@ -30,6 +33,7 @@ function Index(props) {
     device,
     pageType,
     title,
+    inputType,
     handleSend,
     handleCtrlEnter,
     handleInputChange,
@@ -43,10 +47,20 @@ function Index(props) {
     //handleTouchEnd,
     // handleDoubleClick,
     handleAction,
+    changeMessageByUpload,
+    setInputType,
+    handleUploadAudio,
+    handleNotAllowedOrFound,
   } = useList(props)
 
+  const { functionCallingShowDrawer, functionCallingGetDom } =
+    useFuntionCalling({
+      ...props,
+      changeMessageByUpload,
+    })
+
   const getItems = () => {
-    if (pageType === '1') {
+    if (pageType === '1' || pageType === '3') {
       const items = [
         {
           key: '1',
@@ -73,6 +87,21 @@ function Index(props) {
                 target="_blank"
               >
                 ChatGPT学习心得
+              </a>
+            </>
+          ),
+          icon: <Icon name="course" className="m-ai-menu-icon"></Icon>,
+        },
+        {
+          key: 'web',
+          label: (
+            <>
+              {/* eslint-disable-next-line */}
+              <a
+                href={`https://blog.csdn.net/xutongbao/article/details/131568991`}
+                target="_blank"
+              >
+                ChatGPT已经联网
               </a>
             </>
           ),
@@ -125,6 +154,21 @@ function Index(props) {
                 target="_blank"
               >
                 ChatGPT学习心得
+              </a>
+            </>
+          ),
+          icon: <Icon name="course" className="m-ai-menu-icon"></Icon>,
+        },
+        {
+          key: 'web',
+          label: (
+            <>
+              {/* eslint-disable-next-line */}
+              <a
+                href={`https://blog.csdn.net/xutongbao/article/details/131568991`}
+                target="_blank"
+              >
+                ChatGPT已经联网
               </a>
             </>
           ),
@@ -388,7 +432,7 @@ function Index(props) {
                                 item.messageType === '2' ? (
                                   <>
                                     <div className="m-ai-message-footer-info">
-                                    gpt-3.5-turbo-16k-0613
+                                      gpt-3.5-turbo-16k-0613
                                     </div>
                                     <div
                                       className="m-ai-message-footer-upgrade"
@@ -432,29 +476,87 @@ function Index(props) {
           </div>
         </div>
         <div className="m-ai-footer">
-          <Input.TextArea
-            value={message}
-            onChange={handleInputChange}
-            onKeyUp={(e) => handleCtrlEnter(e)}
-            placeholder="请输入"
-            // disabled={isSending}
-            autoSize={{
-              minRows: 3,
-              maxRows: 8,
-            }}
-          />
-          <div className="m-ai-footer-btn-wrap">
-            <Popover
-              placement="topRight"
-              content={<div>Ctrl+Enter</div>}
-              trigger={device?.type === 'mobile' ? '' : 'hover'}
-            >
-              <Button type="primary" loading={isSending} onClick={handleSend}>
-                发送
-              </Button>
-            </Popover>
+          {inputType === '1' ? (
+            <div className="m-ai-chat-input-wrap">
+              <Icon
+                name="audio"
+                className="m-ai-chat-input-type-icon"
+                onClick={() => setInputType('2')}
+              ></Icon>
+              <Input.TextArea
+                value={message}
+                onChange={handleInputChange}
+                onKeyUp={(e) => handleCtrlEnter(e)}
+                placeholder="请输入"
+                allowClear
+                // disabled={isSending}
+                className="m-ai-chat-input"
+                autoSize={{
+                  minRows: 3,
+                  maxRows: 8,
+                }}
+              />
+            </div>
+          ) : null}
+
+          <div
+            className={`m-ai-chat-audio-recorder-wrap-outer ${
+              inputType === '2' ? 'active' : ''
+            }`}
+          >
+            <Icon
+              name="keyboard"
+              className="m-ai-chat-input-type-icon"
+              onClick={() => setInputType('1')}
+            ></Icon>
+            <div className="m-ai-chat-audio-recorder-wrap">
+              <AudioRecorder
+                onRecordingComplete={handleUploadAudio}
+                onNotAllowedOrFound={handleNotAllowedOrFound}
+                audioTrackConstraints={{
+                  noiseSuppression: true,
+                  echoCancellation: true,
+                }}
+                // downloadOnSavePress={true}
+                downloadFileExtension="webm"
+                showVisualizer={true}
+                classes={{
+                  AudioRecorderStartSaveClass: 'js-audio-send',
+                }}
+              />
+            </div>
           </div>
+
+          {inputType === '1' ? (
+            <div className="m-ai-footer-btn-wrap">
+              <Popover
+                placement="topRight"
+                content={<div>Ctrl+Enter</div>}
+                trigger={device?.type === 'mobile' ? '' : 'hover'}
+              >
+                <Button
+                  type="primary"
+                  loading={isSending}
+                  // icon={<SendOutlined />}
+                  onClick={handleSend}
+                >
+                  发送
+                </Button>
+              </Popover>
+              <Popover
+                placement="topRight"
+                content={<div>插件库</div>}
+                trigger={device?.type === 'mobile' ? '' : 'hover'}
+              >
+                <Button
+                  icon={<PlusCircleOutlined />}
+                  onClick={functionCallingShowDrawer}
+                ></Button>
+              </Popover>
+            </div>
+          ) : null}
         </div>
+        {functionCallingGetDom()}
       </div>
     </div>
   )
