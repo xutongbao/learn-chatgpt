@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import Api from '../../../../../api'
-import moment from 'moment'
+import { handleWatchChatUpdate } from '../../../../../api/socket'
 
+let chatListTemp = []
 export default function useList(props) {
   // eslint-disable-next-line
   const [total, setTotal] = useState(10)
@@ -14,73 +15,54 @@ export default function useList(props) {
   const [visible, setVisible] = useState(false)
   //把dataSource和pageSize单独放在一起是为了避免切换pageSize时的bug
   const [state, setState] = useState({
-    dataSource: [
-      {
-        uid: 0,
-        avatar: 'http://static.xutongbao.top/img/m-gpt-3_5-logo.png',
-        name: 'ChatGPT',
-        intro: '',
-        createTime: '',
-      },
-      {
-        uid: 1,
-        avatar: 'http://static.xutongbao.top/img/m-gpt-4-logo.png',
-        name: 'GPT-4',
-        intro: '',
-        createTime: '',
-      },
-      {
-        uid: 2,
-        avatar: 'http://static.xutongbao.top/img/logo.png',
-        name: '群聊',
-        intro: '',
-        createTime: '',
-      },
-      {
-        uid: 3,
-        avatar:
-          'http://static.xutongbao.top/img/m-real-people-group-chat2.png?time=20230302',
-        name: '真人群聊',
-        intro: '',
-        createTime: '',
-      },
-      {
-        uid: 4,
-        avatar: 'http://static.xutongbao.top/img/m-course.png?time=2023040401',
-        name: '课程',
-        intro: '学而不思则罔',
-        createTime: '',
-      },
-      {
-        uid: 5,
-        avatar: 'http://static.xutongbao.top/img/m-words.png',
-        name: '识字',
-        intro: '幼儿园起步',
-        createTime: '',
-      },
-      {
-        uid: 6,
-        avatar: 'http://static.xutongbao.top/img/m-google.png',
-        name: 'Google',
-        intro: '通过api接口实现',
-        createTime: '',
-      },
-      {
-        uid: 7,
-        avatar: 'http://static.xutongbao.top/img/m-file.png',
-        name: '我的文件',
-        intro: '私密存储',
-        createTime: '',
-      },
-    ],
-    pageSize: 10,
+    dataSource: [],
+    pageSize: 20,
   })
+  const [isHasMore, setIsHasMore] = useState(true)
 
   //搜索
-  const handleSearch = () => {
+  const handleSearch = async ({
+    page = current,
+    pageSize = state.pageSize,
+    isRefresh = false,
+  } = {}) => {
+    if (isRefresh) {
+      setState({
+        dataSource: [],
+        pageSize: 20,
+      })
+    }
+    let searchData = { pageNum: page, pageSize }
+    await Api.h5.realTalkAppSearch(searchData).then((res) => {
+      if (res.code === 200) {
+        const { pageNum, pageSize, total } = res.data
+
+        let list = res.data.list
+
+        if (isRefresh) {
+          chatListTemp = list
+          setState({
+            dataSource: [...list],
+            pageSize: res.data.pageSize,
+          })
+        } else {
+          chatListTemp = [...state.dataSource, ...list]
+          setState({
+            dataSource: [...state.dataSource, ...list],
+            pageSize: res.data.pageSize,
+          })
+        }
+
+        setTotal(res.data.total)
+        const currentTemp = res.data.pageNum + 1
+        setCurrent(currentTemp)
+        setIsHasMore(pageNum < Math.ceil(total / pageSize))
+      }
+    })
+
     let username = localStorage.getItem('username')
     let isAll = false
-    if (username === 'admin' || username === '1183391880') {
+    if (username === 'admin' || username === '1183391880@qq.com') {
       isAll = true
     }
     let routerSearchObjNew = { talkId: localStorage.getItem('talkId'), isAll }
@@ -89,41 +71,39 @@ export default function useList(props) {
       ...routerSearchObjNew,
     }
 
-    Api.h5.chatListSearch(searchParams).then((res) => {
-      if (res.code === 200) {
-        let { chatInfo, chatInfoForGPT4, groupChatInfo, realPeopleInfo } =
-          res.data
-        const { dataSource } = state
-        if (chatInfo.createTime) {
-          dataSource[0].createTime = moment(chatInfo.createTime - 0).format(
-            'MM-DD HH:mm:ss'
-          )
-          dataSource[0].intro = chatInfo.message
+    if (page === 1) {
+      Api.h5.chatListSearch(searchParams).then((res) => {
+        if (res.code === 200) {
+          let { chatInfo, chatInfoForGPT4, groupChatInfo, realPeopleInfo } =
+            res.data
+          if (chatInfo.createTime) {
+            let resultIndex = chatListTemp.findIndex((item) => item.uid === 0)
+            chatListTemp[resultIndex].createTime = chatInfo.createTime
+            chatListTemp[resultIndex].intro = chatInfo.message
+          }
+          if (chatInfoForGPT4.createTime) {
+            let resultIndex = chatListTemp.findIndex((item) => item.uid === 1)
+            chatListTemp[resultIndex].createTime = chatInfoForGPT4.createTime
+            chatListTemp[resultIndex].intro = chatInfoForGPT4.message
+          }
+          if (groupChatInfo.createTime) {
+            let resultIndex = chatListTemp.findIndex((item) => item.uid === 2)
+
+            chatListTemp[resultIndex].createTime = groupChatInfo.createTime
+            chatListTemp[resultIndex].intro = groupChatInfo.message
+          }
+          if (realPeopleInfo.createTime) {
+            let resultIndex = chatListTemp.findIndex((item) => item.uid === 3)
+            chatListTemp[resultIndex].createTime = realPeopleInfo.createTime
+            chatListTemp[resultIndex].intro = realPeopleInfo.message
+          }
+          setState({
+            dataSource: chatListTemp,
+            pageSize: 20,
+          })
         }
-        if (chatInfoForGPT4.createTime) {
-          dataSource[1].createTime = moment(
-            chatInfoForGPT4.createTime - 0
-          ).format('MM-DD HH:mm:ss')
-          dataSource[1].intro = chatInfoForGPT4.message
-        }
-        if (groupChatInfo.createTime) {
-          dataSource[2].createTime = moment(
-            groupChatInfo.createTime - 0
-          ).format('MM-DD HH:mm:ss')
-          dataSource[2].intro = groupChatInfo.message
-        }
-        if (realPeopleInfo.createTime) {
-          dataSource[3].createTime = moment(
-            realPeopleInfo.createTime - 0
-          ).format('MM-DD HH:mm:ss')
-          dataSource[3].intro = realPeopleInfo.message
-        }
-        setState({
-          dataSource,
-          pageSize: 10,
-        })
-      }
-    })
+      })
+    }
   }
 
   //详情
@@ -153,28 +133,45 @@ export default function useList(props) {
   }
 
   //操作
-  const handleAction = ({ uid }) => {
-    if (uid === 0) {
-      props.history.push(`/ai/chat`)
-    } else if (uid === 1) {
-      props.history.push(`/ai/chat-gpt-4`)
-    } else if (uid === 2) {
-      props.history.push(`/ai/groupChat`)
-    } else if (uid === 3) {
-      props.history.push(`/ai/realPeopleGroupChat`)
-    } else if (uid === 4) {
-      props.history.push(`/ai/course`)
-    } else if (uid === 5) {
-      props.history.push(`/ai/words`)
-    } else if (uid === 6) {
-      props.history.push(`/single/home/google`)
-    } else if (uid === 7) {
-      props.history.push(`/single/home/fileList`)
+  const handleAction = ({ uid, chatListItemType, name, users }) => {
+    if (chatListItemType === '1') {
+      if (uid === 0) {
+        props.history.push(`/ai/chat`)
+      } else if (uid === 1) {
+        props.history.push(`/ai/chat-gpt-4`)
+      } else if (uid === 2) {
+        props.history.push(`/ai/groupChat`)
+      } else if (uid === 3) {
+        props.history.push(`/ai/realPeopleGroupChat`)
+      } else if (uid === 4) {
+        props.history.push(`/ai/course`)
+      } else if (uid === 5) {
+        props.history.push(`/ai/words`)
+      } else if (uid === 6) {
+        props.history.push(`/single/home/google`)
+      } else if (uid === 7) {
+        props.history.push(`/single/home/fileList`)
+      }
+    } else if (chatListItemType === '2') {
+      name = encodeURIComponent(name)
+      let friendUserId = users.find(item => item.isOwner === '0').uid
+      props.history.push(`/single/home/realChat?realTalkId=${uid}&name=${name}&friendUserId=${friendUserId}`)
     }
   }
 
   useEffect(() => {
     handleSearch()
+    // eslint-disable-next-line
+  }, [])
+
+  useEffect(() => {
+    handleWatchChatUpdate({
+      callback: () => {
+        if (document.location.href.includes('/ai/index/home/chatList')) {
+          handleSearch()
+        }
+      },
+    })
     // eslint-disable-next-line
   }, [])
 
@@ -185,6 +182,7 @@ export default function useList(props) {
     pageSize: state.pageSize,
     currentImage,
     visible,
+    isHasMore,
     handleSearch,
     handleDetail,
     formatLessonTime,

@@ -32,6 +32,10 @@ const urls = {
   //#region 配置
   configGetHomeTabs: '/api/light/config/getHomeTabs',
   configGetMeData: '/api/light/config/getMeData',
+  configBase: '/api/light/config/base',
+  configChatList: '/api/light/config/chatList',
+
+
   //#endregion
 
   //#region 推荐
@@ -85,9 +89,23 @@ const urls = {
   chatEdit: '/api/light/chat/edit',
   chatAddAudio: '/api/light/chat/addAudio',
   chatGoogleSearch: '/api/light/chat/googleSearch',
-
-
   //#endregion 
+
+  //#region 真人对话
+  realTalkAppSearch: '/api/light/realTalk/appSearch',
+  realTalkAdminSearch: '/api/light/realTalk/adminSearch',
+  realTalkAdd: '/api/light/realTalk/add',
+  realTalkDelete: '/api/light/realTalk/delete',
+  realTalkEdit: '/api/light/realTalk/edit',
+  //#endregion
+
+  //#region 真人聊天
+  realChatAppSearch: '/api/light/realChat/appSearch',
+  realChatAdminSearch: '/api/light/realChat/adminSearch',
+  realChatAdd: '/api/light/realChat/add',
+  realChatDelete: '/api/light/realChat/delete',
+  realChatEdit: '/api/light/realChat/edit',
+  //#endregion    
 
   //#region 文件列表
   fileAppSearch: '/api/light/file/appSearch',

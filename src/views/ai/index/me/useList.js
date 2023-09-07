@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Modal } from 'antd'
 import Api from '../../../../api'
-
-const { confirm } = Modal
 
 export default function useList(props) {
   const [isLoading, setIsLoading] = useState(true)
@@ -29,10 +26,26 @@ export default function useList(props) {
     })
   }
 
+  const handleSendMessage = () => {
+    let friendUserId = '41f2e0a3-d136-41fd-ba95-918ee510b8e6'
+    Api.h5.realTalkAdd({ userIds: [friendUserId] }).then((res) => {
+      if (res.code === 200) {
+        let realTalkId = res.data.realTalkId
+        window.reactRouter.push(
+          `/single/home/realChat?realTalkId=${realTalkId}&name=徐同保&friendUserId=${friendUserId}`
+        )
+      }
+    })
+  }
+
   //跳转
   const handleJumpPage = (path) => {
-    // eslint-disable-next-line
-    props.history.push(path)
+    if (path === '/ai/single/me/customerService') {
+      console.log('人工客服')
+      handleSendMessage()
+    } else {
+      props.history.push(path)
+    }
   }
 
   const handleAvatarClick = (e) => {
@@ -56,50 +69,10 @@ export default function useList(props) {
         setUserInfo(userInfo)
         setNickname(res.data.nickname)
         localStorage.setItem('uid', res.data.uid)
-
-        let groupCodeHistory = localStorage.getItem('groupCode')
-        const { payStatus } = userInfo
-        if (payStatus !== '2' && groupCodeHistory !== '672913') {
-          let historyAddMsgTime = localStorage.getItem('addGroupMsgTime')
-          let now = Date.now()
-
-          if (historyAddMsgTime) {
-            if (now - historyAddMsgTime > 1000 * 60 * 60) {
-              // 继续
-            } else {
-              return
-            }
-          } else {
-            // 继续
-          }
-          if (username.includes('G-')) {
-            return
-          }
-          confirm({
-            title: '推荐加入微信群获得更多提问次数',
-            onOk() {
-              props.history.push('/ai/single/me/joinGroup')
-            },
-          })
-          let addGroupMsgTime = Date.now()
-          localStorage.setItem('addGroupMsgTime', addGroupMsgTime)
-        }
       } else {
         setUserInfo({ isVipStatus: false })
       }
     })
-    // eslint-disable-next-line
-  }, [])
-
-  useEffect(() => {
-    // if (username.includes('G-')) {
-    //   confirm({
-    //     title: '推荐游客观看本页的【视频教程】',
-    //     onOk() {
-    //       props.history.push('/ai/single/me/videoQuestion')
-    //     },
-    //   })
-    // }
     // eslint-disable-next-line
   }, [])
 

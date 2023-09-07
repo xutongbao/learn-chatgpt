@@ -1,5 +1,6 @@
-import React, { Suspense, lazy } from 'react'
+import React, { Suspense, lazy, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { initAudio } from '../api/socket'
 import {
   Switch,
   Route,
@@ -14,7 +15,10 @@ const NotFound = lazy(() => import('../views/ai/notFound/NotFound'))
 
 function Router({ extraRouter, h5Router }) {
   window.reactRouter = useHistory()
-  if (localStorage.getItem('isDebuger') === '1') {
+  if (
+    localStorage.getItem('isDebuger') === '1' ||
+    (window.platform === 'rn' && window.reactNative.RN_REACT_APP_MODE === 'dev')
+  ) {
     // eslint-disable-next-line
     const vConsole = new VConsole()
   }
@@ -23,6 +27,9 @@ function Router({ extraRouter, h5Router }) {
   if (href.includes('chat.') || href.includes('localhost')) {
     redirectPath = '/ai/index/home/chatList'
   }
+  useEffect(() => {
+    initAudio()
+  },  [])
   return (
     <>
       <ErrorBoundary>

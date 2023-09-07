@@ -1,0 +1,9 @@
+.m-download-wrap{display: flex;flex-direction: column; position: absolute;top: 0;left: 0;right: 0;bottom: 0;}
+.m-download-logo-wrap{display: flex;flex: 1; align-items: center;justify-content: center;}
+.m-download-logo{background-image: url(https://static.xutongbao.top/img/logo.png); width: 80px; height: 80px;background-size: 100% 100%;border-radius: 12px;}
+.m-download-logo-text{text-align: center;margin: 10px 0 0; font-size: 24px;color: #333;}
+.m-download-footer{display: flex;flex-direction: column;height: 200px;}
+.m-download-btn-wrap{display: flex;justify-content: center;}
+.m-download-btn{background: #f85959;border-radius: 6px;padding: 8px 20px;color: #fff;font-size: 20px;}
+.m-download-text-wrap{display: flex;justify-content: center;}
+.m-download-text{color: #f85959;padding: 10px 20px;font-size: 14px;}

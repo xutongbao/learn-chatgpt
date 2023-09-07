@@ -1,0 +1,24 @@
+.m-userlist-userinfo-wrap-box{display: flex;justify-content: center;background: #ddd;background: #ddd;position: absolute;top: 0;left: 0;right: 0;bottom: 0;overflow: hidden;}
+.m-userlist-userinfo-wrap{display: flex;flex-direction: column; max-width: 800px;width: 100%;background: white;}
+.m-userlist-userinfo-main{flex:1;display: flex;flex-direction: column;overflow-y: auto;}
+.m-userlist-userinfo-wrap{flex: 1;overflow-y: auto;background: #ededed;}
+.m-userlist-userinfo-header-wrap{position: relative; margin: 0 0 0 0; padding: 20px 20px 26px 28px;background: #fff;cursor: pointer;}
+.m-userlist-userinfo-user-edit-icon{position: absolute;top: 90px;right: 10px;font-size: 20px;transform: rotate(180deg);color: #999;}
+.m-userlist-userinfo-header{display: flex; }
+.m-userlist-userinfo-header-img{width: 64px!important; height: 64px!important;border-radius: 6px;}
+.m-userlist-userinfo-header .ant-image-mask-info {display: none;}
+.m-userlist-userinfo-header-info{flex: 1;margin: 20px 10px 0 20px;overflow: hidden;}
+.m-userlist-userinfo-header-info-row1{height: 20px;line-height: 20px;display: flex;}
+.m-userlist-userinfo-header-username{font-weight: bold;font-size: 20px;}
+.m-userlist-userinfo-header-vip{color: #ff9a03;vertical-align:middle;display: inline-block;margin: 3px 0 0 5px;font-size: 22px;}
+.m-userlist-userinfo-header-money{color: #a5680e;vertical-align:middle;display: inline-block;margin: 0 0 0 5px;font-size: 22px;}
+.m-userlist-userinfo-header-info-row2{margin: 10px 0 0 0; height: 24px;font-size: 18px;color: #999;display: flex;}
+.m-userlist-userinfo-header-follow{display: inline-block;}
+.m-userlist-userinfo-header-count{font-size: 14px;display: inline-block;margin: 0 2px 0 0;font-weight: bold;}
+.m-userlist-userinfo-header-due-date{margin: 2px 0 0 0; line-height: 30px;font-size: 16px;color: #999;}
+.m-userlist-userinfo-group-wrap{padding: 10px 0; display: flex; background: white;flex-flow: row wrap;align-content: flex-start;gap: 10px 0;}
+.m-userlist-userinfo-group-item{flex: 0 0 25%;text-align: center;display: flex;flex-direction: column;cursor: pointer;}
+.m-userlist-userinfo-group-item-icon{font-size: 26px!important;color: #333;line-height: 36px;}
+.m-userlist-userinfo-group-item-title{font-size: 14px;height: 20px;}
+.m-userlist-userinfo-btn-wrap{margin: 10px 0 0 0;padding: 14px 0;font-size: 16px; background: #fff; color: #27467f; font-weight: bold; display: flex;align-items: center;justify-content: center;cursor: pointer;}
+.m-userlist-userinfo-btn-icon{margin: 0 5px 0 0;font-weight: 400;}

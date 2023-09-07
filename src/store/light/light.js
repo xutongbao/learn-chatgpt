@@ -11,6 +11,8 @@ const defaultState = fromJS({
   collapsed: false,
   theme: 'dark',
   selectedKeys: '',
+  isRNGotToken: false,
+  homeMsgCount: '',
 })
 
 const reducer = (state = defaultState, action) => {

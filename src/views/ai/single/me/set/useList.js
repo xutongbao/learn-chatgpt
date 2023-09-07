@@ -8,8 +8,14 @@ export default function useList(props) {
   const [codeHighLight, setCodeHighLight] = useState(codeHighLightHistory)
   let wideScreenHistory =
     localStorage.getItem('wideScreen') === 'false' ? false : true
+  let socketLoginAlarmHistory =
+    localStorage.getItem('socketLoginAlarm') === 'false' ? false : true
+
   const [wideScreen, setWideScreen] = useState(wideScreenHistory)
   const [subscribe, setSubscribe] = useState(true)
+  const [socketLoginAlarm, setSocketLoginAlarm] = useState(
+    socketLoginAlarmHistory
+  )
 
   const handleCodeHighLight = (value) => {
     setCodeHighLight(value)
@@ -30,22 +36,40 @@ export default function useList(props) {
     })
   }
 
+  const handleSocketLoginAlarm = (value) => {
+    setSocketLoginAlarm(value)
+    localStorage.setItem('socketLoginAlarm', value)
+  }
+
   useEffect(() => {
-    Api.h5.userGetInfo({}).then((res) => {
-      if (res.code === 200) {
-        let userInfo = res.data
-        setSubscribe(userInfo.subscribe === '2' ? false : true)
+    if (window.platform === 'rn') {
+      if (props.isRNGotToken === true) {
+        Api.h5.userGetInfo({}).then((res) => {
+          if (res.code === 200) {
+            let userInfo = res.data
+            setSubscribe(userInfo.subscribe === '2' ? false : true)
+          }
+        })
       }
-    })
+    } else {
+      Api.h5.userGetInfo({}).then((res) => {
+        if (res.code === 200) {
+          let userInfo = res.data
+          setSubscribe(userInfo.subscribe === '2' ? false : true)
+        }
+      })
+    }
     // eslint-disable-next-line
-  }, [])
+  }, [props.isRNGotToken])
 
   return {
     codeHighLight,
     wideScreen,
     subscribe,
+    socketLoginAlarm,
     handleCodeHighLight,
     handleWideScreen,
     handleSubscribe,
+    handleSocketLoginAlarm,
   }
 }

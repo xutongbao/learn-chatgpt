@@ -25,6 +25,7 @@ export default function useList(props) {
     }
     Api.h5.userAppEdit(newValues).then((res) => {
       if (res.code === 200) {
+        localStorage.setItem('nickname', values.nickname)
         message.success('成功')
         props.history.push('/ai/index/me')
       }

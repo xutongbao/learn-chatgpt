@@ -65,13 +65,23 @@ export default function useList(props) {
   }, [pathname])
 
   useEffect(() => {
-    Api.h5.configGetMeData().then((res) => {
-      if (res.code === 200) {
-        setGroupButton1(res.data.me.groupButton2)
+    if (window.platform === 'rn') {
+      if (props.isRNGotToken === true) {
+        Api.h5.configGetMeData().then((res) => {
+          if (res.code === 200) {
+            setGroupButton1(res.data.me.groupButton2)
+          }
+        })
       }
-    })
+    } else {
+      Api.h5.configGetMeData().then((res) => {
+        if (res.code === 200) {
+          setGroupButton1(res.data.me.groupButton2)
+        }
+      })
+    }
     // eslint-disable-next-line
-  }, [])
+  }, [props.isRNGotToken])
 
   return {
     routeDom,

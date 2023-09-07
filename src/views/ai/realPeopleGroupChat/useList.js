@@ -246,9 +246,15 @@ export default function useList(props) {
   }, [state.dataSource])
 
   useEffect(() => {
-    handleSearch({ isGetNewest: true })
+    if (window.platform === 'rn') {
+      if (props.isRNGotToken === true) {
+        handleSearch({ isGetNewest: true })
+      }
+    } else {
+      handleSearch({ isGetNewest: true })
+    }
     // eslint-disable-next-line
-  }, [])
+  }, [props.isRNGotToken])
 
   return {
     username,

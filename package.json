@@ -5,6 +5,7 @@
   "dependencies": {
     "@ant-design/pro-table": "^2.56.5",
     "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/material": "^5.10.3",
@@ -15,7 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
-    "antd": "^5.3.2",
+    "antd": "^5.8.4",
     "antd-mobile": "^5.24.2",
     "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
@@ -105,6 +106,7 @@
     "sass-loader": "^12.3.0",
     "semver": "^7.3.5",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.7.2",
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.0.2",
@@ -128,13 +130,11 @@
   "scripts": {
     "start": "cross-env MODE_ENV=prod node scripts/start.js",
     "dev": "cross-env MODE_ENV=dev node scripts/start.js",
-    "build_test": "cross-env MODE_ENV=test GENERATE_SOURCEMAP=false GENERATE_BUNDLE_ANALYZER_REPORT=true node scripts/build.js",
+    "build_test3": "cross-env MODE_ENV=test GENERATE_SOURCEMAP=false GENERATE_BUNDLE_ANALYZER_REPORT=true node scripts/build.js",
     "build": "cross-env MODE_ENV=prod PUBLIC_URL=http://static.xutongbao.top/ GENERATE_SOURCEMAP=false node scripts/build.js",
     "build_test2": "cross-env MODE_ENV=dev GENERATE_SOURCEMAP=true GENERATE_BUNDLE_ANALYZER_REPORT=false node scripts/build.js",
-    "build_dk": "cross-env MODE_ENV=dev PUBLIC_URL=cdn/ GENERATE_SOURCEMAP=true node scripts/build.js",
+    "build_test": "cross-env MODE_ENV=test GENERATE_SOURCEMAP=true node scripts/build.js",
     "build2": "cross-env MODE_ENV=prod PUBLIC_URL=http://static.xutongbao.top/ GENERATE_SOURCEMAP=true node scripts/build.js",
-
-
     "test": "node scripts/test.js"
   },
   "eslintConfig": {

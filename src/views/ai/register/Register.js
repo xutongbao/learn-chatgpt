@@ -3,7 +3,7 @@ import { Button, Input, Dropdown, Form, Popover } from 'antd'
 import { connect } from 'react-redux'
 import { Icon, UploadImgToCNDMobile } from '../../../components/light'
 import useList from './useListRegister'
-import useBrowserCheck from '../../../utils/hooks/useBrowserCheck'
+import useBrowserCheck from '../../../utils/hooks/useBrowserCheck/useBrowserCheck'
 import './index.css'
 
 function Register(props) {

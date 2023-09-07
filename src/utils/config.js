@@ -1,9 +1,19 @@
 const baseURL = {
   // 使用反向代理解决跨域时，dev应为空字符串
   //dev: '',
-  dev: 'http://localhost:85', //192.168.0.137 localhost
+  dev: 'http://172.20.10.4:85', //192.168.0.137 localhost 192.168.1.107 172.20.10.4
   //dev: 'http://yuying-api.xutongbao.top',
-  test: 'http://yuying-api.xutongbao.top',
+  test: '',
+  //prod: 'http://yuying-api.xutongbao.top',
+  prod: '' //使用nginx代理解决https请求转发到http
+}[process.env.REACT_APP_MODE]
+
+const socketBaseURL = {
+  // 使用反向代理解决跨域时，dev应为空字符串
+  //dev: '',
+  dev: 'http://172.20.10.4:84', //192.168.0.137 localhost 192.168.1.107 172.20.10.4:84
+  //dev: 'http://yuying-api.xutongbao.top',
+  test: '',
   //prod: 'http://yuying-api.xutongbao.top',
   prod: '' //使用nginx代理解决https请求转发到http
 }[process.env.REACT_APP_MODE]
@@ -22,4 +32,4 @@ const nodeBaseURL = {
   prod: 'https://efficacious-tiny-infinity.glitch.me',
 }[process.env.REACT_APP_MODE]
 
-export { baseURL, imageBaseUrl, nodeBaseURL }
+export { baseURL, socketBaseURL, imageBaseUrl, nodeBaseURL }

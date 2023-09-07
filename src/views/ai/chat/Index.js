@@ -1,28 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import {
-  Input,
-  Button,
-  Dropdown,
-  Popover,
-  Descriptions,
-  Skeleton,
-  Image,
-} from 'antd'
-// eslint-disable-next-line
-import { SendOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import { Input, Button, Dropdown, Popover, Skeleton } from 'antd'
+import { PlusCircleOutlined } from '@ant-design/icons'
 import useList from './useList'
 import useFuntionCalling from './useFuntionCalling'
 import moment from 'moment'
 import { SinglePageHeader, Icon } from '../../../components/light'
 import { Scrollbar } from 'react-scrollbars-custom'
 import { AudioRecorder } from 'react-audio-voice-recorder'
-
+import useDialog from './useDialog'
+import useUserInfo from '../../../utils/hooks/useUserInfo/Index'
 import './index.css'
 import './index2.css'
 
 function Index(props) {
+  const { dialogShow, dialogDom } = useDialog(props)
+  const { userInfoShowModel, userInfoGetDom } = useUserInfo()
+
   // eslint-disable-next-line
   const {
     dataSource,
@@ -34,12 +29,13 @@ function Index(props) {
     pageType,
     title,
     inputType,
+    isLoading,
     handleSend,
     handleCtrlEnter,
     handleInputChange,
     handleScroll,
+    handleUpdateToGPT4,
     getMessageToolbar,
-    handleJumpPage,
     handleToolbarOpenChange,
     handleAudioPlayerBtnClick,
     // handleSelectText,
@@ -51,7 +47,7 @@ function Index(props) {
     setInputType,
     handleUploadAudio,
     handleNotAllowedOrFound,
-  } = useList(props)
+  } = useList({ ...props, dialogShow })
 
   const { functionCallingShowDrawer, functionCallingGetDom } =
     useFuntionCalling({
@@ -112,7 +108,10 @@ function Index(props) {
           label: (
             <>
               {/* eslint-disable-next-line */}
-              <a href={`https://llq.ywswge.cn`} target="_blank">
+              <a
+                href={`https://static.xutongbao.top/app/ChromeSetup.exe`}
+                target="_blank"
+              >
                 下载chrome浏览器（推荐）
               </a>
             </>
@@ -185,7 +184,10 @@ function Index(props) {
           label: (
             <>
               {/* eslint-disable-next-line */}
-              <a href={`https://llq.ywswge.cn`} target="_blank">
+              <a
+                href={`https://static.xutongbao.top/app/ChromeSetup.exe`}
+                target="_blank"
+              >
                 下载chrome浏览器（推荐）
               </a>
             </>
@@ -209,51 +211,6 @@ function Index(props) {
     }
   }
 
-  const getPayStatusDom = (text) => {
-    let hook = {
-      1: {
-        title: '未付费',
-        className: 'grey',
-      },
-      2: {
-        title: '已付费',
-        className: 'green',
-      },
-    }
-    return (
-      <span className={`m-tag-status ${hook[text] && hook[text].className}`}>
-        {hook[text] && hook[text].title}
-      </span>
-    )
-  }
-
-  //用户信息
-  const getUserInfo = (item) => {
-    return (
-      <div className="m-ai-chat-userinfo-wrap">
-        <Descriptions
-          title="用户信息"
-          column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}
-        >
-          <Descriptions.Item label="用户头像" span={1}>
-            <Image
-              src={item.userAvatarCdn}
-              className="m-ai-chat-intro-img"
-              alt={'图片'}
-            ></Image>
-          </Descriptions.Item>
-          {item?.userInfo?.payStatus ? (
-            <Descriptions.Item label="是否付费" span={1}>
-              {getPayStatusDom(item?.userInfo?.payStatus)}
-            </Descriptions.Item>
-          ) : null}
-          <Descriptions.Item label="注册时间" span={1}>
-            {moment(item.userInfo.createTime - 0).format('MM-DD HH:mm:ss')}
-          </Descriptions.Item>
-        </Descriptions>
-      </div>
-    )
-  }
   //音频播放器
   const getAudioDom = (item) => {
     return (
@@ -273,14 +230,17 @@ function Index(props) {
           title={title}
         ></SinglePageHeader>
         <div className="m-ai-main" id="scrollableDiv" onScroll={handleScroll}>
-          <div className="m-ai-list">
-            <Dropdown
-              menu={{ items: getItems() }}
-              className="m-ai-dropdown"
-              trigger={['click', 'hover']}
-            >
-              <Icon name="more" className="m-ai-menu-btn"></Icon>
-            </Dropdown>
+          <div className={`m-ai-list ${window.platform === 'rn' ? 'rn' : ''}`}>
+            {window.platform === 'rn' ? null : (
+              <Dropdown
+                menu={{ items: getItems() }}
+                className="m-ai-dropdown"
+                trigger={['click', 'hover']}
+              >
+                <Icon name="more" className="m-ai-menu-btn"></Icon>
+              </Dropdown>
+            )}
+
             {dataSource.length > 0 ? (
               <Scrollbar onScroll={handleScroll} ref={scrollEl}>
                 {dataSource.map((item, index) => (
@@ -288,23 +248,17 @@ function Index(props) {
                     <div className="m-ai-user-list-wrap-wrap">
                       <div className="m-ai-user-list-wrap">
                         {item.messageType === '1' ? (
-                          <Popover
-                            placement="rightTop"
-                            title={null}
-                            content={getUserInfo(item)}
-                            trigger="click"
-                            getPopupContainer={() =>
-                              document.getElementById(
-                                `message-item-${item.uid}`
-                              )
+                          <img
+                            className="m-ai-user-list-avatar"
+                            src={item.userAvatarCdn}
+                            alt="头像"
+                            onClick={() =>
+                              userInfoShowModel({
+                                uid: item.userInfo.uid,
+                                info: item.info,
+                              })
                             }
-                          >
-                            <img
-                              className="m-ai-user-list-avatar"
-                              src={item.userAvatarCdn}
-                              alt="头像"
-                            ></img>
-                          </Popover>
+                          ></img>
                         ) : (
                           <Popover
                             placement="rightTop"
@@ -369,14 +323,6 @@ function Index(props) {
                                     dangerouslySetInnerHTML={{
                                       __html: item.messageForHtml,
                                     }}
-                                    // onClick={() => handleSelectText(item.uid)}
-                                    // onTouchStart={() =>
-                                    //   handleTouchStart(item.uid)
-                                    // }
-                                    // onTouchEnd={() => handleTouchEnd(item.uid)}
-                                    // onDoubleClick={() =>
-                                    //   handleDoubleClick(item.uid)
-                                    // }
                                     id={`m-ai-message-value-${item.uid}`}
                                   ></div>
                                   <div
@@ -418,13 +364,15 @@ function Index(props) {
                                         handleAudioPlayerBtnClick(item)
                                       }
                                     ></Icon>
-                                    <Button
-                                      type="text"
-                                      className={`m-ai-message-audio-player-btn audio-ing ${
-                                        item.isAudioLoading ? 'active' : ''
-                                      }`}
-                                      loading={true}
-                                    />
+                                    {item.isAudioLoading ? (
+                                      <Button
+                                        type="text"
+                                        className={`m-ai-message-audio-player-btn audio-ing ${
+                                          item.isAudioLoading ? 'active' : ''
+                                        }`}
+                                        loading={true}
+                                      />
+                                    ) : null}
                                   </Popover>
                                 </div>
                                 {(item.chatGPTVersion === '3.5' ||
@@ -436,9 +384,7 @@ function Index(props) {
                                     </div>
                                     <div
                                       className="m-ai-message-footer-upgrade"
-                                      onClick={() =>
-                                        handleJumpPage('/ai/single/me/exchange')
-                                      }
+                                      onClick={() => handleUpdateToGPT4()}
                                     >
                                       升级到GPT-4
                                     </div>
@@ -463,7 +409,7 @@ function Index(props) {
               </Scrollbar>
             ) : null}
 
-            {dataSource.length === 0 && pageType === '2' ? (
+            {dataSource.length === 0 && isLoading ? (
               <Skeleton
                 avatar
                 paragraph={{
@@ -539,13 +485,14 @@ function Index(props) {
                   loading={isSending}
                   // icon={<SendOutlined />}
                   onClick={handleSend}
+                  className="m-ai-footer-btn-send"
                 >
                   发送
                 </Button>
               </Popover>
               <Popover
                 placement="topRight"
-                content={<div>插件库</div>}
+                content={device?.type === 'mobile' ? '' : <div>插件库</div>}
                 trigger={device?.type === 'mobile' ? '' : 'hover'}
               >
                 <Button
@@ -557,6 +504,8 @@ function Index(props) {
           ) : null}
         </div>
         {functionCallingGetDom()}
+        {dialogDom()}
+        {userInfoGetDom()}
       </div>
     </div>
   )
@@ -565,6 +514,7 @@ function Index(props) {
 const mapStateToProps = (state) => {
   return {
     collapsed: state.getIn(['light', 'collapsed']),
+    isRNGotToken: state.getIn(['light', 'isRNGotToken']),
   }
 }
 

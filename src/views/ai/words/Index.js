@@ -46,7 +46,10 @@ function Index(props) {
         label: (
           <>
             {/* eslint-disable-next-line */}
-            <a href={`https://llq.ywswge.cn`} target="_blank">
+            <a
+              href={`https://static.xutongbao.top/app/ChromeSetup.exe`}
+              target="_blank"
+            >
               下载chrome浏览器（推荐）
             </a>
           </>
@@ -67,13 +70,15 @@ function Index(props) {
           title="识字"
         ></SinglePageHeader>
         <div className="m-words-list" id="scrollableDiv">
-          <Dropdown
-            menu={{ items: getItems() }}
-            className="m-words-dropdown"
-            trigger={['click', 'hover']}
-          >
-            <Icon name="more" className="m-words-menu-btn"></Icon>
-          </Dropdown>
+          {window.platform === 'rn' ? null : (
+            <Dropdown
+              menu={{ items: getItems() }}
+              className="m-words-dropdown"
+              trigger={['click', 'hover']}
+            >
+              <Icon name="more" className="m-words-menu-btn"></Icon>
+            </Dropdown>
+          )}
           <InfiniteScroll
             dataLength={dataSource.length}
             next={handleSearch}
@@ -148,6 +153,7 @@ function Index(props) {
 const mapStateToProps = (state) => {
   return {
     collapsed: state.getIn(['light', 'collapsed']),
+    isRNGotToken: state.getIn(['light', 'isRNGotToken']),
   }
 }
 

@@ -10,27 +10,48 @@ import './index.css'
 
 function Index(props) {
   // eslint-disable-next-line
-  const { routeDom, filterRouteArr, tabsValue, handleTabsChange, handleJumpPage } = useList(props)
-
+  const {
+    routeDom,
+    filterRouteArr,
+    tabsValue,
+    handleTabsChange,
+    handleJumpPage,
+  } = useList(props)
 
   return (
     <div>
       <div className="m-single-wrap">
         <div className="m-single-inner">
-          <SinglePageHeader goBackPath="/ai/index/me" isBackTextVisible={true}></SinglePageHeader>
-          <Box sx={{ bgcolor: 'background.paper' }} className="m-single-tab-box">
-            <Tabs
-              value={tabsValue}
-              onChange={(event, value) => handleTabsChange(event, value)}
-              variant="scrollable"
-              // scrollButtons={false}
-              // allowScrollButtonsMobile={true}
-              // centered={true}
-              className="m-mui-tabs"
+          <SinglePageHeader
+            goBackPath="/ai/index/me"
+            isBackTextVisible={true}
+          ></SinglePageHeader>
+          {window.platform === 'rn' ? null : (
+            <Box
+              sx={{ bgcolor: 'background.paper' }}
+              className="m-single-tab-box"
             >
-              {filterRouteArr.map((item, index) => (<Tab key={index} id={`m-tab-${index}`} label={item.title} onClick={() => handleJumpPage(item)} />))}
-            </Tabs>
-          </Box>
+              <Tabs
+                value={tabsValue}
+                onChange={(event, value) => handleTabsChange(event, value)}
+                variant="scrollable"
+                // scrollButtons={false}
+                // allowScrollButtonsMobile={true}
+                // centered={true}
+                className="m-mui-tabs"
+              >
+                {filterRouteArr.map((item, index) => (
+                  <Tab
+                    key={index}
+                    id={`m-tab-${index}`}
+                    label={item.title}
+                    onClick={() => handleJumpPage(item)}
+                  />
+                ))}
+              </Tabs>
+            </Box>
+          )}
+
           <Suspense fallback={<Loading isLazyLoading={true}></Loading>}>
             <Switch>{routeDom}</Switch>
           </Suspense>
@@ -43,6 +64,7 @@ function Index(props) {
 const mapStateToProps = (state) => {
   return {
     collapsed: state.getIn(['light', 'collapsed']),
+    isRNGotToken: state.getIn(['light', 'isRNGotToken']),
   }
 }
 

@@ -50,6 +50,18 @@ export default function useList(props) {
     })
   }
 
+  const handleSendMessage = () => {
+    let friendUserId = '41f2e0a3-d136-41fd-ba95-918ee510b8e6'
+    Api.h5.realTalkAdd({ userIds: [friendUserId] }).then((res) => {
+      if (res.code === 200) {
+        let realTalkId = res.data.realTalkId
+        window.reactRouter.push(
+          `/single/home/realChat?realTalkId=${realTalkId}&name=徐同保&friendUserId=${friendUserId}`
+        )
+      }
+    })
+  }
+
   useEffect(() => {
     // eslint-disable-next-line
   }, [])
@@ -63,5 +75,6 @@ export default function useList(props) {
     handleQuit,
     handleJumpPage,
     handleCopy,
+    handleSendMessage,
   }
 }

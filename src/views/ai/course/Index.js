@@ -2,9 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { SinglePageHeader, Icon } from '../../../components/light'
-import {
-  Dropdown,
-} from 'antd'
+import { Dropdown } from 'antd'
 
 import Course from './recommend/Index'
 import './index.css'
@@ -47,7 +45,10 @@ function Index(props) {
         label: (
           <>
             {/* eslint-disable-next-line */}
-            <a href={`https://llq.ywswge.cn`} target="_blank">
+            <a
+              href={`https://static.xutongbao.top/app/ChromeSetup.exe`}
+              target="_blank"
+            >
               下载chrome浏览器（推荐）
             </a>
           </>
@@ -67,13 +68,15 @@ function Index(props) {
           ></SinglePageHeader>
           <div className="m-ai-main">
             <div className="m-ai-course-list">
-              <Dropdown
-                menu={{ items: getItems() }}
-                className="m-ai-dropdown"
-                trigger={['click', 'hover']}
-              >
-                <Icon name="more" className="m-ai-menu-btn"></Icon>
-              </Dropdown>
+              {window.platform === 'rn' ? null : (
+                <Dropdown
+                  menu={{ items: getItems() }}
+                  className="m-ai-dropdown"
+                  trigger={['click', 'hover']}
+                >
+                  <Icon name="more" className="m-ai-menu-btn"></Icon>
+                </Dropdown>
+              )}
               <Course></Course>
             </div>
           </div>

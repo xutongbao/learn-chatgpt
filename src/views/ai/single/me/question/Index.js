@@ -64,8 +64,8 @@ function Index(props) {
               <div>解决方案：下载chrome浏览器</div>
               <div>
                 {/* eslint-disable-next-line */}
-                <a href={`https://llq.ywswge.cn`} target="_blank">
-                  {`https://llq.ywswge.cn`}
+                <a href={`https://static.xutongbao.top/app/ChromeSetup.exe`} target="_blank">
+                  {`https://static.xutongbao.top/app/ChromeSetup.exe`}
                 </a>
               </div>
             </div>

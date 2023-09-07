@@ -13,14 +13,14 @@ function Index(props) {
     handleFinish,
     handleFinishFailed,
     handleCopy,
-    handleJumpPage,
+    handleSendMessage,
   } = useList(props)
 
-  const { wechatCode, wechatQRCode, xingqiu1 } = getAdminInfo()
+  const { wechatCode, wechatQRCode } = getAdminInfo()
 
   return (
     <>
-      <div className="m-single-page-space m-form-bottom">
+      <div className="m-single-page-space">
         <div className="m-single-exchange-form-wrap">
           <Form
             form={form}
@@ -57,47 +57,24 @@ function Index(props) {
               >
                 立即兑换
               </Button>
+              <Button onClick={handleSendMessage}>
+                人工客服
+              </Button>
             </Form.Item>
           </Form>
         </div>
         <div className="m-single-exchange-intro">
-          <div>1. VIP过期，提示“提问数受限”，升级到GPT-4等都需要兑换码。</div>
           <div>
-            2. 请加微信：
+            加微信：
             <span
               className="m-weixin-code"
               onClick={() => handleCopy(wechatCode)}
             >
               {wechatCode}
             </span>
-            ，获得兑换码。也可以扫描二维码添加微信。
+            ，获得兑换码，成为会员，尽情使用ChatGPT！
           </div>
-          <div>3. 会员每天可以提问100条</div>
-          <div>
-            4. 您可以
-            <span
-              onClick={() => handleJumpPage('/ai/single/me/share')}
-              className="m-weixin-code"
-            >
-              邀请
-            </span>
-            其他人注册并购买兑换码，自己得到提成
-          </div>
-          <div>
-            5. 通过
-            <span
-              onClick={() => handleJumpPage('/ai/single/me/share')}
-              className="m-weixin-code"
-            >
-              分享
-            </span>
-            把二维码或链接分享给你的朋友，邀请他们注册，你和你的朋友都会自动获得更多的提问次数。每邀请一个用户注册你可以连续7天每天多提问10次。你的朋友可以一直每天多提问10次。
-          </div>
-          {wechatCode === 'xu1183391880' ? (
-            <div>6. 另一种获得兑换码的方法：加入知识星球私信我获得兑换码</div>
-          ) : null}
         </div>
-
         <div className="m-single-exchange-img-wrap">
           <Image
             src={wechatQRCode}
@@ -105,15 +82,6 @@ function Index(props) {
             alt={'图片'}
           ></Image>
         </div>
-        {wechatCode === 'xu1183391880' ? (
-          <div className="m-single-exchange-img-wrap">
-            <Image
-              src={xingqiu1}
-              className="m-single-exchange-img"
-              alt={'图片'}
-            ></Image>
-          </div>
-        ) : null}
       </div>
     </>
   )

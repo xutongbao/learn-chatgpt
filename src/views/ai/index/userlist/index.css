@@ -1,18 +1,20 @@
-.m-single-list{flex: 1;padding: 10px 0; overflow-y: auto;}
-.m-single-ai-user-list-middle-wrap-wrap{margin: 0 0 0 14px; height: 61px;}
-.m-single-user-list-wrap{padding: 10px 0px 10px;display: flex;line-height: 28px;align-items: center;}
-.m-single-ai-play-list-item-img-wrap{position: relative; display: flex;position: relative; width: 40px;height: 40px;background: #dddddd;border-radius: 4px;}
-.m-single-ai-play-list-item-img-wrap::before{content: '';margin: auto;width: 20px;height: 20px;background-image: url(../../../../static/images/loading.png);background-size: 100% 100%; animation: loading 0.5s linear infinite;}
-.m-single-ai-user-list-middle-avatar{position: absolute;top: 0;left: 0; width: 40px!important;height: 40px!important;border-radius: 6px;}
-.m-single-user-list-user-wrap{flex:1; padding: 0 14px 0 10px;line-height: 18px;overflow: hidden;}
-.m-single-user-list-user-name{font-size: 14px;font-weight: bold;}
-.m-single-user-list-user-fans-count{font-size: 12px;color: #999;}
-.m-single-user-list-btn-wrap{padding: 0 0 0 5px;}
-.m-single-user-list-btn{padding: 4px 12px;border-radius: 1px;}
-.m-single-user-list-btn.unfollow{border: 1px solid #ddd; color: #333;cursor: pointer;}
-.m-single-user-list-btn.followed{color: #999;}
-.m-single-ai-user-list-middle-divider{margin: 0 0 0 52px; height: 1px;background: rgba(0, 0, 0, 0.06);}
-
+.m-userlist-list-wrap{display: flex;flex: 1; position: relative;overflow-y: auto;}
+.m-userlist-search{position: absolute;top: 0;left: 0;right: 0; display: flex;justify-content: center; padding: 10px 10px 10px 10px;backdrop-filter: blur(20px);border-bottom: 1px solid #ddd; z-index: 9;}
+.m-userlist-list{flex: 1;padding: 10px 0; overflow-y: auto;}
+.m-userlist-list::before{content: '';height: 50px;display: block;}
+.m-userlist-ai-user-list-middle-wrap-wrap{margin: 0 0 0 14px; height: 61px;}
+.m-userlist-user-list-wrap{padding: 10px 0px 10px;display: flex;line-height: 28px;align-items: center;}
+.m-userlist-ai-play-list-item-img-wrap{position: relative; display: flex;position: relative; width: 40px;height: 40px;background: #dddddd;border-radius: 4px;}
+.m-userlist-ai-play-list-item-img-wrap::before{content: '';margin: auto;width: 20px;height: 20px;background-image: url(../../../../static/images/loading.png);background-size: 100% 100%; animation: loading 0.5s linear infinite;}
+.m-userlist-ai-user-list-middle-avatar{position: absolute;top: 0;left: 0; width: 40px!important;height: 40px!important;border-radius: 6px;}
+.m-userlist-user-list-user-wrap{flex:1; padding: 0 14px 0 10px;line-height: 18px;overflow: hidden;}
+.m-userlist-user-list-user-name{font-size: 14px;font-weight: bold;margin: 0 0 5px 0;}
+.m-userlist-user-list-user-fans-count{font-size: 12px;color: #999;}
+.m-userlist-user-list-btn-wrap{padding: 0 0 0 5px;}
+.m-userlist-user-list-btn{padding: 4px 12px;border-radius: 1px;}
+.m-userlist-user-list-btn.unfollow{border: 1px solid #ddd; color: #333;cursor: pointer;}
+.m-userlist-user-list-btn.followed{color: #999;}
+.m-userlist-ai-user-list-middle-divider{margin: 0 0 0 52px; height: 1px;background: rgba(0, 0, 0, 0.06);}
 
 
 

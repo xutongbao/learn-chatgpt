@@ -13,14 +13,18 @@ export default function useList(props) {
   const [isHasMore, setIsHasMore] = useState(true)
   const [currentImage, setCurrentImage] = useState()
   const [visible, setVisible] = useState(false)
-
+  const [searchNickname, setSearchNickname] = useState('')
+  const [searchHistory, setSearchHistory] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   //搜索
   const handleSearch = ({
     page = current,
     pageSize = state.pageSize,
     isRefresh = false,
+    searchNicknameCurrent,
   } = {}) => {
+    setIsLoading(true)
     if (isRefresh) {
       setState({
         dataSource: [],
@@ -28,86 +32,82 @@ export default function useList(props) {
       })
       setPlayerList([])
     }
-    let searchData = { pageNum: page, pageSize }
-    Api.h5.userUserlist(searchData).then((res) => {
-      if (res.code === 200) {
-        const { pageNum, pageSize, total } = res.data
-
-        let list = res.data.list
-        list = list.map(item => {
-          let { avatarCdn } = item
-          if (avatarCdn === 'http://static.xutongbao.top/img/logo.png') {
-            avatarCdn = 'http://static.xutongbao.top/img/m-default-avatar.jpg'
-          }
-          return {
-            ...item,
-            avatarCdn
-          }
-        })
-        if (isRefresh) {
-          setState({
-            dataSource: [...list],
-            pageSize: res.data.pageSize,
-          })
-        } else {
-          setState({
-            dataSource: [...state.dataSource, ...list],
-            pageSize: res.data.pageSize,
-          })
-        }
-        setTotal(res.data.total)
-        const currentTemp = res.data.pageNum + 1
-        setCurrent(currentTemp)
-        setIsHasMore(pageNum < Math.ceil(total / pageSize))
-      }
-    })
-  }
-
-  //详情
-  const handleDetail = ({ lessonUid, urlCnd }) => {
-    props.history.push(
-      `/h5/single/play?lessonUid=${lessonUid}&urlCnd=${urlCnd}`
-    )
-  }
-
-  const formatLessonTime = (text) => {
-    const resultTime = text.split(':')
-    if (resultTime[0] === '00') {
-      return text.slice(3)
-    } else {
-      return text
+    let nickname =
+      typeof searchNicknameCurrent === 'string'
+        ? searchNicknameCurrent
+        : searchNickname
+    setSearchNickname(nickname)
+    let searchHistoryLocalStorage = localStorage.getItem('searchHistory')
+      ? localStorage.getItem('searchHistory')
+      : []
+    try {
+      searchHistoryLocalStorage = Array.isArray(searchHistoryLocalStorage)
+        ? searchHistoryLocalStorage
+        : JSON.parse(searchHistoryLocalStorage)
+    } catch (error) {
+      console.log(error)
     }
-  }
-
-  //关注
-  const handleFollow = (item) => {
-    Api.h5
-      .behaviorFollowAction({
-        courseUserIds: [item.uid],
-        isFollow: !item.isFollow
+    if (Array.isArray(searchHistoryLocalStorage)) {
+      searchHistoryLocalStorage.push({
+        label: nickname,
+        value: nickname,
+        createTime: Date.now(),
       })
+      let map = new Map()
+      searchHistoryLocalStorage
+        .filter((item) => item.value.trim() !== '')
+        .filter((item) => item.createTime)
+        .sort((a, b) => b.createTime - a.createTime)
+        .slice(0, 20)
+        .forEach((item) => {
+          map.set(item.value, item)
+        })
+      searchHistoryLocalStorage = [...map.values()]
+      setSearchHistory(searchHistoryLocalStorage)
+      localStorage.setItem(
+        'searchHistory',
+        JSON.stringify(searchHistoryLocalStorage)
+      )
+    }
+
+    let searchData = { pageNum: page, pageSize, nickname }
+    Api.h5
+      .userUserlist(searchData)
       .then((res) => {
+        setIsLoading(false)
         if (res.code === 200) {
-          let { dataSource, pageSize } = state
-          let resultIndex = dataSource.findIndex(
-            (dataSourceItem) => dataSourceItem.uid === item.uid
-          )
-          if (resultIndex >= 0) {
-            if (dataSource[resultIndex].isFollow) {
-              dataSource[resultIndex].isFollow = false
-              dataSource[resultIndex].followCount =
-                dataSource[resultIndex].followCount - 1
-            } else {
-              dataSource[resultIndex].isFollow = true
-              dataSource[resultIndex].followCount =
-                dataSource[resultIndex].followCount + 1
+          const { pageNum, pageSize, total } = res.data
+
+          let list = res.data.list
+          list = list.map((item) => {
+            let { avatarCdn } = item
+            if (avatarCdn === 'http://static.xutongbao.top/img/logo.png') {
+              avatarCdn = 'http://static.xutongbao.top/img/m-default-avatar.jpg'
             }
+            return {
+              ...item,
+              avatarCdn,
+            }
+          })
+          if (isRefresh) {
             setState({
-              dataSource: dataSource,
-              pageSize: pageSize,
+              dataSource: [...list],
+              pageSize: res.data.pageSize,
+            })
+          } else {
+            setState({
+              dataSource: [...state.dataSource, ...list],
+              pageSize: res.data.pageSize,
             })
           }
+          setTotal(res.data.total)
+          const currentTemp = res.data.pageNum + 1
+          setCurrent(currentTemp)
+          setIsHasMore(pageNum < Math.ceil(total / pageSize))
         }
+      })
+      .catch(() => {
+        setIsLoading(false)
       })
   }
 
@@ -121,7 +121,15 @@ export default function useList(props) {
     e.stopPropagation()
   }
 
-  
+  //跳转
+  const handleJumpPage = (path) => {
+    // eslint-disable-next-line
+    props.history.push(path)
+  }
+
+  const handleSearchNicknameChange = (e) => {
+    setSearchNickname(e.target.value)
+  }
 
   useEffect(() => {
     handleSearch()
@@ -147,12 +155,14 @@ export default function useList(props) {
     isHasMore,
     currentImage,
     visible,
+    searchNickname,
+    searchHistory,
+    isLoading,
     setVisible,
     handleSearch,
-    handleDetail,
-    formatLessonTime,
-    handleFollow,
     handleAvatarClick,
     handleImageClick,
+    handleJumpPage,
+    handleSearchNicknameChange,
   }
 }

@@ -55,7 +55,7 @@ function Index(props) {
         label: (
           <>
             {/* eslint-disable-next-line */}
-            <a href={`https://llq.ywswge.cn`} target="_blank">
+            <a href={`https://static.xutongbao.top/app/ChromeSetup.exe`} target="_blank">
               下载chrome浏览器（推荐）
             </a>
           </>

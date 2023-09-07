@@ -4,6 +4,7 @@
 .m-h5-footer{display: flex;border-top: 1px solid #ddd;background: #f6f6f6;}
 .m-h5-footer-item{flex:1;text-align: center;color: #1a1a1a;}
 .m-h5-footer-item.active{color: #00c250;}
+.m-h5-footer-item.active .m-h5-footer-icon{color: #00c250}
 .m-h5-footer-icon{font-size: 24px!important;display: block;height: 30px;line-height: 30px; padding: 4px 0 0;}
 .m-h5-footer-text{font-size: 12px;padding: 2px 0;transform: scale(1);}
 .m-h5-home-header{height: 50px;background: #f6f6f6;text-align: center;line-height: 50px;font-weight: bold;font-size: 16px; color: #181818;border-bottom: 1px solid #ddd;}

@@ -15,8 +15,16 @@ service.interceptors.request.use(
     if (config.isNotNeedToken !== true) {
       config.headers.authorization = localStorage.getItem('token')
     }
-    config.headers.href = document.location.href
-    config.headers.version = window.version
+    if (window.platform === 'rn') {
+      config.headers.platformos = localStorage.getItem('platformos') ? localStorage.getItem('platformos') : 'rn'
+      config.headers.version = localStorage.getItem('appVersion') ? localStorage.getItem('appVersion') : ''
+    } else {
+      config.headers.platformos = 'h5'
+      config.headers.version = window.version
+    }
+    config.headers.href = `${document.location.href}?platformos=${config.headers.platformos}&version=${config.headers.version}`
+
+
     // 请求接口时显示loading，接口响应后隐藏loading，如果有特殊情况不能满足需求的，例如同时请求了多个接口
     // 且接口响应时间有比较大的差异，loading的显示隐藏状态不能友好的展示，可以直接在业务代码或api层，把
     // isLoading设置为false，则不再使用拦截器控制loading的状态，自己在业务代码里手动控制loading的状态
@@ -67,28 +75,32 @@ service.interceptors.response.use(
         setTimeout(() => {
           isCanShow = true
         }, 1000)
-        if (document.location.href.includes('#/h5')) {
-          window.reactRouter.replace({ pathname: '/h5/login' })
-        } else if (document.location.href.includes('#/light')) {
-          window.reactRouter.replace({ pathname: '/light/login' })
-        } else if (document.location.href.includes('#/ai')) {
-          window.reactRouter.replace({ pathname: '/ai/login' })
+        if (window.platform === 'rn') {
+          message.warning('请重新登录')
         } else {
-          window.reactRouter.replace({ pathname: '/h5/login' })
+          if (document.location.href.includes('#/h5')) {
+            window.reactRouter.replace({ pathname: '/h5/login' })
+          } else if (document.location.href.includes('#/light')) {
+            window.reactRouter.replace({ pathname: '/light/login' })
+          } else if (document.location.href.includes('#/ai')) {
+            window.reactRouter.replace({ pathname: '/ai/login' })
+          } else {
+            window.reactRouter.replace({ pathname: '/h5/login' })
+          }
         }
 
         return res.data
       } else if (res.data.code === 40001) {
-        if (isCanShow) {
-          message.warning(res.data.message)
-          isCanShow = false
-        }
-        setTimeout(() => {
-          isCanShow = true
-        }, 1000)
-        if (document.location.href.includes('#/h5')) {
-          window.reactRouter.replace({ pathname: '/h5/single/me/exchange' })
-        }
+        // if (isCanShow) {
+        //   message.warning(res.data.message)
+        //   isCanShow = false
+        // }
+        // setTimeout(() => {
+        //   isCanShow = true
+        // }, 1000)
+        // if (document.location.href.includes('#/h5')) {
+        //   window.reactRouter.replace({ pathname: '/h5/single/me/exchange' })
+        // }
 
         return res.data
       } else if (res.data.code === 40002) {
@@ -115,7 +127,7 @@ service.interceptors.response.use(
         return res.data
       } else if (res.data.code === 40003) {
         return res.data
-      }else {
+      } else {
         return Promise.reject(res)
       }
     }

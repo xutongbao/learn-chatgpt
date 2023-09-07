@@ -95,6 +95,34 @@ const h5Router = [
     path: '/single/home/fileList',
     component: lazy(() => import('../../views/ai/single/home/fileList/Index')),
   }, 
+  {
+    title: '真人私聊',
+    path: '/single/home/realChat',
+    component: lazy(() => import('../../views/ai/single/home/realChat/Index')),
+  },
+  {
+    title: '下载',
+    path: '/single/download',
+    component: lazy(() => import('../../views/ai/single/download/Index')),
+  }, 
+  {
+    title: '测试1',
+    path: '/single/demo/test1',
+    component: lazy(() => import('../../views/ai/single/demo/test1/Index')),
+  }, 
+  {
+    title: '测试socket',
+    path: '/single/demo/socket',
+    component: lazy(() => import('../../views/ai/single/demo/socket/Index')),
+  }, 
+  //#region 用户列表
+  {
+    title: '用户信息',
+    path: '/single/userList/userInfo',
+    component: lazy(() => import('../../views/ai/single/useList/userInfo/Index')),
+  },
+  //#endregion
+
 ]
 
 const router = []

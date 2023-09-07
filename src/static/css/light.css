@@ -27,7 +27,7 @@ a {text-decoration: none;}
 .m-login-link:hover{color: #1890ff;font-weight: bold; text-decoration: underline;}
 .m-login-input{font-size: 16px!important;}
 .m-loading{display: none; position: fixed;top: 0;left: 0;right: 0;bottom: 0;background: rgba(0, 0, 0, 0);z-index: 10000;}
-.m-loading.active{display: flex;}
+.m-loading.active{display: flex;align-items: center;justify-content: center;}
 .m-spin{margin: auto;}
 .m-index-wrap{display: flex; position: absolute;top: 0;left: 0;right: 0;bottom: 0;}
 .m-list{display: flex;flex-direction: column; position: relative;flex:1;overflow: hidden;}

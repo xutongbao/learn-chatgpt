@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Switch } from 'antd'
 import useList from './useList'
+import { Descriptions, Badge } from 'antd'
 import './index.css'
 
 function Index(props) {
@@ -10,10 +11,35 @@ function Index(props) {
     codeHighLight,
     wideScreen,
     subscribe,
+    socketLoginAlarm,
     handleCodeHighLight,
     handleWideScreen,
     handleSubscribe,
+    handleSocketLoginAlarm,
   } = useList(props)
+  const [isShowUpate, setIsShowUpdate] = useState(false)
+  let lastestVersion = localStorage.getItem('lastestVersion')
+  let appVersion = localStorage.getItem('appVersion')
+
+  const handleVersion = () => {
+    if (lastestVersion && appVersion) {
+      let lastestVersionNum = lastestVersion.replace(/\./g, '') - 0
+      let appVersionNum = appVersion.replace(/\./g, '') - 0
+      if (lastestVersionNum > appVersionNum) {
+        setIsShowUpdate(true)
+      } else {
+        setIsShowUpdate(false)
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (window.platform === 'rn') {
+      handleVersion()
+    }
+    // eslint-disable-next-line
+  }, [])
+
   return (
     <>
       <div className="m-single-page-set">
@@ -53,7 +79,45 @@ function Index(props) {
               />
             </div>
           </div>
+          <div className="m-single-set-divider"></div>
+          <div className="m-single-set-row">
+            <div className="m-single-set-label">上线提醒</div>
+            <div className="m-single-set-switch">
+              <Switch
+                checkedChildren="开启"
+                unCheckedChildren="关闭"
+                checked={socketLoginAlarm}
+                onChange={handleSocketLoginAlarm}
+              />
+            </div>
+          </div>
         </div>
+        {window.platform === 'rn' ? (
+          <div className="m-single-set-update-wrap">
+            <Descriptions title="版本信息">
+              <Descriptions.Item label="当前版本">
+                {appVersion}
+              </Descriptions.Item>
+              {isShowUpate ? (
+                <Descriptions.Item label="最新版本">
+                  {lastestVersion}
+                </Descriptions.Item>
+              ) : null}
+              {isShowUpate ? (
+                <Descriptions.Item label="最新版本下载链接">
+                  {/* eslint-disable-next-line */}
+                  <a
+                    href={`https://chat.xutongbao.top/#/single/download`}
+                    className="m-download-text"
+                  >
+                    https://chat.xutongbao.top/#/single/download
+                  </a>
+                  <Badge count={1} />
+                </Descriptions.Item>
+              ) : null}
+            </Descriptions>
+          </div>
+        ) : null}
       </div>
     </>
   )
@@ -62,6 +126,7 @@ function Index(props) {
 const mapStateToProps = (state) => {
   return {
     collapsed: state.getIn(['light', 'collapsed']),
+    isRNGotToken: state.getIn(['light', 'isRNGotToken']),
   }
 }
 

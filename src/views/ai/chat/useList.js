@@ -3,11 +3,10 @@ import { message as antdMessage } from 'antd'
 import Api from '../../../api'
 import {
   objArrayUnique,
-  showLoading,
-  hideLoading,
   uploadGetTokenFromLocalStorageForH5,
   uploadGetTokenForH5,
 } from '../../../utils/tools'
+import { handleLogin } from '../../../api/socket'
 import * as clipboard from 'clipboard-polyfill/text'
 import Clipboard from 'clipboard'
 import { Icon } from '../../../components/light'
@@ -42,7 +41,7 @@ export default function useList(props) {
   const {
     location: { pathname },
   } = props
-  let pageType = '1' //1单聊，2群聊
+  let pageType = '1' //1单聊，2群聊 3GPT-4
   let initTitle = 'ChatGPT'
   if (pathname === '/ai/groupChat') {
     pageType = '2'
@@ -76,6 +75,7 @@ export default function useList(props) {
   const [trigger, setTrigger] = useState('click')
   const [userInfo, setUserInfo] = useState({})
   const [inputType, setInputType] = useState('1') //1文字，2录音
+  const [isLoading, setIsLoading] = useState(false)
 
   const scrollEl = useRef(null)
   let uidForFrontEndPeopleMesssage
@@ -116,7 +116,7 @@ export default function useList(props) {
 
       let username = localStorage.getItem('username')
       let isAll = false
-      if (username === 'admin' || username === '1183391880') {
+      if (username === 'admin' || username === '1183391880@qq.com') {
         isAll = true
       }
       searchData = {
@@ -128,8 +128,9 @@ export default function useList(props) {
       }
     }
     setIsGetNewest(isGetNewest)
-    showLoading()
+    setIsLoading(true)
     Api.h5.chatSearch(searchData, false).then((res) => {
+      setIsLoading(false)
       if (res.code === 200) {
         let list = res.data.list.map((item) => {
           let message = item.message
@@ -197,7 +198,6 @@ export default function useList(props) {
               pageSize: res.data.pageSize,
             })
           }
-          hideLoading()
         } else {
           let mergeList = [...list, ...state.dataSource]
           mergeList = objArrayUnique({ arr: mergeList, field: 'uid' })
@@ -345,13 +345,11 @@ export default function useList(props) {
           setIsSending(false)
         } else if (res.code === 40001) {
           setIsSending(false)
-          isCurrentPage = '2'
-          props.history.push(`/ai/exchange`)
+          props.dialogShow({ type: 'exchange' })
         } else if (res.code === 40003) {
           setIsSending(false)
-          isCurrentPage = '2'
           antdMessage.success('提问数受限，请加入微信群获取验证码')
-          props.history.push(`/ai/single/me/joinGroup`)
+          props.dialogShow({ type: 'joinGroup' })
         }
       })
   }
@@ -403,7 +401,6 @@ export default function useList(props) {
             content: '请上传头像后再提问',
             duration: 30,
           })
-          props.history.push('/ai/single/me/editUserInfo')
           return
         }
       }
@@ -418,13 +415,22 @@ export default function useList(props) {
                 '【我的】-【微信群】请扫码入群，并填写群公告验证码，增加提问次数',
               duration: 30,
             })
-            // props.history.push('/ai/single/me/joinGroup')
-            // return
           }
         }
       }
       const now = Date.now()
       uidForFrontEndPeopleMesssage = now
+
+      let platformos
+      let version
+      if (window.platform === 'rn') {
+        platformos = localStorage.getItem('platformos')
+        version = localStorage.getItem('appVersion')
+      } else {
+        platformos = 'h5'
+        version = window.version
+      }
+
       dataSource.push({
         uid: now,
         userAvatarCdn: avatarCdn,
@@ -440,8 +446,13 @@ export default function useList(props) {
         audioUrlCdn: audioUrlCdnForRecorder,
         createTime: now,
         userInfo: {
+          uid: localStorage.getItem('uid'),
           payStatus,
           createTime,
+        },
+        info: {
+          platformos,
+          version,
         },
       })
 
@@ -696,22 +707,14 @@ export default function useList(props) {
     setMessage(`${message}${data.urlCdn}`)
   }
 
-  //退出
-  const handleQuit = () => {
-    Api.light.userLogout().then((res) => {
-      if (res.code === 200) {
-        isCurrentPage = '2'
-        props.history.push('/h5/login')
-        window.localStorage.removeItem('username')
-        window.localStorage.removeItem('token')
-      }
-    })
-  }
-
   //跳转
   const handleJumpPage = (path) => {
     isCurrentPage = '2'
     props.history.push(path)
+  }
+
+  const handleUpdateToGPT4 = (path) => {
+    props.dialogShow({ type: 'exchange' })
   }
 
   const handleScroll = (scrollValues) => {
@@ -870,12 +873,22 @@ export default function useList(props) {
   }, [])
 
   useEffect(() => {
-    Api.h5.userGetInfo({ isLoading: false }).then((res) => {
-      if (res.code === 200) {
-        setUserInfo(res.data)
+    if (window.platform === 'rn') {
+      if (props.isRNGotToken === true) {
+        Api.h5.userGetInfo({ isLoading: false }).then((res) => {
+          if (res.code === 200) {
+            setUserInfo(res.data)
+          }
+        })
       }
-    })
-  }, [])
+    } else {
+      Api.h5.userGetInfo({ isLoading: false }).then((res) => {
+        if (res.code === 200) {
+          setUserInfo(res.data)
+        }
+      })
+    }
+  }, [props.isRNGotToken])
 
   useEffect(() => {
     let dataSource = state.dataSource
@@ -922,17 +935,22 @@ export default function useList(props) {
             }, 200)
           }
         }
-
-        hideLoading()
       }, 100)
     }
     // eslint-disable-next-line
   }, [state.dataSource])
 
   useEffect(() => {
-    handleSearch({ isGetNewest: true })
+    if (window.platform === 'rn') {
+      if (props.isRNGotToken === true) {
+        handleSearch({ isGetNewest: true })
+      }
+    } else {
+      handleSearch({ isGetNewest: true })
+    }
+
     // eslint-disable-next-line
-  }, [])
+  }, [props.isRNGotToken])
 
   useEffect(() => {
     const codeDoms = document.querySelectorAll('pre')
@@ -982,6 +1000,11 @@ export default function useList(props) {
     // eslint-disable-next-line
   }, [state.dataSource])
 
+  useEffect(() => {
+    handleLogin()
+    // eslint-disable-next-line
+  }, [])  
+
   return {
     username,
     dataSource: state.dataSource,
@@ -996,13 +1019,14 @@ export default function useList(props) {
     pageType,
     title,
     inputType,
+    isLoading,
     handleSearch,
     handleSend,
     handleCtrlEnter,
-    handleQuit,
     handleJumpPage,
     handleInputChange,
     handleScroll,
+    handleUpdateToGPT4,
     handleSelectText,
     handleTouchStart,
     handleTouchEnd,

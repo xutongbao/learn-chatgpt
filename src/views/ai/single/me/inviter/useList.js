@@ -72,7 +72,7 @@ export default function useList(props) {
     Api.h5
       .behaviorFollowAction({
         courseUserIds: [item.uid],
-        isFollow: !item.isFollow
+        isFollow: !item.isFollow,
       })
       .then((res) => {
         if (res.code === 200) {
@@ -100,9 +100,15 @@ export default function useList(props) {
   }
 
   useEffect(() => {
-    handleSearch()
+    if (window.platform === 'rn') {
+      if (props.isRNGotToken === true) {
+        handleSearch()
+      }
+    } else {
+      handleSearch()
+    }
     // eslint-disable-next-line
-  }, [])
+  }, [props.isRNGotToken])
 
   useEffect(() => {
     let playListTemp = []

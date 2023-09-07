@@ -6,6 +6,7 @@ import useList from './useList'
 import moment from 'moment'
 import { Scrollbar } from 'react-scrollbars-custom'
 import { SinglePageHeader, Icon } from '../../../components/light'
+import useUserInfo from '../../../utils/hooks/useUserInfo/Index'
 
 import './index.css'
 
@@ -22,6 +23,8 @@ function Index(props) {
     handleAction,
     getMessageToolbar,
   } = useList(props)
+
+  const { userInfoShowModel, userInfoGetDom } = useUserInfo()
 
   const getItems = () => {
     const items = [
@@ -60,7 +63,10 @@ function Index(props) {
         label: (
           <>
             {/* eslint-disable-next-line */}
-            <a href={`https://llq.ywswge.cn`} target="_blank">
+            <a
+              href={`https://static.xutongbao.top/app/ChromeSetup.exe`}
+              target="_blank"
+            >
               下载chrome浏览器（推荐）
             </a>
           </>
@@ -95,6 +101,7 @@ function Index(props) {
     )
   }
 
+  // eslint-disable-next-line
   const getContent = (item) => {
     return (
       <div className="m-ai-group-chat-userinfo-wrap">
@@ -124,34 +131,33 @@ function Index(props) {
         ></SinglePageHeader>
         <div className="m-ai-main" id="scrollableDiv" onScroll={handleScroll}>
           <div className="m-ai-list">
-            <Dropdown
-              menu={{ items: getItems() }}
-              className="m-ai-dropdown"
-              trigger={['click', 'hover']}
-            >
-              <Icon name="more" className="m-ai-menu-btn"></Icon>
-            </Dropdown>
+            {window.platform === 'rn' ? null : (
+              <Dropdown
+                menu={{ items: getItems() }}
+                className="m-ai-dropdown"
+                trigger={['click', 'hover']}
+              >
+                <Icon name="more" className="m-ai-menu-btn"></Icon>
+              </Dropdown>
+            )}
+
             {dataSource.length > 0 ? (
               <Scrollbar onScroll={handleScroll} ref={scrollEl}>
                 {dataSource.map((item, index) => (
                   <div key={index} id={`message-item-${item.uid}`}>
                     <div className="m-ai-user-list-wrap-wrap">
                       <div className="m-ai-user-list-wrap">
-                        <Popover
-                          placement="rightTop"
-                          title={null}
-                          content={getContent(item)}
-                          trigger="click"
-                          getPopupContainer={() =>
-                            document.getElementById(`message-item-${item.uid}`)
+                        <img
+                          className="m-ai-user-list-avatar"
+                          src={item.userAvatarCdn}
+                          alt="头像"
+                          onClick={() =>
+                            userInfoShowModel({
+                              uid: item.userInfo.uid,
+                              info: item.info,
+                            })
                           }
-                        >
-                          <img
-                            className="m-ai-user-list-avatar"
-                            src={item.userAvatarCdn}
-                            alt="头像"
-                          ></img>
-                        </Popover>
+                        ></img>
                         <div className="m-ai-message-wrap">
                           <div className="m-ai-nickname">
                             {item.nickname}{' '}
@@ -232,11 +238,17 @@ function Index(props) {
             }}
           />
           <div className="m-ai-footer-btn-wrap">
-            <Button type="primary" disabled={isSending} onClick={handleSend}>
+            <Button
+              type="primary"
+              disabled={isSending}
+              onClick={handleSend}
+              className="m-ai-real-footer-btn-send"
+            >
               发送
             </Button>
           </div>
         </div>
+        {userInfoGetDom()}
       </div>
     </div>
   )
@@ -245,6 +257,7 @@ function Index(props) {
 const mapStateToProps = (state) => {
   return {
     collapsed: state.getIn(['light', 'collapsed']),
+    isRNGotToken: state.getIn(['light', 'isRNGotToken']),
   }
 }
 

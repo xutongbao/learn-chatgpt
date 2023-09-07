@@ -37,6 +37,8 @@ const Api = {
   //#region 配置
   configGetHomeTabs: (data) => common({ url: urls.h5.configGetHomeTabs, data, method: 'post', isLoading: false  }),
   configGetMeData: (data) => common({ url: urls.h5.configGetMeData, data, method: 'post' }),
+  configBase: (data) => common({ url: urls.h5.configBase, data, method: 'post' }),
+  configChatList: (data) => common({ url: urls.h5.configChatList, data, method: 'post', isLoading: false  }),
 
   //#endregion  
 
@@ -92,6 +94,24 @@ const Api = {
   chatGoogleSearch: (data) => common({ url: urls.h5.chatGoogleSearch, data, method: 'post' }),
 
   //#endregion   
+
+  //#region 真人对话
+  realTalkAppSearch: (data) => common({ url: urls.h5.realTalkAppSearch, data, method: 'post', isLoading: false }),
+  realTalkAdminSearch: (data) => common({ url: urls.h5.realTalkAdminSearch, data, method: 'post' }),
+  realTalkAdd: (data) => common({ url: urls.h5.realTalkAdd, data, method: 'post' }),
+  realTalkDelete: (data) => common({ url: urls.h5.realTalkDelete, data, method: 'post' }),
+  realTalkEdit: (data) => common({ url: urls.h5.realTalkEdit, data, method: 'post' }),
+  //#endregion  
+
+
+  //#region 真人聊天
+  realChatAppSearch: (data) => common({ url: urls.h5.realChatAppSearch, data, method: 'post', isLoading: false }),
+  realChatAdminSearch: (data) => common({ url: urls.h5.realChatAdminSearch, data, method: 'post' }),
+  realChatAdd: (data) => common({ url: urls.h5.realChatAdd, data, method: 'post' }),
+  realChatDelete: (data) => common({ url: urls.h5.realChatDelete, data, method: 'post' }),
+  realChatEdit: (data) => common({ url: urls.h5.realChatEdit, data, method: 'post', isLoading: false }),
+  //#endregion    
+    
 
   //#region 文件列表
   fileAppSearch: (data) => common({ url: urls.h5.fileAppSearch, data, method: 'post' }),

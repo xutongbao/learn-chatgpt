@@ -8,7 +8,10 @@ import { imageBaseUrl, baseURL } from './config'
 import Api from '../api'
 //import { html2json, json2html } from 'html2json'
 import Store from '../store'
+import uaParser from 'ua-parser-js'
+
 let timer
+let ua = uaParser(navigator.userAgent)
 
 //显示loading
 const showLoading = (delay = 0) => {
@@ -506,7 +509,9 @@ const addLog = ({ errorTitle, detail }) => {
     errorTitle,
     detail,
   }
-  Api.h5.emailCustomSend({ subject: '网页报错', html: JSON.stringify(tempValues) }).then(() => {})
+  Api.h5
+    .emailCustomSend({ subject: '网页报错', html: JSON.stringify(tempValues) })
+    .then(() => {})
 }
 
 //是否是PC
@@ -596,7 +601,8 @@ const getAdminInfo = () => {
     wechatQRCode: 'http://static.xutongbao.top/wechat.jpg?time=20230215',
     wechatGroupQRCode: `http://static.xutongbao.top/img/m-join-group-buffer.jpg?time=${now}`,
     email: '1183391880@qq.com',
-    xingqiu1: 'http://static.xutongbao.top/img/m-chat-xingqiu1.jpg?time=20230504',
+    xingqiu1:
+      'http://static.xutongbao.top/img/m-chat-xingqiu1.jpg?time=20230504',
     isHasBigWechatGroup: true,
 
     // host: 'gpt.xutongbao.top',
@@ -648,10 +654,8 @@ const getAdminInfo = () => {
       host: 'dalinvip.xutongbao.top',
       url,
       wechatCode: 'dalinvip2023',
-      wechatQRCode:
-        'http://static.xutongbao.top/img/m-dalin-wechat.jpg',
-      wechatGroupQRCode:
-        'http://static.xutongbao.top/img/m-dalin-wechat.jpg',
+      wechatQRCode: 'http://static.xutongbao.top/img/m-dalin-wechat.jpg',
+      wechatGroupQRCode: 'http://static.xutongbao.top/img/m-dalin-wechat.jpg',
       xingqiu1: 'http://static.xutongbao.top/img/m-dalin-xingqiu1.jpg',
       xingqiu2: 'http://static.xutongbao.top/img/m-dalin-xingqiu2.jpg',
       email: 'xxxx@qq.com',
@@ -662,10 +666,8 @@ const getAdminInfo = () => {
       host: 'lntano.xutongbao.top',
       url,
       wechatCode: 'g15997086777',
-      wechatQRCode:
-        'http://static.xutongbao.top/img/m-tan-wechat.jpg',
-      wechatGroupQRCode:
-        `http://static.xutongbao.top/img/m-tan-wechat-group.jpg?time=${now}`,
+      wechatQRCode: 'http://static.xutongbao.top/img/m-tan-wechat.jpg',
+      wechatGroupQRCode: `http://static.xutongbao.top/img/m-tan-wechat-group.jpg?time=${now}`,
       email: 'xxxx@qq.com',
       isHasBigWechatGroup: false,
     },
@@ -674,10 +676,8 @@ const getAdminInfo = () => {
       host: 'dk.xutongbao.top',
       url,
       wechatCode: 'wxid_51aibh0csyy322',
-      wechatQRCode:
-        'http://static.xutongbao.top/img/m-dk-wechat.jpg',
-      wechatGroupQRCode:
-        `http://static.xutongbao.top/img/m-dk-wechat-group.jpg?time=${now}`,
+      wechatQRCode: 'http://static.xutongbao.top/img/m-dk-wechat.jpg',
+      wechatGroupQRCode: `http://static.xutongbao.top/img/m-dk-wechat-group.jpg?time=${now}`,
       email: 'xxxx@qq.com',
       isHasBigWechatGroup: false,
     },
@@ -686,10 +686,8 @@ const getAdminInfo = () => {
       host: 'cate.xutongbao.top',
       url,
       wechatCode: 'xch10472',
-      wechatQRCode:
-        'http://static.xutongbao.top/img/m-cate-wechat.jpg',
-      wechatGroupQRCode:
-        `http://static.xutongbao.top/img/m-cate-wechat-group.jpg?time=${now}`,
+      wechatQRCode: 'http://static.xutongbao.top/img/m-cate-wechat.jpg',
+      wechatGroupQRCode: `http://static.xutongbao.top/img/m-cate-wechat-group.jpg?time=${now}`,
       email: 'xxxx@qq.com',
       isHasBigWechatGroup: false,
     },
@@ -698,10 +696,8 @@ const getAdminInfo = () => {
       host: 'luye.xutongbao.top',
       url,
       wechatCode: 'xch10472',
-      wechatQRCode:
-        'http://static.xutongbao.top/img/m-luye-wechat.jpg',
-      wechatGroupQRCode:
-        `http://static.xutongbao.top/img/m-luye-wechat-group.jpg?time=${now}`,
+      wechatQRCode: 'http://static.xutongbao.top/img/m-luye-wechat.jpg',
+      wechatGroupQRCode: `http://static.xutongbao.top/img/m-luye-wechat-group.jpg?time=${now}`,
       email: 'xxxx@qq.com',
       isHasBigWechatGroup: false,
     },
@@ -710,10 +706,8 @@ const getAdminInfo = () => {
       host: 'erc.xutongbao.top',
       url,
       wechatCode: 'DIANBAN12',
-      wechatQRCode:
-        'http://static.xutongbao.top/img/m-erc-wechat.jpg',
-      wechatGroupQRCode:
-        `http://static.xutongbao.top/img/m-erc-wechat-group.jpg?time=${now}`,
+      wechatQRCode: 'http://static.xutongbao.top/img/m-erc-wechat.jpg',
+      wechatGroupQRCode: `http://static.xutongbao.top/img/m-erc-wechat-group.jpg?time=${now}`,
       email: 'xxxx@qq.com',
       isHasBigWechatGroup: false,
     },
@@ -722,10 +716,8 @@ const getAdminInfo = () => {
       host: 'gpt.xutongbao.top',
       url,
       wechatCode: 'zllt2075',
-      wechatQRCode:
-        'http://static.xutongbao.top/img/m-gpt-wechat.jpg',
-      wechatGroupQRCode:
-        `http://static.xutongbao.top/img/m-gpt-wechat-group.jpg?time=${now}`,
+      wechatQRCode: 'http://static.xutongbao.top/img/m-gpt-wechat.jpg',
+      wechatGroupQRCode: `http://static.xutongbao.top/img/m-gpt-wechat-group.jpg?time=${now}`,
       email: 'xxxx@qq.com',
       isHasBigWechatGroup: false,
     },
@@ -740,6 +732,51 @@ const getAdminInfo = () => {
     }
   }
 }
+
+const handleWatchRNMessage = () => {
+  if (window.ReactNativeWebView) {
+    if (window.reactNative?.type === 'userInfo') {
+      window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'userInfo' }))
+    }
+  }
+
+  const eventListener = (e) => {
+    let payload = e.data ? JSON.parse(e.data) : {}
+    let type = payload.type
+
+    if (type === 'userInfo') {
+      localStorage.setItem('token', payload.token)
+      localStorage.setItem('uid', payload.uid)
+      localStorage.setItem('username', payload.username)
+      localStorage.setItem('nickname', payload.nickname)
+      localStorage.setItem('talkId', payload.talkId)
+      localStorage.setItem('groupCode', payload.groupCode)
+      localStorage.setItem('lastestVersion', payload.lastestVersion)
+      localStorage.setItem('appVersion', payload.appVersion)
+      localStorage.setItem('platformos', payload.platformos)
+
+
+      Store.dispatch({
+        type: 'SET_LIGHT_STATE',
+        key: ['isRNGotToken'],
+        value: true,
+      })
+    } else if (type === 'getBrowserInfo') {
+      const { browser } = ua
+      window.ReactNativeWebView.postMessage(JSON.stringify({ type, browser }))
+    }
+  }
+
+  if (window.platform === 'rn') {
+    if (ua.os.name === 'iOS') {
+      window.addEventListener('message', eventListener)
+    } else {
+      window.document.addEventListener('message', eventListener)
+    }
+  }
+}
+
+handleWatchRNMessage()
 
 export {
   //显示loading

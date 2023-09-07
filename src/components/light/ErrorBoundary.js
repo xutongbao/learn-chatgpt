@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+// eslint-disable-next-line
 import { addLog } from '../../utils/tools'
 
-let timer
+//let timer
 
 //错误边界
 //https://zh-hans.reactjs.org/docs/error-boundaries.html#gatsby-focus-wrapper
@@ -28,7 +29,7 @@ export default class ErrorBoundary extends Component {
     if (!(process.env.REACT_APP_MODE === 'dev')) {
       const errorTitle = error.toString()
       //css块加载失败： Loading CSS chunk
-      if (errorTitle.includes('ChunkLoadError')) {
+      if (errorTitle.includes('Loading CSS')) {
         this.setState({
           isLoadingError: true
         })
@@ -36,10 +37,10 @@ export default class ErrorBoundary extends Component {
           window.location.reload()
         }, 3000)
       } else {
-        timer = setTimeout(() => {
-          addLog({ errorTitle, detail: errorInfo.componentStack })
-          clearTimeout(timer)
-        }, 3000)
+        // timer = setTimeout(() => {
+        //   addLog({ errorTitle, detail: errorInfo.componentStack })
+        //   clearTimeout(timer)
+        // }, 3000)
         this.setState({
           isLoadingError: false
         })

@@ -1,10 +1,11 @@
-import { Skeleton } from 'antd'
+import { Skeleton, Badge } from 'antd'
 import { ImageViewer } from 'antd-mobile'
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import useList from './useList'
+import moment from 'moment'
 import './index.css'
 
 function Index(props) {
@@ -12,6 +13,7 @@ function Index(props) {
     dataSource,
     currentImage,
     visible,
+    isHasMore,
     handleSearch,
     handleAction,
     handleImageClick,
@@ -22,7 +24,7 @@ function Index(props) {
       <InfiniteScroll
         dataLength={dataSource.length}
         next={handleSearch}
-        refreshFunction={() => handleSearch({ isRefresh: true })}
+        refreshFunction={() => handleSearch({ page: 1, isRefresh: true })}
         pullDownToRefresh
         pullDownToRefreshThreshold={50}
         pullDownToRefreshContent={
@@ -31,7 +33,7 @@ function Index(props) {
         releaseToRefreshContent={
           <h3 style={{ textAlign: 'center' }}>&#8593; 释放刷新</h3>
         }
-        hasMore={false}
+        hasMore={isHasMore}
         loader={
           <Skeleton
             avatar
@@ -46,28 +48,31 @@ function Index(props) {
         scrollableTarget="scrollableDiv"
       >
         {dataSource.map((item, index) => (
-          <div key={index} id={`player-item-${index}`}>
+          <div key={index}>
             <div
               className="m-single-ai-user-list-wrap-wrap"
               onClick={() => handleAction(item)}
             >
               <div className="m-single-ai-user-list-wrap">
-                <img
-                  className="m-single-ai-user-list-avatar"
-                  src={item.avatar}
-                  alt="头像"
-                  onClick={(e) => handleImageClick(e, item)}
-                ></img>
+                <Badge count={item.unReadCount}>
+                  <img
+                    className="m-single-ai-user-list-avatar"
+                    src={item.avatar}
+                    alt="头像"
+                    onClick={(e) => handleImageClick(e, item)}
+                  ></img>
+                </Badge>
                 <div className="m-single-ai-user-list-user-wrap">
                   <div className="m-single-ai-user-list-user-name-wrap">
                     <div className="m-single-ai-user-list-user-name m-ellipsis">
                       {item.name}
                     </div>
                     <div className="m-single-ai-user-list-btn-wrap">
-                      {item.createTime}
+                      {item.createTime
+                        ? moment(item.createTime - 0).format('MM-DD HH:mm:ss')
+                        : ''}
                     </div>
                   </div>
-
                   <div className="m-single-ai-user-list-user-fans-count m-ellipsis">
                     {item.intro}
                   </div>

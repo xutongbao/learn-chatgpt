@@ -107,9 +107,15 @@ export default function useList(props) {
   }
 
   useEffect(() => {
-    handleSearch()
+    if (window.platform === 'rn') {
+      if (props.isRNGotToken === true) {
+        handleSearch()
+      }
+    } else {
+      handleSearch()
+    }
     // eslint-disable-next-line
-  }, [])
+  }, [props.isRNGotToken])
 
   return {
     username,

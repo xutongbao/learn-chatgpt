@@ -4,7 +4,11 @@ import Footer from './Footer'
 import Home from './home/Index'
 import Userlist from './userlist/Index'
 import Me from './me/Index'
-import useBrowserCheck from '../../../utils/hooks/useBrowserCheck'
+import useBrowserCheck from '../../../utils/hooks/useBrowserCheck/useBrowserCheck'
+import { handleLogin } from '../../../api/socket'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+
 import './index.css'
 
 function Index(props) {
@@ -15,6 +19,11 @@ function Index(props) {
 
   useEffect(() => {
     browserCheckHandleModalVisible()
+    // eslint-disable-next-line
+  }, [])
+
+  useEffect(() => {
+    handleLogin()
     // eslint-disable-next-line
   }, [])
   return (
@@ -34,4 +43,21 @@ function Index(props) {
   )
 }
 
-export default Index
+const mapStateToProps = (state) => {
+  return {
+    homeMsgCount: state.getIn(['light', 'homeMsgCount']),
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSetState(key, value) {
+      dispatch({ type: 'SET_LIGHT_STATE', key, value })
+    },
+    onDispatch(action) {
+      dispatch(action)
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Index))

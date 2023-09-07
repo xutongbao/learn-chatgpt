@@ -3,7 +3,7 @@ import { Button, Input, message, Switch } from 'antd'
 import Api from '../../../api'
 import { connect } from 'react-redux'
 import { showLoading, hideLoading } from '../../../utils/tools'
-import useBrowserCheck from '../../../utils/hooks/useBrowserCheck'
+import useBrowserCheck from '../../../utils/hooks/useBrowserCheck/useBrowserCheck'
 import './index.css'
 
 function Login(props) {

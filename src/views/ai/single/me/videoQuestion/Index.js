@@ -84,7 +84,9 @@ function Index(props) {
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    isRNGotToken: state.getIn(['light', 'isRNGotToken']),
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

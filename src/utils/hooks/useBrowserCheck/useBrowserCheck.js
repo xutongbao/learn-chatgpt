@@ -53,7 +53,7 @@ export default function useBrowserCheck(props) {
         return
       }
 
-      setIsModalVisible(true)
+      //setIsModalVisible(true) //暂时注释掉，不再检查浏览器版本
 
 
     } else {

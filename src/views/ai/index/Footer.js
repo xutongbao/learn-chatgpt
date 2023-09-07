@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { Icon } from '../../../components/light'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { Badge } from 'antd'
 
 function Footer(props) {
   const {
@@ -28,10 +29,12 @@ function Footer(props) {
   return (
     <div className="m-h5-footer">
       <NavLink to="/ai/index/home" className="m-h5-footer-item">
-        <Icon
-          name={getIcon({ myPageType: '1', iconName: 'chat' })}
-          className="m-h5-footer-icon"
-        ></Icon>
+        <Badge count={props.homeMsgCount}>
+          <Icon
+            name={getIcon({ myPageType: '1', iconName: 'chat' })}
+            className="m-h5-footer-icon"
+          ></Icon>
+        </Badge>
         <div className="m-h5-footer-text">消息</div>
       </NavLink>
       <NavLink to="/ai/index/userlist" className="m-h5-footer-item">
@@ -55,6 +58,7 @@ function Footer(props) {
 const mapStateToProps = (state) => {
   return {
     userInfo: state.getIn(['light', 'userInfo']).toJS(),
+    homeMsgCount: state.getIn(['light', 'homeMsgCount']),
   }
 }
 

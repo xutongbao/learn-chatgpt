@@ -50,7 +50,10 @@ function Index(props) {
         label: (
           <>
             {/* eslint-disable-next-line */}
-            <a href={`https://llq.ywswge.cn`} target="_blank">
+            <a
+              href={`https://static.xutongbao.top/app/ChromeSetup.exe`}
+              target="_blank"
+            >
               下载chrome浏览器（推荐）
             </a>
           </>
@@ -66,16 +69,18 @@ function Index(props) {
       <div className={`m-filelist-wrap-chat`}>
         <SinglePageHeader
           goBackPath="/ai/index/home/chatList"
-          title="文件列表"
+          title="我的文件"
         ></SinglePageHeader>
         <div className="m-filelist-list" id="scrollableDiv">
-          <Dropdown
-            menu={{ items: getItems() }}
-            className="m-filelist-dropdown"
-            trigger={['click', 'hover']}
-          >
-            <Icon name="more" className="m-filelist-menu-btn"></Icon>
-          </Dropdown>
+          {window.platform === 'rn' ? null : (
+            <Dropdown
+              menu={{ items: getItems() }}
+              className="m-filelist-dropdown"
+              trigger={['click', 'hover']}
+            >
+              <Icon name="more" className="m-filelist-menu-btn"></Icon>
+            </Dropdown>
+          )}
           <InfiniteScroll
             dataLength={dataSource.length}
             next={handleSearch}
@@ -185,6 +190,7 @@ function Index(props) {
 const mapStateToProps = (state) => {
   return {
     collapsed: state.getIn(['light', 'collapsed']),
+    isRNGotToken: state.getIn(['light', 'isRNGotToken']),
   }
 }
 

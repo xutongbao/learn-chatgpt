@@ -38,10 +38,15 @@ const getRouteArr = () => {
       component: lazy(() => import('../../single/me/inviter/Index')),
     },   
     {
-      title: 'IOS下载',
+      title: 'iOS app',
       path: '/ai/single/me/ios',
       component: lazy(() => import('../../single/me/ios/Index')),
     },  
+    {
+      title: '安卓app',
+      path: '/ai/single/me/android',
+      component: lazy(() => import('../../single/me/android/Index')),
+    }, 
     {
       title: '文字教程',
       path: '/ai/single/me/question',
