@@ -7,7 +7,7 @@ a {text-decoration: none;}
 .m-login-logo{display: inline-block;margin: 16px 16px 5px 20px;  height: 30px;width: 30px;background-image: url(../images/logo.png);background-size: 100% 100%;}
 .m-login-divider{height: 26px;display: inline-block;margin: 20px 0 0; border-left: 1px solid #ddd;width: 1px;vertical-align: top;}
 .m-login-header-text{display: inline-block; margin: 2px 0 0 10px;vertical-align: top;font-size: 18px;}
-.m-login{margin: 100px auto;transform: translateY(-26px); padding: 18px 16px 0;width: 388px;height: 240px;}
+.m-login{margin: 100px auto;transform: translateY(-26px); padding: 18px 16px 0;width: 388px;}
 .m-login.admin{margin: auto; padding: 26px 16px 0;background: white;box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);border-radius: 4px;}
 .m-login.h5{padding: 26px 16px 0;}
 .m-login.sale{padding: 36px 16px 0;}
@@ -110,7 +110,7 @@ a {text-decoration: none;}
 .m-modal-check-msg.checking{color:#3bb4f2 ;}
 .m-home-content-box{margin: 10px 10px 5px;padding: 10px;}
 .m-home-welcome{font-size: 20px;line-height: 32px;color: #333;margin: 0 0 10px 10px;}
-.m-modal-form-info{position: relative;}
+.m-modal-form-info{position: relative;margin: 0 0 100px 0;}
 .m-category-icon{display: inline-block; margin: 0 0 0 5px;font-size: 20px;cursor: pointer;vertical-align: top;}
 .m-category-item{display: block; margin: 0 0 5px 0;}
 .m-form-order{width: 150px;}

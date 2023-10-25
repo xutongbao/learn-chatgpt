@@ -32,7 +32,7 @@ function Index(props) {
             onFinish={handleFinish}
             onFinishFailed={handleFinishFailed}
           >
-            <div id="m-modal-form-info" className="m-modal-form-info">
+            <div id="m-modal-form-info" className="m-modal-form-info-exchange">
               <Form.Item
                 label=""
                 name="code"
@@ -72,7 +72,7 @@ function Index(props) {
             >
               {wechatCode}
             </span>
-            ，获得兑换码，成为会员，尽情使用ChatGPT！
+            ，免费获得兑换码，成为会员，尽情使用ChatGPT和AI绘画（Stable Diffusion）！
           </div>
         </div>
         <div className="m-single-exchange-img-wrap">

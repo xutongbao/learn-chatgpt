@@ -223,7 +223,7 @@ function Login(props) {
             登录
           </Button>
         </div>
-        <div className="m-login-btn-wrap">
+        <div className="m-ai-login-footer-text-wrap">
           <Button
             type="link"
             className="m-login-btn-text"
@@ -244,6 +244,13 @@ function Login(props) {
             onClick={handleForgetPassword}
           >
             忘记密码
+          </Button>
+          <Button
+            type="link"
+            className="m-login-btn-text"
+            onClick={() => handleJump('/welcome/home')}
+          >
+            首页
           </Button>
         </div>
       </div>

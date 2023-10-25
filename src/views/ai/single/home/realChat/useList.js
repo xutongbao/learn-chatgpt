@@ -9,6 +9,8 @@ import {
   objArrayUnique,
   uploadGetTokenFromLocalStorageForH5,
   uploadGetTokenForH5,
+  showLoading,
+  hideLoading,
 } from '../../../../../utils/tools'
 import * as clipboard from 'clipboard-polyfill/text'
 import Clipboard from 'clipboard'
@@ -88,6 +90,7 @@ export default function useList(props) {
     setIsLoading(true)
     Api.h5.realChatAppSearch(searchData).then((res) => {
       setIsLoading(false)
+      hideLoading()
       if (res.code === 200) {
         let list = res.data.list.map((item) => {
           let message = item.message
@@ -96,6 +99,12 @@ export default function useList(props) {
           let friendsUserInfoArr = item.users.filter(
             (item) => item.uid !== localStorage.getItem('uid')
           )
+
+          if (friendsUserInfoArr.length === 0) {
+            friendsUserInfoArr=[{
+              isRead: '1'
+            }]
+          }
 
           return {
             ...item,
@@ -153,6 +162,7 @@ export default function useList(props) {
       messageType: '1',
       message: message,
     }
+    showLoading()
     Api.h5
       .realChatAdd({ info, talkId: routerSearchObj.realTalkId })
       .then((res) => {
@@ -379,18 +389,18 @@ export default function useList(props) {
 
   const getMessageToolbar = (item) => {
     return (
-      <div className="m-ai-chat-message-toolbar">
+      <div className="m-real-chat-message-toolbar">
         {item.audioUrlCdn ? (
           // eslint-disable-next-line
           <a
             href={item.audioUrlCdn}
             target="_blank"
-            className="m-ai-chat-toolbar-link"
+            className="m-real-chat-toolbar-link"
           >
             <Icon
               name="download"
               title="复制"
-              className="m-ai-chat-toolbar-icon"
+              className="m-real-chat-toolbar-icon"
             ></Icon>
             <div>下载音频</div>
           </a>
@@ -398,22 +408,22 @@ export default function useList(props) {
 
         {item.isShowToAudioBtn ? (
           <div
-            className="m-ai-chat-toolbar-item"
+            className="m-real-chat-toolbar-item"
             onClick={() => handleToAudio(item)}
             title={item.isAudioLoading ? '转音频中' : '转音频'}
           >
-            <Icon name="music" className="m-ai-chat-toolbar-icon"></Icon>
+            <Icon name="music" className="m-real-chat-toolbar-icon"></Icon>
             <div>{item.isAudioLoading ? '转音频中' : '转音频'}</div>
           </div>
         ) : null}
         <div
-          className="m-ai-chat-toolbar-item"
+          className="m-real-chat-toolbar-item"
           onClick={() => handleCopy(item.info.message)}
         >
           <Icon
             name="copy"
             title="复制"
-            className="m-ai-chat-toolbar-icon"
+            className="m-real-chat-toolbar-icon"
           ></Icon>
           <div>复制</div>
         </div>

@@ -29,7 +29,7 @@ function Router({ extraRouter, h5Router }) {
   }
   useEffect(() => {
     initAudio()
-  },  [])
+  }, [])
   return (
     <>
       <ErrorBoundary>
@@ -52,6 +52,7 @@ function Router({ extraRouter, h5Router }) {
               <Route
                 key={item.path}
                 path={item.path}
+                exact={item.exact === true ? true : false}
                 component={item.component}
               ></Route>
             ))}

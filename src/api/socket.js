@@ -39,21 +39,25 @@ function onConnect() {
 }
 socket.on('connect', onConnect)
 
-socket.on('/socket/login', (res) => {
-  let socketLoginAlarmHistory =
-    localStorage.getItem('socketLoginAlarm') === 'false' ? false : true
-  if (res.uid !== localStorage.getItem('uid') && socketLoginAlarmHistory) {
-    if (historyLoginUserIds.includes(res.uid) === false) {
-      try {
-        loginAudio.play()
-        historyLoginUserIds.push(res.uid)
-        console.log('play', res)
-      } catch (error) {
-        console.log('用户点击网页后，再收到消息时，会有提示音')
+const handleWatchLogin = ({ callback } = {}) => {
+  socket.on('/socket/login', (res) => {
+    console.log('watch login', res)
+    callback && callback(res)
+    let socketLoginAlarmHistory =
+      localStorage.getItem('socketLoginAlarm') === 'false' ? false : true
+    if (res.uid !== localStorage.getItem('uid') && socketLoginAlarmHistory) {
+      if (historyLoginUserIds.includes(res.uid) === false) {
+        try {
+          historyLoginUserIds.push(res.uid)
+          loginAudio.play()
+          console.log('play', res)
+        } catch (error) {
+          console.log('用户点击网页后，再收到消息时，会有提示音')
+        }
       }
     }
-  }
-})
+  })
+}
 
 const handleLogin = () => {
   const config = getConfig()
@@ -61,7 +65,7 @@ const handleLogin = () => {
   if (socketLoginTime) {
     let now = Date.now()
     //60秒内socket登录只会执行一次
-    let seconds = process.env.REACT_APP_MODE === 'dev' ? 3 : 60
+    let seconds = process.env.REACT_APP_MODE === 'dev' ? 30 : 60
     if (now - socketLoginTime > 1000 * seconds) {
       // 继续
     } else {
@@ -81,7 +85,6 @@ const handleLogin = () => {
     localStorage.setItem('socketLoginTime', socketLoginTime)
   }
 }
-handleLogin()
 
 const initAudio = () => {
   let alarm = document.getElementById('js-alarm')
@@ -109,6 +112,7 @@ const initAudio = () => {
 
   document.body.append(loginAudio)
 }
+
 const playAudio = () => {
   try {
     audio.play()
@@ -119,34 +123,40 @@ const playAudio = () => {
 
 const handleRealTalkAppSearch = () => {
   let searchData = { pageNum: '1', pageSize: 1, isLightData: true }
-  Api.h5.realTalkAppSearch(searchData).then((res) => {
-    if (res.code === 200) {
-      let unReadCount = res.data.unReadCount
-      let homeMsgCount = Store.getState().getIn(['light', 'homeMsgCount'])
-      if (homeMsgCount !== '' && unReadCount > homeMsgCount) {
-        console.log('您有新消息，socket文件', unReadCount)
-        playAudio()
+  let authorization = localStorage.getItem('token')
+  if (window.location.href.includes('/single/download')) {
+    console.log('no need login')
+    //todo 不需要登录
+  } else if (authorization) {
+    Api.h5.realTalkAppSearch(searchData).then((res) => {
+      if (res.code === 200) {
+        let unReadCount = res.data.unReadCount
+        let homeMsgCount = Store.getState().getIn(['light', 'homeMsgCount'])
+        if (homeMsgCount !== '' && unReadCount > homeMsgCount) {
+          console.log('您有新消息，socket文件', unReadCount)
+          playAudio()
+        }
+        Store.dispatch({
+          type: 'SET_LIGHT_STATE',
+          key: ['homeMsgCount'],
+          value: unReadCount,
+        })
+        console.log('未读消息数', unReadCount)
+        clearInterval(timer1)
+        document.title = '学习'
+        if (unReadCount > 0) {
+          timer1 = setInterval(() => {
+            count++
+            if (count % 2 === 0) {
+              document.title = '您有新消息\u{1F514}'
+            } else {
+              document.title = '您有新消息'
+            }
+          }, 1000)
+        }
       }
-      Store.dispatch({
-        type: 'SET_LIGHT_STATE',
-        key: ['homeMsgCount'],
-        value: unReadCount,
-      })
-      console.log('未读消息数', unReadCount)
-      clearInterval(timer1)
-      document.title = '学习'
-      if (unReadCount > 0) {
-        timer1 = setInterval(() => {
-          count++
-          if (count % 2 === 0) {
-            document.title = '您有新消息\u{1F514}'
-          } else {
-            document.title = '您有新消息'
-          }
-        }, 1000)
-      }
-    }
-  })
+    })
+  }
 }
 
 const handleWatchChatUpdate = ({ callback } = {}) => {
@@ -160,8 +170,11 @@ const handleWatchChatUpdate = ({ callback } = {}) => {
     // }, 3000)
   })
 }
+
+handleLogin()
 handleRealTalkAppSearch()
 handleWatchChatUpdate()
+handleWatchLogin()
 
 const handleTriggerChatUpdate = () => {
   const config = getConfig()
@@ -180,4 +193,5 @@ export {
   handleLogin,
   handleWatchChatUpdate,
   handleTriggerChatUpdate,
+  handleWatchLogin,
 }

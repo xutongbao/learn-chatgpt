@@ -1,7 +1,7 @@
 const baseURL = {
   // 使用反向代理解决跨域时，dev应为空字符串
   //dev: '',
-  dev: 'http://172.20.10.4:85', //192.168.0.137 localhost 192.168.1.107 172.20.10.4
+  dev: 'http://localhost:85', //192.168.0.137 localhost 192.168.1.107 172.20.10.4
   //dev: 'http://yuying-api.xutongbao.top',
   test: '',
   //prod: 'http://yuying-api.xutongbao.top',
@@ -11,7 +11,7 @@ const baseURL = {
 const socketBaseURL = {
   // 使用反向代理解决跨域时，dev应为空字符串
   //dev: '',
-  dev: 'http://172.20.10.4:84', //192.168.0.137 localhost 192.168.1.107 172.20.10.4:84
+  dev: 'http://localhost:84', //192.168.0.137 localhost 192.168.1.107 172.20.10.4:84
   //dev: 'http://yuying-api.xutongbao.top',
   test: '',
   //prod: 'http://yuying-api.xutongbao.top',

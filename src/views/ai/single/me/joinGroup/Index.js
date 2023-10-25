@@ -23,6 +23,7 @@ function Index(props) {
       message.warning('群公告验证码不能为空')
     } else if (groupCode === '672913') {
       message.success('成功')
+      props.handleDialogHide && props.handleDialogHide()
     } else {
       message.warning('群公告验证码错误')
     }
@@ -63,7 +64,10 @@ function Index(props) {
       </div>
       <div className="m-single-join-group-intro">
         <div>
-          【扫码入群】-【查看群公告】-【找到验证码】-【填写验证码】-【获得更多提问次数】
+          1.【扫码入群】-【查看群公告】-【找到验证码】-【填写验证码】-【获得更多提问次数】
+        </div>
+        <div>
+          2.【扫码入群】-【添加群主好友】-【免费获得兑换码】-【在兑换页输入兑换码】-【成为会员】-【尽情使用ChatGPT和AI绘画（Stable Diffusion）】
         </div>
       </div>
       <div>

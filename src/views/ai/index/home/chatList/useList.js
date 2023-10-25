@@ -32,7 +32,10 @@ export default function useList(props) {
         pageSize: 20,
       })
     }
-    let searchData = { pageNum: page, pageSize }
+    let searchData = {
+      pageNum: page,
+      pageSize,
+    }
     await Api.h5.realTalkAppSearch(searchData).then((res) => {
       if (res.code === 200) {
         const { pageNum, pageSize, total } = res.data
@@ -74,8 +77,14 @@ export default function useList(props) {
     if (page === 1) {
       Api.h5.chatListSearch(searchParams).then((res) => {
         if (res.code === 200) {
-          let { chatInfo, chatInfoForGPT4, groupChatInfo, realPeopleInfo } =
-            res.data
+          let {
+            chatInfo,
+            chatInfoForGPT4,
+            groupChatInfo,
+            realPeopleInfo,
+            sdSingleUserInfo,
+            sdGroupInfo,
+          } = res.data
           if (chatInfo.createTime) {
             let resultIndex = chatListTemp.findIndex((item) => item.uid === 0)
             chatListTemp[resultIndex].createTime = chatInfo.createTime
@@ -96,6 +105,16 @@ export default function useList(props) {
             let resultIndex = chatListTemp.findIndex((item) => item.uid === 3)
             chatListTemp[resultIndex].createTime = realPeopleInfo.createTime
             chatListTemp[resultIndex].intro = realPeopleInfo.message
+          }
+          if (sdSingleUserInfo.createTime) {
+            let resultIndex = chatListTemp.findIndex((item) => item.uid === 8)
+            chatListTemp[resultIndex].createTime = sdSingleUserInfo.createTime
+            chatListTemp[resultIndex].intro = sdSingleUserInfo.message
+          }
+          if (sdGroupInfo.createTime) {
+            let resultIndex = chatListTemp.findIndex((item) => item.uid === 9)
+            chatListTemp[resultIndex].createTime = sdGroupInfo.createTime
+            chatListTemp[resultIndex].intro = sdGroupInfo.message
           }
           setState({
             dataSource: chatListTemp,
@@ -151,11 +170,26 @@ export default function useList(props) {
         props.history.push(`/single/home/google`)
       } else if (uid === 7) {
         props.history.push(`/single/home/fileList`)
+      } else if (uid === 8) {
+        props.history.push(`/single/home/sd?type=1`)
+      } else if (uid === 9) {
+        props.history.push(`/single/home/sd?type=2`)
+      } else if (uid === 10) {
+        props.history.push(`/welcome/home?type=2`)
       }
     } else if (chatListItemType === '2') {
       name = encodeURIComponent(name)
-      let friendUserId = users.find(item => item.isOwner === '0').uid
-      props.history.push(`/single/home/realChat?realTalkId=${uid}&name=${name}&friendUserId=${friendUserId}`)
+      let ownerUser = users.find((item) => item.isOwner === '1')
+      let friendUser = users.find((item) => item.isOwner === '0')
+      let friendUserId
+      if (friendUser) {
+        friendUserId = friendUser.uid
+      } else if (ownerUser) {
+        friendUserId = ownerUser.uid
+      }
+      props.history.push(
+        `/single/home/realChat?realTalkId=${uid}&name=${name}&friendUserId=${friendUserId}`
+      )
     }
   }
 

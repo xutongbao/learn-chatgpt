@@ -23,7 +23,7 @@ service.interceptors.request.use(
       config.headers.version = window.version
     }
     config.headers.href = `${document.location.href}?platformos=${config.headers.platformos}&version=${config.headers.version}`
-
+    config.timeout = 30 * 60 * 1000
 
     // 请求接口时显示loading，接口响应后隐藏loading，如果有特殊情况不能满足需求的，例如同时请求了多个接口
     // 且接口响应时间有比较大的差异，loading的显示隐藏状态不能友好的展示，可以直接在业务代码或api层，把
@@ -65,7 +65,7 @@ service.interceptors.response.use(
         if (res.config.isShowMessage !== false) {
           message.warning(msg)
         }
-        Promise.reject(res)
+        //Promise.reject(res)
         return res.data
       } else if (res.data.code === 403) {
         if (isCanShow) {
@@ -79,13 +79,13 @@ service.interceptors.response.use(
           message.warning('请重新登录')
         } else {
           if (document.location.href.includes('#/h5')) {
-            window.reactRouter.replace({ pathname: '/h5/login' })
+            window.reactRouter.replace({ pathname: '/ai/login' })
           } else if (document.location.href.includes('#/light')) {
             window.reactRouter.replace({ pathname: '/light/login' })
           } else if (document.location.href.includes('#/ai')) {
-            window.reactRouter.replace({ pathname: '/ai/login' })
+            window.reactRouter.replace({ pathname: '/welcome/home' })
           } else {
-            window.reactRouter.replace({ pathname: '/h5/login' })
+            //window.reactRouter.replace({ pathname: '/welcome/home' })
           }
         }
 

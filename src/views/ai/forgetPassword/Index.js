@@ -65,7 +65,7 @@ function Index(props) {
           onFinish={handleFinish}
           onFinishFailed={handleFinishFailed}
         >
-          <div id="m-modal-form-info" className="m-modal-form-info">
+          <div>
             <Form.Item
               label=""
               name="username"
@@ -202,6 +202,13 @@ function Index(props) {
             onClick={() => handleJump('/ai/login')}
           >
             登录
+          </Button>
+          <Button
+            type="link"
+            className="m-login-btn-text"
+            onClick={() => handleJump('/welcome/home')}
+          >
+            首页
           </Button>
         </div>
       </div>

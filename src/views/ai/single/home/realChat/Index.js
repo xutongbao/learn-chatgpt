@@ -86,7 +86,7 @@ function Index(props) {
         className={`m-real-chat-wrap-chat ${wideScreenHistory ? 'active' : ''}`}
       >
         <SinglePageHeader
-          goBackPath="/ai/index/home/chatList"
+          // goBackPath="/ai/index/home/chatList"
           title={decodeURIComponent(routerSearchObj.name)}
         ></SinglePageHeader>
         <div
@@ -185,7 +185,7 @@ function Index(props) {
                                     title={null}
                                     content={getAudioDom(item)}
                                     trigger="click"
-                                    className="m-real-chat-chat-audio-popover"
+                                    className="m-real-chat-audio-popover"
                                     getPopupContainer={() =>
                                       document.getElementById(
                                         `m-real-chat-message-footer-${item.uid}`
@@ -255,10 +255,10 @@ function Index(props) {
         </div>
         <div className="m-real-chat-footer">
           {inputType === '1' ? (
-            <div className="m-real-chat-chat-input-wrap">
+            <div className="m-real-chat-input-wrap">
               {/* <Icon
                 name="audio"
-                className="m-real-chat-chat-input-type-icon"
+                className="m-real-chat-input-type-icon"
                 onClick={() => setInputType('2')}
               ></Icon> */}
               <Input.TextArea
@@ -268,7 +268,7 @@ function Index(props) {
                 placeholder="请输入"
                 allowClear
                 // disabled={isSending}
-                className="m-real-chat-chat-input"
+                className="m-real-chat-input"
                 autoSize={{
                   minRows: 3,
                   maxRows: 8,
@@ -278,16 +278,16 @@ function Index(props) {
           ) : null}
 
           <div
-            className={`m-real-chat-chat-audio-recorder-wrap-outer ${
+            className={`m-real-chat-audio-recorder-wrap-outer ${
               inputType === '2' ? 'active' : ''
             }`}
           >
             <Icon
               name="keyboard"
-              className="m-real-chat-chat-input-type-icon"
+              className="m-real-chat-input-type-icon"
               onClick={() => setInputType('1')}
             ></Icon>
-            <div className="m-real-chat-chat-audio-recorder-wrap">
+            <div className="m-real-chat-audio-recorder-wrap">
               <AudioRecorder
                 onRecordingComplete={handleUploadAudio}
                 onNotAllowedOrFound={handleNotAllowedOrFound}

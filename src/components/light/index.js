@@ -72,6 +72,7 @@ import ClassInfo from './ClassInfo'
 import EditCell from './EditCell'
 //独立页面header
 import SinglePageHeader from './SinglePageHeader'
+import Picture from './Picture'
 import './index.css'
 
 export {
@@ -112,4 +113,5 @@ export {
   //编辑单元格
   EditCell,
   SinglePageHeader,
+  Picture,
 }

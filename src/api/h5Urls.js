@@ -34,6 +34,7 @@ const urls = {
   configGetMeData: '/api/light/config/getMeData',
   configBase: '/api/light/config/base',
   configChatList: '/api/light/config/chatList',
+  configWelcome: '/api/light/config/welcome',
 
 
   //#endregion
@@ -106,6 +107,20 @@ const urls = {
   realChatDelete: '/api/light/realChat/delete',
   realChatEdit: '/api/light/realChat/edit',
   //#endregion    
+
+  //#region 画图
+  sdAppSearch: '/api/light/sd/appSearch',
+  sdSearchForSimpleSd: '/api/light/sd/searchForSimpleSd',
+  sdImgSearch: '/api/light/sd/imgSearch',
+  sdAdd: '/api/light/sd/add',
+  sdUploadPicture: '/api/light/sd/uploadPicture',
+  sdPromptSearch: '/api/light/sd/promptSearch',
+  sdGetImgListByModelId: '/api/light/sd/sdGetImgListByModelId',
+  sdUpscale: '/api/light/sd/upscale',
+
+
+
+  //#endregion      
 
   //#region 文件列表
   fileAppSearch: '/api/light/file/appSearch',

@@ -19,6 +19,10 @@ export default function useDialog(props) {
     setType(type)
   }
 
+  const handleDialogHide = () => {
+    setIsModalVisible(false)
+  }
+
   //Dom
   const getDom = () => {
     return (
@@ -30,8 +34,12 @@ export default function useDialog(props) {
         width={800}
         forceRender
       >
-        {type === 'joinGroup' ? <JoinGroup></JoinGroup> : null}
-        {type === 'exchange' ? <Exchange></Exchange> : null}
+        {type === 'joinGroup' ? (
+          <JoinGroup handleDialogHide={handleDialogHide}></JoinGroup>
+        ) : null}
+        {type === 'exchange' ? (
+          <Exchange handleDialogHide={handleDialogHide}></Exchange>
+        ) : null}
       </Modal>
     )
   }

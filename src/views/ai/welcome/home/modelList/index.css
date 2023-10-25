@@ -1,0 +1,44 @@
+.m-welcome-model-list-wrap-box{display: flex;justify-content: center;background: #ddd;background: #ddd;position: absolute;top: 0;left: 0;right: 0;bottom: 0;overflow: hidden;}
+.m-welcome-model-list-wrap-box-inner{position: relative; display: flex;flex-direction: column; max-width: 800px;width: 100%;background: #ededed;}
+.m-welcome-model-list-wrap{position: absolute;display: flex;flex-direction: column; top: 0;bottom: 0;left: 0;right: 0;overflow-y: auto;}
+.m-welcome-model-list-header{display: flex; padding: 20px calc(4.5%) 0 calc(4.5%);align-items:center;margin: 0 0 5px 0;}
+.m-welcome-model-list-header-title{font-size: 30px;font-weight: bold;}
+.m-welcome-model-list-header-info{flex: 1}
+.m-welcome-model-list-header-right{display: flex;align-items:center;}
+.m-welcome-model-list-card-wrap{flex: 1;overflow-y: auto;padding: 0 5px;}
+.m-welcome-model-list-avatar{width: 40px;height: 40px;border-radius: 5px;cursor: pointer;}
+.m-welcome-model-list-btn-text{margin: 0 5px 0 0;padding: 4px 0;}
+.m-welcome-model-list-carousel-item{padding: 5px 0 0 0;}
+.m-welcome-model-list-carousel-item.withBorder{border-top: 1px solid #ddd;}
+.m-welcome-model-list-carousel-item-info{padding: 5px 0;}
+.m-welcome-model-list-carouse-item-tag{font-size: 12px;color: #1677ff; height: 16px;line-height: 16px;cursor: pointer;}
+.m-welcome-model-list-carouse-item-tag:hover{color: #0d6ef7;}
+.m-welcome-model-list-carouse-item-title{font-size: 24px;color: #000; height: 32px;}
+.m-welcome-model-list-carouse-item-sub-title{font-size: 22px;color: #999;height: 26px;}
+.m-welcome-model-list-carousel-item-img-wrap{position: relative; width: 100%;padding: 64% 0 0 0;}
+.m-welcome-model-list-carousel-item-img{position: absolute;top: 0;bottom: 0;left: 0;right: 0;border-radius: 5px; background-size: 100% 100%;}
+.m-welcome-model-list-card-header-wrap{border-top: 1px solid #ddd; margin: 20px calc(4.5%) 0 calc(4.5%);}
+.m-welcome-model-list-card-title-wrap{display: flex;align-items: center;padding: 5px 0 2px;}
+.m-welcome-model-list-card-title{font-size: 22px;font-weight: bold;flex: 1;}
+.m-welcome-model-list-card-more{font-size: 14px;color: #1677ff;cursor: pointer;}
+.m-welcome-model-list-card-more:hover{color: #0d6ef7;}
+.m-welcome-model-list-card-sub-title{font-size: 16px;color: #999;}
+.m-welcome-model-list-card-item-row{display: flex;padding: 5px 0;align-items: center;}
+.m-welcome-model-list-card-item-img-wrap{display: flex;position: relative; width: 50px;height: 64px;background: #dddddd;}
+.m-welcome-model-list-card-item-img-wrap::before{content: '';margin: auto;width: 22px;height: 22px;background-image: url(../../../../../static/images/loading.png);background-size: 100% 100%; animation: loading 0.5s linear infinite;}
+.m-welcome-model-list-card-item-img{position: absolute; width: 50px;height: 64px;border-radius: 5px;object-fit: cover;}
+.m-welcome-model-list-card-item-info-wrap{height: 64px; flex: 1;display: flex;align-items: center; margin: 0 0 0 5px;overflow: hidden;}
+.m-welcome-model-list-card-item-info-wrap.withBorder{border-bottom: 1px solid #ddd;}
+.m-welcome-model-list-card-item-info{flex:1;padding: 0 4px 0 0; display:flex;flex-direction: column;justify-content: center;overflow: hidden;}
+.m-welcome-model-list-card-item-title{font-size: 18px;color: #000;font-weight: bold;margin:  0 0 2px 0;}
+.m-welcome-model-list-card-item-sub-title{font-size: 14px;color: #999;}
+.m-welcome-model-list-card-item-btn{padding: 0 20px;background: #ddd;color: #1677ff;font-weight: bold;letter-spacing: 2px;font-size: 16px; border-radius: 15px;text-align: center;height: 30px; line-height: 32px;cursor: pointer;}
+.m-welcome-model-list-card-item-btn:hover{box-shadow: 0 0 5px rgba(0, 0, 0, 0.3) ;}
+
+
+
+
+
+
+
+

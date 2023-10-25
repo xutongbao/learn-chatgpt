@@ -74,7 +74,7 @@ function Register(props) {
           onFinish={handleFinish}
           onFinishFailed={handleFinishFailed}
         >
-          <div id="m-modal-form-info" className="m-modal-form-info">
+          <div>
             <Form.Item
               label=""
               name="username"
@@ -235,7 +235,7 @@ function Register(props) {
               <Button
                 type="primary"
                 htmlType="submit"
-                className="m-space m-single-exchange-btn"
+                className="m-space"
                 style={{ width: '100%' }}
               >
                 注册
@@ -257,6 +257,13 @@ function Register(props) {
             onClick={handleGuest}
           >
             游客
+          </Button>
+          <Button
+            type="link"
+            className="m-login-btn-text"
+            onClick={() => handleJumpPage('/welcome/home')}
+          >
+            首页
           </Button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { handleWatchLogin } from '../../../../api/socket'
 import Api from '../../../../api'
 
 export default function useList(props) {
@@ -146,6 +147,17 @@ export default function useList(props) {
     setPlayerList([...playerList, ...playListTemp])
     // eslint-disable-next-line
   }, [state.dataSource])
+
+  useEffect(() => {
+    handleWatchLogin({
+      callback: () => {
+        if (document.location.href.includes('/ai/index/userlist')) {
+          handleSearch()
+        }
+      },
+    })
+    // eslint-disable-next-line
+  }, [])  
 
   return {
     dataSource: state.dataSource,

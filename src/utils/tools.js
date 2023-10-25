@@ -505,6 +505,7 @@ const addLog = ({ errorTitle, detail }) => {
   } = window.reactRouter
   const tempValues = {
     username: localStorage.getItem('username'),
+    nickname: localStorage.getItem('nickname'),
     path: pathname,
     errorTitle,
     detail,
@@ -579,12 +580,16 @@ const formatOrderNo = (orderNo) => {
 
 //对象数组去重
 const objArrayUnique = ({ arr, field }) => {
-  let map = new Map()
-  arr.forEach((item) => {
-    map.set(item[field], item)
-  })
-  const resultArr = [...map.values()]
-  return resultArr
+  if (Array.isArray(arr)) {
+    let map = new Map()
+    arr.forEach((item) => {
+      map.set(item[field], item)
+    })
+    const resultArr = [...map.values()]
+    return resultArr
+  } else {
+    return arr
+  }
 }
 
 //获取管理员信息
@@ -736,7 +741,9 @@ const getAdminInfo = () => {
 const handleWatchRNMessage = () => {
   if (window.ReactNativeWebView) {
     if (window.reactNative?.type === 'userInfo') {
-      window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'userInfo' }))
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({ type: 'userInfo' })
+      )
     }
   }
 
@@ -754,7 +761,6 @@ const handleWatchRNMessage = () => {
       localStorage.setItem('lastestVersion', payload.lastestVersion)
       localStorage.setItem('appVersion', payload.appVersion)
       localStorage.setItem('platformos', payload.platformos)
-
 
       Store.dispatch({
         type: 'SET_LIGHT_STATE',
@@ -777,6 +783,32 @@ const handleWatchRNMessage = () => {
 }
 
 handleWatchRNMessage()
+
+//检查只能输入英文
+const checkOnlyEnglish = (e, value) => {
+  let zhCNReg = new RegExp('[\\u4E00-\\u9FFF]+', 'g')
+  if (value && zhCNReg.test(value)) {
+    return Promise.reject(new Error('只能输入英文!'))
+  } else {
+    return Promise.resolve()
+  }
+}
+
+const checkIncrementOf = (e, value, number = 8) => {
+  if (value && value % number !== 0) {
+    return Promise.reject(new Error('请输入能被8整除的数!'))
+  } else {
+    return Promise.resolve()
+  }
+}
+
+const sleep = async (count) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, count)
+  })
+}
 
 export {
   //显示loading
@@ -842,4 +874,7 @@ export {
   objArrayUnique,
   //获取管理员信息
   getAdminInfo,
+  checkOnlyEnglish,
+  sleep,
+  checkIncrementOf,
 }

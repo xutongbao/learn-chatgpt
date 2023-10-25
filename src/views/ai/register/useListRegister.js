@@ -191,15 +191,18 @@ export default function useList(props) {
     const invitationCode = localStorage.getItem('invitationCode')
       ? localStorage.getItem('invitationCode')
       : ''
-    Api.h5.userGetUserInfoById({ uid: invitationCode }).then((res) => {
-      if (res.code === 200) {
-        const { nickname } = res.data
-        let inviter = nickname
-        form.setFieldsValue({
-          inviter,
-        })
-      }
-    })
+    if (invitationCode) {
+      Api.h5.userGetUserInfoById({ uid: invitationCode }).then((res) => {
+        if (res.code === 200) {
+          const { nickname } = res.data
+          let inviter = nickname
+          form.setFieldsValue({
+            inviter,
+          })
+        }
+      })
+    }
+
     // eslint-disable-next-line
   }, [])
 

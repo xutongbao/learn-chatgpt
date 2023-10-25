@@ -21,7 +21,7 @@ export default function useList(props) {
         window.localStorage.removeItem('token')
         localStorage.removeItem('token')
         localStorage.removeItem('talkId')
-        props.history.push(`/ai/login`)
+        props.history.push(`/welcome/home`)
       }
     })
   }

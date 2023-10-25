@@ -39,6 +39,7 @@ const Api = {
   configGetMeData: (data) => common({ url: urls.h5.configGetMeData, data, method: 'post' }),
   configBase: (data) => common({ url: urls.h5.configBase, data, method: 'post' }),
   configChatList: (data) => common({ url: urls.h5.configChatList, data, method: 'post', isLoading: false  }),
+  configWelcome: (data) => common({ url: urls.h5.configWelcome, data, method: 'post' }),
 
   //#endregion  
 
@@ -107,10 +108,22 @@ const Api = {
   //#region 真人聊天
   realChatAppSearch: (data) => common({ url: urls.h5.realChatAppSearch, data, method: 'post', isLoading: false }),
   realChatAdminSearch: (data) => common({ url: urls.h5.realChatAdminSearch, data, method: 'post' }),
-  realChatAdd: (data) => common({ url: urls.h5.realChatAdd, data, method: 'post' }),
+  realChatAdd: (data) => common({ url: urls.h5.realChatAdd, data, method: 'post', isLoading: false }),
   realChatDelete: (data) => common({ url: urls.h5.realChatDelete, data, method: 'post' }),
   realChatEdit: (data) => common({ url: urls.h5.realChatEdit, data, method: 'post', isLoading: false }),
   //#endregion    
+
+  //#region 画图
+  sdAppSearch: (data) => common({ url: urls.h5.sdAppSearch, data, method: 'post' }),
+  sdSearchForSimpleSd: (data) => common({ url: urls.h5.sdSearchForSimpleSd, data, method: 'post' }),
+  sdImgSearch: (data) => common({ url: urls.h5.sdImgSearch, data, method: 'post' }),
+  sdAdd: (data) => common({ url: urls.h5.sdAdd, data, method: 'post', isLoading: false  }),
+  sdUploadPicture: (data) => common({ url: urls.h5.sdUploadPicture, data, method: 'post', isLoading: false }),
+  sdPromptSearch: (data) => common({ url: urls.h5.sdPromptSearch, data, method: 'post' }),
+  sdGetImgListByModelId: (data) => common({ url: urls.h5.sdGetImgListByModelId, data, method: 'post' }),
+  sdUpscale: (data) => common({ url: urls.h5.sdUpscale, data, method: 'post' }),
+
+  //#endregion      
     
 
   //#region 文件列表

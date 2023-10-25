@@ -1,0 +1,5 @@
+.m-monitor-domain-wrap{padding: 5px 0 10px;display: flex;gap: 5px;align-items: center;}
+.m-monitor-btn-wrap{display: flex;gap: 5px;flex-wrap: wrap;}
+.m-monitor-response-wrap{position: fixed;display: flex;flex-direction: column;gap: 5px; left: 0;right: 0;bottom: 0;padding: 5px;}
+
+

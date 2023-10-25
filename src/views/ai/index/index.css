@@ -9,7 +9,7 @@
 .m-h5-footer-text{font-size: 12px;padding: 2px 0;transform: scale(1);}
 .m-h5-home-header{height: 50px;background: #f6f6f6;text-align: center;line-height: 50px;font-weight: bold;font-size: 16px; color: #181818;border-bottom: 1px solid #ddd;}
 .m-h5-home-content{flex: 1;overflow-y: auto;display: flex;flex-direction: column;}
-.m-h5-home-main{overflow-y: auto;flex:1;padding: 4px 0 0 0;}
+.m-h5-home-main{overflow-y: auto;flex:1;padding: 0 0 0 0;}
 .m-h5-home-main-list{height: 100%;overflow-y: auto;}
 .m-h5-lesson-play-wrap{display: flex;justify-content: center;background: #ddd;overflow-y: auto;}
 .m-h5-lesson-play-inner{background: white;width: 100%;}

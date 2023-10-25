@@ -19,6 +19,7 @@ export default function UploadImgToCND({
   imgDir = 'img',
   filePrefix = '',
   uploadType = 1,
+  isSd = false,
 }) {
   const imageUrl = imageUrlFormat(imgUrlCnd)
   let defaultValue = {
@@ -57,7 +58,12 @@ export default function UploadImgToCND({
       data,
     }).then((res) => {
       if (res.data.code === 200) {
-        typeof onChange === 'function' && onChange(res.data.data.key)
+        if (isSd) {
+          typeof onChange === 'function' &&
+            onChange('https://static.xutongbao.top/' + res.data.data.key)
+        } else {
+          typeof onChange === 'function' && onChange(res.data.data.key)
+        }
       }
     })
 
