@@ -1,3 +1,5 @@
+
+
 # ChatGPT-API Demo
 
 English | [简体中文](./README.zh-CN.md)
@@ -21,7 +23,7 @@ A demo repo based on [OpenAI GPT-3.5 Turbo & GPT-4 API.](https://platform.openai
    ```bash
     yarn
    ```
-3. Run the application, the local project runs on `http://localhost:3000/`
+2. Run the application, the local project runs on `http://localhost:3000/`
    ```bash
     yarn start
    ```
